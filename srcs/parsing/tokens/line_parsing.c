@@ -48,4 +48,4 @@ int	remove_spaces(char *str)
 			new_str[str_len++] = str[i];
 	use_data()->line_cpy = new_str;
 	return (EXIT_SUCCESS);
-}
+}//ceci est un changement

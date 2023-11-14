@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/edufour/Desktop/42_Projets/minishell2/srcs/parsing/tokens",
+      "program": "/Users/edufour/Desktop/42_Projets/minishell2/srcs/parsing/tokens/build/Debug/outDebug"
+    }
+  ]
+}
