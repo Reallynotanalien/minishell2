@@ -117,4 +117,7 @@ void		get_path(t_command *cmd);
 
 void		cat_handler(int signum);
 
+//builtins
+int			echo_builtin(t_command *cmd);
+
 #endif
