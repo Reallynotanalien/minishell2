@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (use_data()->line == NULL)
 			exit_program();
-		free(use_data()->line);
+		// free(use_data()->line); (freed it already in remove_spaces)
 		free_commands_if_not_empty();
 		if (use_data()->heredoc_flag == YES)
 			unlink(".here_doc");
