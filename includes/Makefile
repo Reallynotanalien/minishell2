@@ -44,8 +44,8 @@ LIBS = ./includes/libft/libft.a ./includes/readline/libreadline.a ./includes/rea
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C ./includes/libft
-	#--@cd ./includes/readline && ./configure
-	#@$(MAKE) everything -C ./includes/readline
+	--@cd ./includes/readline && ./configure
+	@$(MAKE) everything -C ./includes/readline
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBS)
 	@echo "$(YELLOW)⚡️$(NAME) ⚡️$(B_GREEN)has been created $(COLOUR_END)!"
 

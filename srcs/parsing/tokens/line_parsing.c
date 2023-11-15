@@ -86,4 +86,4 @@ int	remove_spaces(char *str)
 		use_data()->line_cpy = skip_consecutives(i, end, str);
 	free (str);
 	return (EXIT_SUCCESS);
-}
+}//ceci est un changement
