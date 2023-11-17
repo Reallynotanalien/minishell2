@@ -24,6 +24,7 @@ SRCS =	./srcs/init.c \
 		./srcs/exec/path.c \
 		./srcs/utils.c \
 		./srcs/builtins/builtins.c \
+		./srcs/parsing/tokens/redirections.c \
 				
 
 #colours ------------------------------------------

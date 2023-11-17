@@ -95,6 +95,7 @@ void		init_data(t_data *data);
 //utils.c
 t_data		*use_data(void);
 void		view_list(void);
+char		*ft_strlower(char *str);
 
 //linked_list.c
 t_token		*add_token(char *token);
@@ -119,5 +120,9 @@ void		cat_handler(int signum);
 
 //builtins
 int			echo_builtin(t_command *cmd);
+
+//redirections
+int			token_redirin(t_token *token, t_command *cmd);
+int			token_redirout(t_token *token, t_command *cmd);
 
 #endif
