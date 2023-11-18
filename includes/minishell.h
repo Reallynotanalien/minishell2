@@ -109,6 +109,7 @@ void		free_commands_if_not_empty(void);
 void		view_commands(void);
 
 void		exec(t_command *cmd);
+int			check_builtin(t_command *cmd);
 
 //path.c
 char		*access_path(t_command *cmd, char **path_env);

@@ -1,0 +1,5 @@
+Handle errors, cleaning and return values
+These functions will not redirect input/output. They will read from/write on STDIN/STDOUT, which will need to be redirected if necessary. \/ Check if it really works ! \/
+Make sure pipes are handled outside of my functions, even with builtins (in exec)
+Will need to add "check_builtin" function in exec, and rework it accordingly (ex: Will the nb of commands stay the same ?)
+Test the arguments given to getcwd in pwd_builtin (not sure it works)
