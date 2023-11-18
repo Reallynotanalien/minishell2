@@ -3,3 +3,5 @@ These functions will not redirect input/output. They will read from/write on STD
 Make sure pipes are handled outside of my functions, even with builtins (in exec)
 Will need to add "check_builtin" function in exec, and rework it accordingly (ex: Will the nb of commands stay the same ?)
 Test the arguments given to getcwd in pwd_builtin (not sure it works)
+Commands not sticking together when quoted (in build_commands, split on whitespaces only if they aren't quoted)
+Will need to remove quotes (except if quoted themselves) when builting command
