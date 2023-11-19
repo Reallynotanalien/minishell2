@@ -5,3 +5,4 @@ Will need to add "check_builtin" function in exec, and rework it accordingly (ex
 Test the arguments given to getcwd in pwd_builtin (not sure it works)
 Commands not sticking together when quoted (in build_commands, split on whitespaces only if they aren't quoted)
 Will need to remove quotes (except if quoted themselves) when builting command
+Test the behavior of substitutions when $HI=$HELLO

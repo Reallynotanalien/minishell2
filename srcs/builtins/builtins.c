@@ -54,11 +54,27 @@ int	pwd_builtin(t_command *cmd)
 	return (0);
 }
 
+/*everything after '=' is the value of the variable, and before is it's name. The name of an environment variable must follow these rules : 
+only letters, digits and '_', cannot start with a digit, and is case sensitive. Messing with a variable used by the system (ex : PATH) might cause problems, and setting a max_lenght could be pertinent.
+Multiple variables can be set at the same time. They are delimited by whitespace.*/
+//step 1 : check if name is valid. 2 : check if value is valid. 3 : set the value ! 4 : Restart with subsequent variables if necessary.
+//export HI=HELLO $HI=10 would use the previous value of HI, not HELLO (This should work as expected as substitutions are done in the begining)
 //exports a new environment variable
-// int export_builtin()
-// {
+int	export_builtin(t_command *cmd)
+{
+	int	i;
 
-// }
+	if (!cmd->cmd[1])
+		//lists all environment variables and their values (see bash)
+	i = 1;
+	while (cmd->cmd[i])
+	{
+		//check if name is valid and store it(is considered valid if everything is okay before '='. Even if value isn't valid, it creates the variable but returns an error. )
+		//store value (if valid... )
+		//set name and value (NOT using setenv....)
+		i++;
+	}
+}
 
 // //unsets an environment variable
 // int unset_builtin()
