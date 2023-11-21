@@ -122,7 +122,7 @@ void		cat_handler(int signum);
 int			echo_builtin(t_command *cmd);
 
 //redirections
-int			token_redirin(t_token *token, t_command *cmd);
-int			token_redirout(t_token *token, t_command *cmd);
+int			token_redirin(t_token *token);
+int			token_redirout(t_token *token);
 
 #endif

@@ -11,7 +11,7 @@ t_token	*command_loop(t_token *tokens, char **command)
 		else if (tokens->type == T_INFILE)
 			printf("infile = open_infile();\n");
 		else if (tokens->type == T_OUTFILE || tokens->type == T_APPEND)
-			printf("outfile = open_outfile();\n");
+			token_redirout(tokens);
 		else if (tokens->type == T_STR)
 		{
 			*command = join_free(*command, " ");
