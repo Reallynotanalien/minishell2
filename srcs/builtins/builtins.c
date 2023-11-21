@@ -35,9 +35,10 @@ int	echo_builtin(t_command *cmd)
 int	cd_builtin(t_command *cmd)
 {
 	if (!cmd->cmd[1] || cmd->cmd[2])
-		print_error("error with cd; too many or too few args");
+		tmp_error("error with cd; too many or too few args\n");
 	if (!chdir(cmd->cmd[1]))
 		perror("ERROR : ");
+	return (0);
 }
 
 // print current working directory on STDOUT_FILENO
@@ -46,7 +47,7 @@ int	pwd_builtin(t_command *cmd)
 	char	*cwd;
 
 	if (cmd->cmd[1])
-		print_error("too many args for pwd");
+		tmp_error("too many args for pwd\n");
 	cwd = getcwd(NULL, 0);
 	ft_putstr_fd(cwd, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
@@ -88,11 +89,19 @@ int	export_builtin(t_command *cmd)
 
 // }
 
-// //gracefully exits minishell
-// int exit_builtin()
-// {
-
-// }
+//gracefully exits minishell (the numeric value given as argument will be the exit code)
+int exit_builtin(t_command *cmd)
+{
+	if (cmd->cmd[1])
+	{
+		if (!ft_isdigit(cmd->cmd[1]))
+			tmp_error("minishell: exit: a: numeric argument required\n");
+		else
+			exit_program(ft_atoi(cmd->cmd[1]));
+	}
+	if (cmd->cmd[2])
+		tmp_error("minishell: exit: too many arguments\n");
+}
 
 /* calls the relevant function from builtin name, 
 or returns 0 if it isn't a builtin.*/

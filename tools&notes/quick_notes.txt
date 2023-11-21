@@ -1,4 +1,6 @@
-Handle errors, cleaning and return values
+Create a copy of env, which will be used throughout the whole execution.
+	- Create cpy of env, allocated and kept in use_data()
+Handle errors, cleaning and return values --- Keep a variable with latest error code, maybe ? 
 These functions will not redirect input/output. They will read from/write on STDIN/STDOUT, which will need to be redirected if necessary. \/ Check if it really works ! \/
 Make sure pipes are handled outside of my functions, even with builtins (in exec)
 Will need to add "check_builtin" function in exec, and rework it accordingly (ex: Will the nb of commands stay the same ?)
@@ -6,3 +8,5 @@ Test the arguments given to getcwd in pwd_builtin (not sure it works)
 Commands not sticking together when quoted (in build_commands, split on whitespaces only if they aren't quoted)
 Will need to remove quotes (except if quoted themselves) when builting command
 Test the behavior of substitutions when $HI=$HELLO
+cat | ls : minishell does not behave correctly; it should wait for input for cat.
+Changed exit_program (added an int as return value)
