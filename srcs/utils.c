@@ -44,3 +44,9 @@ char	*ft_strlower(char *str)
 		new_str[i] = ft_tolower(str[i]);
 	return (new_str);
 }
+
+//Used to indicate an error, to be replaced by proper error printing and handling.
+void	tmp_error(char *error_message)
+{
+	printf("tmp error : %s", error_message);
+}

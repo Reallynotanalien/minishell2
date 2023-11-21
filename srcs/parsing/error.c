@@ -35,11 +35,11 @@ int	print_error(char *message)
 /*Gracefully exits the program by cleaning up all necessary data
 before printing an exit message, restoring the terminal's original
 attributes and exiting.*/
-void	exit_program(void)
+void	exit_program(int code)
 {
 	cleanup();
 	//printf to be deleted later on
 	printf("Cleanup done!\n");
 	restore_attributes();
-	exit(1);
+	exit(code);
 }
