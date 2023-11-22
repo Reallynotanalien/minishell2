@@ -9,9 +9,11 @@ t_token	*command_loop(t_token *tokens, char **command)
 		else if (tokens->type == T_HEREDOC)
 			use_data()->infile = open_heredoc(tokens);
 		else if (tokens->type == T_INFILE)
-			printf("infile = open_infile();\n");
-		else if (tokens->type == T_OUTFILE || tokens->type == T_APPEND)
+			printf("token_redirin(tokens);\n");
+		else if (tokens->type == T_OUTFILE)
 			token_redirout(tokens);
+		else if (tokens->type == T_APPEND)
+			token_redirappend(tokens);
 		else if (tokens->type == T_STR)
 		{
 			*command = join_free(*command, " ");

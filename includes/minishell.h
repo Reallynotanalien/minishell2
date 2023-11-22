@@ -124,5 +124,6 @@ int			echo_builtin(t_command *cmd);
 //redirections
 int			token_redirin(t_token *token);
 int			token_redirout(t_token *token);
+int			token_redirappend(t_token *token);
 
 #endif
