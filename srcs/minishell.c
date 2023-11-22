@@ -4,7 +4,7 @@ int	main(int argc, char **argv, char **env)
 {
 	if (main_parsing(argc, argv, env) == ERROR)
 		exit(1);
-	signals();
+	signals(); 
 	while (1)
 	{
 		use_data()->line = readline("minishell$> ");
@@ -16,7 +16,7 @@ int	main(int argc, char **argv, char **env)
 			add_history(use_data()->line);
 		}
 		if (use_data()->line == NULL)
-			exit_program();
+			exit_program(1);
 		// free(use_data()->line); (freed it already in remove_spaces)
 		free_commands_if_not_empty();
 		if (use_data()->heredoc_flag == YES)

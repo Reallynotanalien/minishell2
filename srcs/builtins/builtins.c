@@ -3,57 +3,74 @@
 //checks if the given string is a builtin name.
 
 //returns buff, which will contain str in lowercase.
-char	*ft_lowerbuiltin(char *str, char *buff)
-{
-	int		i;
+// char	*ft_lowerbuiltin(char *str, char *buff)
+// {
+// 	int		i;
 
-	i = 0;
-	ft_bzero(buff, ft_strlen(str) + 1);
-	i = -1;
-	while (str[++i])
-		buff[i] = ft_tolower(str[i]);
-	return (buff);
-}
+// 	i = 0;
+// 	ft_bzero(buff, ft_strlen(str) + 1);
+// 	i = -1;
+// 	while (str[++i])
+// 		buff[i] = ft_tolower(str[i]);
+// 	return (buff);
+// }
 
 //print the args on STDOUT_FILENO
-int	echo_builtin(t_command *cmd)
-{
-	int	i;
+// int	echo_builtin(t_command *cmd)
+// {
+// 	int	i;
 
-	i = 0;
-	while (cmd->cmd[++i])
-	{
-		ft_putstr_fd(cmd->cmd[i], STDOUT_FILENO);
-		ft_putchar_fd(' ', STDOUT_FILENO);
-	}
-	if (cmd->cmd[1] && ft_strcmp(cmd->cmd[1], "-n"))
-		ft_putchar_fd('\n', STDIN_FILENO);
-	return (0);
-}
+// 	i = 0;
+// 	while (cmd->cmd[++i])
+// 	{
+// 		ft_putstr_fd(cmd->cmd[i], STDOUT_FILENO);
+// 		ft_putchar_fd(' ', STDOUT_FILENO);
+// 	}
+// 	if (cmd->cmd[1] && ft_strcmp(cmd->cmd[1], "-n"))
+// 		ft_putchar_fd('\n', STDIN_FILENO);
+// 	return (0);
+// }
 
 //changes current working directory (env ? check allowed functions !)
-int	cd_builtin(t_command *cmd)
-{
-	if (!cmd->cmd[1] || cmd->cmd[2])
-		tmp_error("error with cd; too many or too few args\n");
-	if (!chdir(cmd->cmd[1]))
-		perror("ERROR : ");
-	return (0);
-}
+// int	cd_builtin(t_command *cmd)
+// {
+// 	if (!cmd->cmd[1] || cmd->cmd[2])
+// 		tmp_error("error with cd; too many or too few args\n");
+// 	if (!chdir(cmd->cmd[1]))
+// 		perror("ERROR : ");
+// 	return (0);
+// }
 
 // print current working directory on STDOUT_FILENO
-int	pwd_builtin(t_command *cmd)
-{
-	char	*cwd;
+// int	pwd_builtin(t_command *cmd)
+// {
+// 	char	*cwd;
 
-	if (cmd->cmd[1])
-		tmp_error("too many args for pwd\n");
-	cwd = getcwd(NULL, 0);
-	ft_putstr_fd(cwd, STDOUT_FILENO);
-	ft_putchar_fd('\n', STDOUT_FILENO);
-	free (cwd);
-	return (0);
-}
+// 	if (cmd->cmd[1])
+// 		tmp_error("too many args for pwd\n");
+// 	cwd = getcwd(NULL, 0);
+// 	ft_putstr_fd(cwd, STDOUT_FILENO);
+// 	ft_putchar_fd('\n', STDOUT_FILENO);
+// 	free (cwd);
+// 	return (0);
+// }
+
+// void	print_export(char *env_var)
+// {
+// 	int	i;
+
+// 	printf("declare -x ");
+// 	i = -1;
+// 	while (env_var && env_var[++i] != '=')
+// 		printf("%c", env_var[i]);
+// 	if (env_var[i] == '=')
+// 	{
+// 		printf("=\"");
+// 		while (env_var[++i])
+// 			printf(env_var[i]);
+// 		printf("\"\n");
+// 	}
+// }
 
 /*everything after '=' is the value of the variable, and before is it's name. The name of an environment variable must follow these rules : 
 only letters, digits and '_', cannot start with a digit, and is case sensitive. Messing with a variable used by the system (ex : PATH) might cause problems, and setting a max_lenght could be pertinent.
@@ -61,21 +78,31 @@ Multiple variables can be set at the same time. They are delimited by whitespace
 //step 1 : check if name is valid. 2 : check if value is valid. 3 : set the value ! 4 : Restart with subsequent variables if necessary.
 //export HI=HELLO $HI=10 would use the previous value of HI, not HELLO (This should work as expected as substitutions are done in the begining)
 //exports a new environment variable
-int	export_builtin(t_command *cmd)
-{
-	int	i;
+// int	export_builtin(t_command *cmd)
+// {
+// 	int	i;
+// 	int	i_line;
 
-	if (!cmd->cmd[1])
-		//lists all environment variables and their values (see bash)
-	i = 1;
-	while (cmd->cmd[i])
-	{
+// 	i = -1;
+// 	if (!cmd->cmd[1])
+// 		while (use_data()->new_env[++i])
+// 			print_export(use_data()->new_env[i]);
+// 	i = 1;
+// 	i_line = 0;
+// 	while (cmd->cmd[i])
+// 	{
+// 		if (!ft_isalpha(cmd->cmd[i][0]) && cmd->cmd[i][0] != '_')
+// 			tmp_error("minishell : export : \'cmd->cmd[i][0]\' : not a valid identifier\n");
+// 		While(cmd->cmd[i][i_line] != '=')
+// 			if (!ft_isalphanum(cmd->cmd[i][i_line]) && cmd->cmd[i][i_line] != '_')
+// 				tmp_error("export : invalid identifier\n");
+		
 		//check if name is valid and store it(is considered valid if everything is okay before '='. Even if value isn't valid, it creates the variable but returns an error. )
 		//store value (if valid... )
 		//set name and value (NOT using setenv....)
-		i++;
-	}
-}
+// 		i++;
+// 	}
+// }
 
 // //unsets an environment variable
 // int unset_builtin()
@@ -90,18 +117,18 @@ int	export_builtin(t_command *cmd)
 // }
 
 //gracefully exits minishell (the numeric value given as argument will be the exit code)
-int exit_builtin(t_command *cmd)
-{
-	if (cmd->cmd[1])
-	{
-		if (!ft_isdigit(cmd->cmd[1]))
-			tmp_error("minishell: exit: a: numeric argument required\n");
-		else
-			exit_program(ft_atoi(cmd->cmd[1]));
-	}
-	if (cmd->cmd[2])
-		tmp_error("minishell: exit: too many arguments\n");
-}
+// int exit_builtin(t_command *cmd)
+// {
+// 	if (cmd->cmd[1])
+// 	{
+// 		if (!ft_isdigit(cmd->cmd[1]))
+// 			tmp_error("minishell: exit: a: numeric argument required\n");
+// 		else
+// 			exit_program(ft_atoi(cmd->cmd[1]));
+// 	}
+// 	if (cmd->cmd[2])
+// 		tmp_error("minishell: exit: too many arguments\n");
+// }
 
 /* calls the relevant function from builtin name, 
 or returns 0 if it isn't a builtin.*/
