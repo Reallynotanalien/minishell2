@@ -67,7 +67,6 @@ int	token_redirin(t_token *token)
 	token_copy = ft_substr(token->token, 2, ft_strlen(token->token));
 	token_copy = ft_strtrim_whitespaces(token_copy);
 	token_lower = ft_strlower(token_copy);
-	printf("token_copy : %s, token_lower: %s\n", token_copy, token_lower);
 	fd = open(token_copy, O_RDONLY);
 	if (fd < 0)
 	{
@@ -77,7 +76,6 @@ int	token_redirin(t_token *token)
 	}
 	if (use_data()->infile != STDIN_FILENO)
 		close(use_data()->infile);
-	printf("fd is: %i\n", fd);
 	use_data()->infile = fd;
 	return (free(token_lower), free(token_copy), EXIT_SUCCESS);
 }
