@@ -81,6 +81,7 @@ void	exec(t_command *cmd)
 	nb_cmds = count_commands(cmd);
 	while (cmd && nb_cmds > 1)
 	{
+		cmd->cmd[0] = ft_strlower(cmd->cmd[0]);
 		get_path(cmd);
 		if (ft_strcmp(cmd->cmd[0], "cat") == 0)
 			signal(SIGINT, cat_handler);
@@ -89,6 +90,7 @@ void	exec(t_command *cmd)
 		if (cmd->next)
 			cmd = cmd->next;
 	}
+	cmd->cmd[0] = ft_strlower(cmd->cmd[0]);
 	get_path(cmd);
 	if (ft_strcmp(cmd->cmd[0], "cat") == 0)
 		signal(SIGINT, cat_handler);
