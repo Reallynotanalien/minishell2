@@ -21,7 +21,7 @@ t_command	*add_command(char *command, int infile, int outfile)
 	new = create_command();
 	if (!new)
 		return (NULL);
-	new->cmd = (char **)ft_split(command, ' ');
+	new->cmd = (char **)ft_split_quotes(command, ' ');
 	new->infile = infile;
 	new->outfile = outfile;
 	if (use_data()->cmd == NULL)

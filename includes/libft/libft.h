@@ -6,7 +6,7 @@
 /*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 16:30:13 by kafortin          #+#    #+#             */
-/*   Updated: 2023/11/06 16:35:17 by kafortin         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:40:02 by kafortin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ char			*copy_from_src(char *dest, const char *src, unsigned int len);
 unsigned int	find_len_until(const char *str, const char to_find);
 void			free_tab(char **tab);
 char			*join_free(char *text, const char *buffer);
+void			**ft_split_quotes(char const *s, char c);
 
 #endif
