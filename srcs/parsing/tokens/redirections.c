@@ -13,7 +13,8 @@ int	token_redirout(t_token *token)
 
 	token_copy = ft_substr(token->token, 2, ft_strlen(token->token));
 	token_copy = ft_strtrim_whitespaces(token_copy);
-	token_lower = ft_strlower(token_copy);
+	token_lower = ft_substr(token_copy, 0, ft_strlen(token_copy));
+	ft_strlower(token_lower);
 	if (access(token_copy, F_OK) == 0 
 		|| access(token_lower, F_OK) == 0)
 	{
@@ -39,7 +40,8 @@ int	token_redirappend(t_token *token)
 
 	token_copy = ft_substr(token->token, 3, ft_strlen(token->token));
 	token_copy = ft_strtrim_whitespaces(token_copy);
-	token_lower = ft_strlower(token_copy);
+	token_lower = ft_substr(token_copy, 0, ft_strlen(token_copy));
+	ft_strlower(token_lower);
 	if (access(token_copy, F_OK) == 0 
 		|| access(token_lower, F_OK) == 0)
 	{
@@ -66,7 +68,8 @@ int	token_redirin(t_token *token)
 
 	token_copy = ft_substr(token->token, 2, ft_strlen(token->token));
 	token_copy = ft_strtrim_whitespaces(token_copy);
-	token_lower = ft_strlower(token_copy);
+	token_lower = ft_substr(token_copy, 0, ft_strlen(token_copy));
+	ft_strlower(token_lower);
 	fd = open(token_copy, O_RDONLY);
 	if (fd < 0)
 	{
