@@ -50,3 +50,17 @@ void	tmp_error(char *error_message)
 {
 	printf("tmp error : %s", error_message);
 }
+
+//returns the index of the first occurence of 'target' in 'str'.
+int	find_index(char *str, char target)
+{
+	int	index;
+
+	index = 0;
+	while (str[index] && str[index] != target)
+		index ++;
+	if (str[index] == target)
+		return (index);
+	else
+		return (-1);
+}

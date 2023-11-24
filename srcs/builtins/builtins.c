@@ -90,12 +90,37 @@ int	set_varname(char *cmd, char *buffer)
 
 int	set_varvalue(char *cmd, char *buffer)
 {
-	//get everything after first '=' and build a string with it. (use ft_strchr to find begining ?)
+	int	i;
+	int	i_buff;
+
+	i = 0;
+	while (cmd[i] && cmd[i] != '=')
+		i++;
+	if (!cmd[i])
+		return (0);
+	i_buff = 0;
+	while(cmd[i])
+		buffer[i_buff++] = cmd[i++];
+	return (1);
 }
 
 char	*build_var(char *name, char *value)
 {
-	//build char *"name=value"
+	char	*new_var;
+	int		i;
+	int		i_component;
+
+	new_var = ft_calloc(ft_strlen(name) + ft_strlen(value) + 2, sizeof(char));
+	i = 0;
+	i_component = 0;
+	while (name[i_component])
+		new_var[i++] = name[i_component++];
+	i_component = 0;
+	new_var[i] = '=';
+	if (value)
+		while (value[i_component])
+			new_var[i++] = value[i_component++];
+	return (new_var);
 }
 
 void	add_varenv(char *name, char *value)
@@ -117,6 +142,11 @@ void	add_varenv(char *name, char *value)
 	updated_env[n_lines] = build_var(name, value);
 	free (use_data()->new_env);
 	use_data()->new_env = updated_env;
+}
+
+char	*ft_getenv(char *var_name)
+{
+	
 }
 
 /*everything after '=' is the value of the variable, and before is it's name. The name of an environment variable must follow these rules : 
@@ -142,16 +172,20 @@ int	export_builtin(t_command *cmd)
 	{
 		if (!ft_isalpha(cmd->cmd[i_cmd][0]) && cmd->cmd[i_cmd][0] != '_')
 			tmp_error("minishell : export : \'cmd->cmd[i]\' : not a valid identifier\n");
-		if (ft_strchr(cmd->cmd[i_cmd], '=') == 0)
+		if (find_index(cmd->cmd[i_cmd], '=') == -1)
 			var_name = ft_calloc(ft_strlen(cmd->cmd[i_cmd]) + 1, sizeof(char));
 		else
-			var_name = ft_calloc(ft_strchr(cmd->cmd[i_cmd], '=') + 1, sizeof(char));
+			var_name = ft_calloc(find_index(cmd->cmd[i_cmd], '=') + 1, sizeof(char));
+		if (find_index(cmd, '=') == -1 || find_index(cmd, '=') == ft_strlen(cmd) - 1)
+			var_value = NULL;
+		else
+			var_value = ft_calloc(ft_strlen(cmd) - find_index(cmd, '=') - 1, sizeof(char));
 		if (!set_varname(cmd->cmd[i_cmd], var_name))
 			return(tmp_error("export : invalid identifier\n"));
 		if (!set_varvalue(cmd->cmd[i_cmd], var_value))
 		{
 			if (!ft_getenv(var_name))
-				//add variable to env with value ""
+				add_varenv(var_name, var_value);
 			return(tmp_error("export : invalid identifier\n"));
 		}
 		add_varenv(var_name, var_value);
