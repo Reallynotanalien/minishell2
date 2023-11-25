@@ -1,5 +1,6 @@
 DO NEXT : test export_builtin. substitute getenv (ex : in substitutions). Handle the malloc'ed return. Merge everything on master once this is done.
 
+**am confused about t_command. I think builtins could simply take char **cmd instead.
 **need to protect variables from unset ? (ex : HOME, USER...)
 **when exporting a variable which has already been set before, this will place it at the end of the environment, not where it initially was.
 Make is_envvar(). replace ft_getenv when used in an if statement.
