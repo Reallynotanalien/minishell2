@@ -45,12 +45,6 @@ char	*ft_strlower(char *str)
 	return (new_str);
 }
 
-//Used to indicate an error, to be replaced by proper error printing and handling.
-void	tmp_error(char *error_message)
-{
-	printf("tmp error : %s", error_message);
-}
-
 //returns the index of the first occurence of 'target' in 'str'.
 int	find_index(char *str, char target)
 {
@@ -63,4 +57,22 @@ int	find_index(char *str, char target)
 		return (index);
 	else
 		return (-1);
+}
+
+char	*ft_getenv(char *var_name)
+{
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = get_varname(use_data()->new_env[i]);
+	while (use_data()->new_env[i] && ft_strcmp(var_name, tmp))
+	{
+		free (tmp);
+		i++;
+		tmp = get_varname(use_data()->new_env[i]);
+	}
+	if (!use_data()->new_env[i])
+		return (free (tmp), NULL);
+	return (free (tmp), get_varvalue(use_data()->new_env[i]));
 }

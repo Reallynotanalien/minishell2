@@ -1,6 +1,6 @@
-DO NEXT : test export_builtin. substitute getenv (ex : in substitutions). Handle the malloc'ed return
+DO NEXT : test export_builtin. substitute getenv (ex : in substitutions). Handle the malloc'ed return. Merge everything on master once this is done.
 
-Make is_envvar()
+Make is_envvar(). replace ft_getenv when used in an if statement.
 Handle errors, cleaning and return values --- Keep a variable with latest error code, maybe ?
 These functions will not redirect input/output. They will read from/write on STDIN/STDOUT, which will need to be redirected if necessary. \/ Check if it really works ! \/
 Make sure pipes are handled outside of my functions, even with builtins (in exec)
@@ -8,6 +8,3 @@ Will need to add "check_builtin" function in exec, and rework it accordingly (ex
 Will need to remove quotes (except if quoted themselves) when builting command
 Test the behavior of substitutions when $HI=$HELLO
 cat | ls : minishell does not behave correctly; it should wait for input for cat.
-
-
-
