@@ -96,6 +96,7 @@ void		init_data(t_data *data);
 t_data		*use_data(void);
 void		view_list(void);
 int			find_index(char *str, char target);
+void		tmp_error(char *error_message);
 char		*ft_strlower(char *str);
 char		*ft_getenv(char *var_name);
 
@@ -126,11 +127,14 @@ int			echo_builtin(t_command *cmd);
 int			cd_builtin(t_command *cmd);
 int			pwd_builtin(t_command *cmd);
 int			export_builtin(t_command *cmd);
-int			env_builtin();
+// int			env_builtin();
 int			exit_builtin(t_command *cmd);
-int			unset_builtin();
-int			check_builtin(t_command *cmd);
+int			unset_builtin(t_command *cmd);
 char		*ft_lowerbuiltin(char *str, char *buff);
+char		*get_varname(char *variable);
+char		*get_varvalue(char *variable);
+int			isvalid_varname(char *variable_name);
+int			check_builtin(t_command *cmd);
 
 //redirections
 int			token_redirin(t_token *token, t_command *cmd);

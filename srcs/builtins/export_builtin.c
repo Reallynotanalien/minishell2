@@ -13,7 +13,7 @@ void	print_export(char *env_var)
 	{
 		printf("=\"");
 		while (env_var[++i])
-			printf(env_var[i]);
+			printf("%c", env_var[i]);
 		printf("\"\n");
 	}
 }
@@ -51,28 +51,27 @@ char	*get_varvalue(char *variable)
 	i_value = 0;
 	while (variable[i])
 		value[i_value++] = variable[i++];
-	return (1);
+	return (value);
 }
 
-void	add_varenv(char *new_var)
+void	add_varenv(char *add_var)
 {
 	int		n_lines;
 	char	**updated_env;
-	char	*new_var;
 	char	*tmp;
 
-	tmp = get_varname(new_var);
+	tmp = get_varname(add_var);
 	if (ft_getenv(tmp))
-		unset(tmp);
+		unset_builtin(tmp);
 	free (tmp);
 	n_lines = 0;
 	while (use_data()->new_env[n_lines])
 		n_lines++;
 	updated_env = ft_calloc(n_lines + 2, sizeof(char *));
-	n_lines = 0;
-	while (use_data()->new_env[n_lines])
+	n_lines = -1;
+	while (use_data()->new_env[++n_lines])
 		updated_env[n_lines] = use_data()->new_env[n_lines];
-	updated_env[n_lines] = new_var;
+	updated_env[n_lines] = add_var;
 	free (use_data()->new_env);
 	use_data()->new_env = updated_env;
 }
@@ -81,6 +80,7 @@ int	export_builtin(t_command *cmd)
 {
 	int		i_cmd;
 	int		i_line;
+	char	*var_name;
 
 	i_cmd = -1;
 	if (!cmd->cmd[1])
@@ -90,15 +90,11 @@ int	export_builtin(t_command *cmd)
 	i_line = 0;
 	while (cmd->cmd[i_cmd])
 	{
-		if (!ft_isalpha(cmd->cmd[i_cmd][0]) && cmd->cmd[i_cmd][0] != '_')
-			tmp_error("export_builtin invalid identifier");
-		while (cmd->cmd[i_cmd][i_line] && cmd->cmd[i_cmd][i_line] != '=')
-		{
-			if (!ft_isalphanum(cmd->cmd[i_cmd]) && cmd->cmd[i_cmd] != '_')
-				return (tmp_error("invalid identifier in export builtin"));
-			i_line++;
-		}
+		var_name = get_varname(cmd->cmd[i_cmd]);
+		if (!isvalid_varname(var_name))
+			return (tmp_error("invalid identifier in export builtin"), 1);
 		add_varenv(ft_strdup(cmd->cmd[i_cmd]));
 		i_cmd++;
 	}
+	return (0);
 }
