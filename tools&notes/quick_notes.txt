@@ -1,5 +1,4 @@
-DO NEXT : ft_getenv(in builtins) and substitute getenv (ex : in substitutions). Handle the malloced return
-What the fuck did I do in export ? No need to actually set the name and value separately. Just need to check if it's valid. Dammit.
+DO NEXT : test export_builtin. substitute getenv (ex : in substitutions). Handle the malloc'ed return
 
 Make is_envvar()
 Handle errors, cleaning and return values --- Keep a variable with latest error code, maybe ?
@@ -9,3 +8,6 @@ Will need to add "check_builtin" function in exec, and rework it accordingly (ex
 Will need to remove quotes (except if quoted themselves) when builting command
 Test the behavior of substitutions when $HI=$HELLO
 cat | ls : minishell does not behave correctly; it should wait for input for cat.
+
+
+

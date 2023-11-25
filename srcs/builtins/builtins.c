@@ -72,74 +72,61 @@ void	print_export(char *env_var)
 	}
 }
 
-//not sure this is finished ?
-int	set_varname(char *cmd, char *buffer)
+char	*get_varname(char *variable)
 {
-	int	i;
+	int		i;
+	char	*var_name;
 
 	i = 0;
-	While(cmd[i] && cmd[i] != '=')
+	while (variable[i] && variable[i] != '=')
+		i++;
+	var_name = ft_calloc(i + 1, sizeof(char));
+	i = 0;
+	while (variable[i] && variable[i] != '=')
 	{
-		if (!ft_isalphanum(cmd[i]) && cmd[i] != '_')
-			return (0);
-		buffer[i] = cmd[i];
+		var_name[i] = variable[i];
 		i++;
 	}
-	return (0);
+	return (var_name);
 }
 
-int	set_varvalue(char *cmd, char *buffer)
+char	*get_varvalue(char *variable)
 {
-	int	i;
-	int	i_buff;
+	int		i;
+	int		i_value;
+	char	*value;
 
 	i = 0;
-	while (cmd[i] && cmd[i] != '=')
+	while (variable[i] && variable[i] != '=')
 		i++;
-	if (!cmd[i])
-		return (0);
-	i_buff = 0;
-	while(cmd[i])
-		buffer[i_buff++] = cmd[i++];
+	if (!variable[i])
+		return (NULL);
+	value = ft_calloc(i + 1, sizeof(char));
+	i_value = 0;
+	while (variable[i])
+		value[i_value++] = variable[i++];
 	return (1);
 }
 
-char	*build_var(char *name, char *value)
-{
-	char	*new_var;
-	int		i;
-	int		i_component;
-
-	new_var = ft_calloc(ft_strlen(name) + ft_strlen(value) + 2, sizeof(char));
-	i = 0;
-	i_component = 0;
-	while (name[i_component])
-		new_var[i++] = name[i_component++];
-	i_component = 0;
-	new_var[i] = '=';
-	if (value)
-		while (value[i_component])
-			new_var[i++] = value[i_component++];
-	return (new_var);
-}
-
-void	add_varenv(char *name, char *value)
+void	add_varenv(char *new_var)
 {
 	int		n_lines;
 	char	**updated_env;
 	char	*new_var;
+	char	*tmp;
 
-	if (ft_getenv(name))
-		unset(name);
+	tmp = get_varname(new_var);
+	if (ft_getenv(tmp))
+		unset(tmp);
+	free (tmp);
 	n_lines = 0;
 	while (use_data()->new_env[n_lines])
 		n_lines++;
 	updated_env = ft_calloc(n_lines + 2, sizeof(char *));
 	n_lines = 0;
-	while(use_data()->new_env[n_lines])
+	while (use_data()->new_env[n_lines])
 		updated_env[n_lines] = use_data()->new_env[n_lines];
-	new_var = ft_calloc(ft_strlen(name) + ft_strlen(value) + 2, sizeof(char));
-	updated_env[n_lines] = build_var(name, value);
+	updated_env[n_lines] = new_var;
 	free (use_data()->new_env);
 	use_data()->new_env = updated_env;
 }
@@ -162,18 +149,13 @@ char	*ft_getenv(char *var_name)
 	return (free (tmp), get_varvalue(use_data()->new_env[i]));
 }
 
-/*everything after '=' is the value of the variable, and before is it's name. The name of an environment variable must follow these rules : 
-only letters, digits and '_', cannot start with a digit, and is case sensitive. Messing with a variable used by the system (ex : PATH) might cause problems, and setting a max_lenght could be pertinent.
-Multiple variables can be set at the same time. They are delimited by whitespace.*/
-//step 1 : check if name is valid. 2 : check if value is valid. 3 : set the value ! 4 : Restart with subsequent variables if necessary.
-//export HI=HELLO $HI=10 would use the previous value of HI, not HELLO (This should work as expected as substitutions are done in the begining)
+
 //exports a new environment variable
 int	export_builtin(t_command *cmd)
 {
+
 	int		i_cmd;
 	int		i_line;
-	char	*var_name;
-	char	*var_value;
 
 	i_cmd = -1;
 	if (!cmd->cmd[1])
@@ -185,23 +167,13 @@ int	export_builtin(t_command *cmd)
 	{
 		if (!ft_isalpha(cmd->cmd[i_cmd][0]) && cmd->cmd[i_cmd][0] != '_')
 			tmp_error("minishell : export : \'cmd->cmd[i]\' : not a valid identifier\n");
-		if (find_index(cmd->cmd[i_cmd], '=') == -1)
-			var_name = ft_calloc(ft_strlen(cmd->cmd[i_cmd]) + 1, sizeof(char));
-		else
-			var_name = ft_calloc(find_index(cmd->cmd[i_cmd], '=') + 1, sizeof(char));
-		if (find_index(cmd, '=') == -1 || find_index(cmd, '=') == ft_strlen(cmd) - 1)
-			var_value = NULL;
-		else
-			var_value = ft_calloc(ft_strlen(cmd) - find_index(cmd, '=') - 1, sizeof(char));
-		if (!set_varname(cmd->cmd[i_cmd], var_name))
-			return(tmp_error("export : invalid identifier\n"));
-		if (!set_varvalue(cmd->cmd[i_cmd], var_value))
+		while (cmd->cmd[i_cmd][i_line] && cmd->cmd[i_cmd][i_line] != '=')
 		{
-			if (!ft_getenv(var_name))
-				add_varenv(var_name, var_value);
-			return(tmp_error("export : invalid identifier\n"));
+			if (!ft_isalphanum(cmd->cmd[i_cmd]) && cmd->cmd[i_cmd] != '_')
+				return (tmp_error("invalid identifier in export builtin"));
+			i_line++;
 		}
-		add_varenv(var_name, var_value);
+		add_varenv(ft_strdup(cmd->cmd[i_cmd]));
 		i_cmd++;
 	}
 }
