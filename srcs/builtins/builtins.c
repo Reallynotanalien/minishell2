@@ -146,7 +146,20 @@ void	add_varenv(char *name, char *value)
 
 char	*ft_getenv(char *var_name)
 {
-	
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = get_varname(use_data()->new_env[i]);
+	while (use_data()->new_env[i] && ft_strcmp(var_name, tmp) != 0) //check how to write 'strings aren't identical'
+	{
+		free (tmp);	
+		i++;
+		tmp = get_varname(use_data()->new_env[i]);
+	}
+	if (!use_data()->new_env[i])
+		return (free (tmp), NULL);
+	return (free (tmp), get_varvalue(use_data()->new_env[i]));
 }
 
 /*everything after '=' is the value of the variable, and before is it's name. The name of an environment variable must follow these rules : 
