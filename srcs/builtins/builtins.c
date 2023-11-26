@@ -58,6 +58,7 @@ int	unset_builtin(char **cmd)
 			return (tmp_error("invalid identifier in unset builtin"), 1);
 	updated_env = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
+	i_update = 0;
 	while (use_data()->new_env[i])
 	{
 		tmp = get_varname(use_data()->new_env[i]);

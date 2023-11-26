@@ -62,7 +62,7 @@ void	add_varenv(char *add_var)
 
 	tmp = get_varname(add_var);
 	if (ft_getenv(tmp))
-		unset_builtin(tmp);
+		unset_builtin(&add_var); //will... this work ?
 	free (tmp);
 	n_lines = 0;
 	while (use_data()->new_env[n_lines])
@@ -76,24 +76,24 @@ void	add_varenv(char *add_var)
 	use_data()->new_env = updated_env;
 }
 
-int	export_builtin(t_command *cmd)
+int	export_builtin(char **cmd)
 {
 	int		i_cmd;
 	int		i_line;
 	char	*var_name;
 
 	i_cmd = -1;
-	if (!cmd->cmd[1])
+	if (!cmd[1])
 		while (use_data()->new_env[++i_cmd])
 			print_export(use_data()->new_env[i_cmd]);
 	i_cmd = 1;
 	i_line = 0;
-	while (cmd->cmd[i_cmd])
+	while (cmd[i_cmd])
 	{
-		var_name = get_varname(cmd->cmd[i_cmd]);
+		var_name = get_varname(cmd[i_cmd]);
 		if (!isvalid_varname(var_name))
 			return (tmp_error("invalid identifier in export builtin"), 1);
-		add_varenv(ft_strdup(cmd->cmd[i_cmd]));
+		add_varenv(ft_strdup(cmd[i_cmd]));
 		i_cmd++;
 	}
 	return (0);

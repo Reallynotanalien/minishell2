@@ -20,6 +20,7 @@ int	substitute_block(char *line, int index, char **blocks, int i_block)
 	int		i;
 	char	*new_block;
 	char	*var_name;
+	char	*tmp;
 
 	i = index + 1;
 	if (line[i] == '?')
@@ -29,12 +30,12 @@ int	substitute_block(char *line, int index, char **blocks, int i_block)
 	while (!is_delimiter(line[i]))
 		i++;
 	var_name = ft_substr(line, index + 1, i - index - 1);
-	new_block = ft_strdup(getenv(var_name));
+	tmp = ft_getenv(var_name);
+	new_block = ft_strdup(tmp);
 	if (!new_block)
 		new_block = ft_strdup("");
-	free (var_name);
 	blocks[i_block] = new_block;
-	return (i - index);
+	return (free (tmp), free (var_name), i - index);
 }
 
 /*Separates the segments (blocks) into different arrays, 
