@@ -95,7 +95,10 @@ void		init_data(t_data *data);
 //utils.c
 t_data		*use_data(void);
 void		view_list(void);
+int			find_index(char *str, char target);
+void		tmp_error(char *error_message);
 char		*ft_strlower(char *str);
+char		*ft_getenv(char *var_name);
 
 //linked_list.c
 t_token		*add_token(char *token);
@@ -119,7 +122,18 @@ void		get_path(t_command *cmd);
 void		cat_handler(int signum);
 
 //builtins
-int			echo_builtin(t_command *cmd);
+int			echo_builtin(char **cmd);
+int			cd_builtin(char **cmd);
+int			pwd_builtin(char **cmd);
+int			export_builtin(char **cmd);
+// int			env_builtin();
+int			exit_builtin(char **cmd);
+int			unset_builtin(char **cmd);
+char		*ft_lowerbuiltin(char *str, char *buff);
+char		*get_varname(char *variable);
+char		*get_varvalue(char *variable);
+int			isvalid_varname(char *variable_name);
+int			check_builtin(char **cmd);
 
 //redirections
 int			token_redirin(t_token *token);

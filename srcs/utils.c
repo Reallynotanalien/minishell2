@@ -44,3 +44,35 @@ char	*ft_strlower(char *str)
 		new_str[i] = ft_tolower(str[i]);
 	return (new_str);
 }
+
+//returns the index of the first occurence of 'target' in 'str'.
+int	find_index(char *str, char target)
+{
+	int	index;
+
+	index = 0;
+	while (str[index] && str[index] != target)
+		index ++;
+	if (str[index] == target)
+		return (index);
+	else
+		return (-1);
+}
+
+char	*ft_getenv(char *var_name)
+{
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = get_varname(use_data()->new_env[i]);
+	while (use_data()->new_env[i] && ft_strcmp(var_name, tmp))
+	{
+		free (tmp);
+		i++;
+		tmp = get_varname(use_data()->new_env[i]);
+	}
+	if (!use_data()->new_env[i])
+		return (free (tmp), NULL);
+	return (free (tmp), get_varvalue(use_data()->new_env[i]));
+}

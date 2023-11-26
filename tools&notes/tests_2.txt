@@ -28,3 +28,8 @@ tests bash :	export TEST1="'"Hi"'"
 				>`TEST'Hi'=hi': not a valid identifier
 minishell :
 notes : ', ", $ and redirections cannot be used in environment variable names.
+
+test :	export "hello=10 hi=20"
+bash : exports hello="10 hi=20"
+minishell :
+notes :
