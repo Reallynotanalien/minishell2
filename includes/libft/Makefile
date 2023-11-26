@@ -6,7 +6,7 @@
 #    By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/05 20:32:19 by kafortin          #+#    #+#              #
-#    Updated: 2023/10/20 14:51:20 by kafortin         ###   ########.fr        #
+#    Updated: 2023/11/23 15:40:16 by kafortin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ FILES = ft_isalpha.c \
 		get_next_line.c \
 		get_next_line_utils.c \
 		ft_free_tab.c \
+		ft_split_quotes.c \
 		
 OBJS = $(FILES:.c=.o)
 
