@@ -20,6 +20,8 @@ void	print_export(void)
 	int		printed;
 	int		nb_vars;
 	char	*last_var;
+	char	*var_name;
+	char	*var_value;
 
 	last_var = NULL;
 	printed = 0;
@@ -28,9 +30,15 @@ void	print_export(void)
 		nb_vars++;
 	while (printed != nb_vars)
 	{
-		printf("declare -x ");
 		last_var = get_next_var(last_var);
-		printf("%s\n", last_var);
+		var_name = get_varname(last_var);
+		var_value = get_varvalue(last_var);
+		if (var_value)
+			printf("declare -x %s=\"%s\"", var_name, var_value);
+		else
+			printf("declare -c %s", last_var);
+		free (var_name);
+		free (var_value);
 		printed++;
 	}
 }
