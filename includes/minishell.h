@@ -126,13 +126,14 @@ int			echo_builtin(char **cmd);
 int			cd_builtin(char **cmd);
 int			pwd_builtin(char **cmd);
 int			export_builtin(char **cmd);
-// int			env_builtin();
+int			env_builtin(void);
 int			exit_builtin(char **cmd);
 int			unset_builtin(char **cmd);
 char		*ft_lowerbuiltin(char *str, char *buff);
 char		*get_varname(char *variable);
 char		*get_varvalue(char *variable);
 int			isvalid_varname(char *variable_name);
+int			is_envvar(char	*varname);
 int			check_builtin(char **cmd);
 
 //redirections

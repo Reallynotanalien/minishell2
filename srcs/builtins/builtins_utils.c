@@ -55,3 +55,13 @@ int	isvalid_varname(char *variable_name)
 	}
 	return (1);
 }
+
+int	is_envvar(char	*varname)
+{
+	char	*tmp;
+
+	tmp = ft_getenv(varname);
+	if (!tmp)
+		return (0);
+	return (free(tmp), 1);
+}

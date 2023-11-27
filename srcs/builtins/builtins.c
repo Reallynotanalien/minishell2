@@ -74,10 +74,23 @@ int	unset_builtin(char **cmd)
 }
 
 //prints env
-// int	env_builtin()
-// {
+int	env_builtin(void)
+{
+	int		i;
+	char	*tmp;
 
-// }
+	i = 0;
+	tmp = get_varvalue(use_data()->new_env[0]);
+	while (use_data()->new_env[i])
+	{
+		if (tmp)
+			printf("%s\n", use_data()->new_env[i]);
+		free (tmp);
+		tmp = get_varvalue(use_data()->new_env[++i]);
+	}
+	free(tmp);
+	return (0);
+}
 
 //gracefully exits minishell (the numeric value given as argument will be the exit code)
 int	exit_builtin(char **cmd)

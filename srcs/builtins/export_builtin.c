@@ -1,20 +1,37 @@
 
 #include "../../includes/minishell.h"
 
-void	print_export(char *env_var)
+char	*get_next_var(char *last_var)
 {
-	int	i;
+	int		i;
+	char	*next_var;
 
-	printf("declare -x ");
 	i = -1;
-	while (env_var && env_var[++i] != '=')
-		printf("%c", env_var[i]);
-	if (env_var[i] == '=')
+	while (use_data()->new_env[++i])
+		if (ft_strcmp(use_data()->new_env[i], next_var) < 0
+			&& (last_var == NULL
+				|| ft_strcmp(use_data()->new_env[i], last_var) > 0))
+			next_var = use_data()->new_env[i];
+	return (next_var);
+}
+
+void	print_export(void)
+{
+	int		printed;
+	int		nb_vars;
+	char	*last_var;
+
+	last_var = NULL;
+	printed = 0;
+	nb_vars = 0;
+	while (use_data()->new_env[nb_vars])
+		nb_vars++;
+	while (printed != nb_vars)
 	{
-		printf("=\"");
-		while (env_var[++i])
-			printf("%c", env_var[i]);
-		printf("\"\n");
+		printf("declare -x ");
+		last_var = get_next_var(last_var);
+		printf("%s\n", last_var);
+		printed++;
 	}
 }
 
@@ -61,8 +78,8 @@ void	add_varenv(char *add_var)
 	char	*tmp;
 
 	tmp = get_varname(add_var);
-	if (ft_getenv(tmp))
-		unset_builtin(&add_var); //will... this work ?
+	if (is_envvar(tmp))
+		unset_builtin(&add_var);
 	free (tmp);
 	n_lines = 0;
 	while (use_data()->new_env[n_lines])
@@ -84,8 +101,7 @@ int	export_builtin(char **cmd)
 
 	i_cmd = -1;
 	if (!cmd[1])
-		while (use_data()->new_env[++i_cmd])
-			print_export(use_data()->new_env[i_cmd]);
+		print_export();
 	i_cmd = 1;
 	i_line = 0;
 	while (cmd[i_cmd])
