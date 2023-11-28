@@ -30,7 +30,7 @@ void	child_two(t_command **cmd)
 			dup2((*cmd)->outfile, STDOUT_FILENO);
 			close((*cmd)->outfile);
 		}
-		if (!check_builtin(cmd))
+		if (!check_builtin((*cmd)->cmd))
 		{
 			get_path(*cmd);
 			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
@@ -52,7 +52,7 @@ void	child_one(t_command **cmd)
 	close((*cmd)->outfile);
 	dup2(use_data()->fd[1], STDOUT_FILENO);
 	close(use_data()->fd[1]);
-	if (!check_builtin(cmd))
+	if (!check_builtin((*cmd)->cmd))
 	{
 		get_path(*cmd);
 		execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);

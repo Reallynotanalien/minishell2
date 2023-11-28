@@ -6,6 +6,7 @@ int	echo_builtin(char	**cmd)
 	int	i;
 
 	i = 0;
+	write(1, "im in echo\n", 11);
 	while (cmd[++i])
 	{
 		ft_putstr_fd(cmd[i], STDOUT_FILENO);
