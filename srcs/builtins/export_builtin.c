@@ -1,32 +1,11 @@
 
 #include "../../includes/minishell.h"
 
+//use "bubble sort" (swap two adjacent elements if they aren't in the right order). Check if char **env_cpy = env, env_cpy[i] = env_cpy[i] + 1 changes the order in env.
 char	**sort_env(char **env)
 {
-	
+
 }
-
-//sorting logic is dumb lol, try again
-//its almost works tho. Gotta compare it to something else than last_var tho.
-// char	*get_next_var(char *last_var)
-// {
-// 	int		i;
-// 	char	*next_var;
-
-// 	i = -1;
-// 	next_var = ft_strdup(use_data()->new_env[0]);
-// 	while (use_data()->new_env[++i])
-// 	{
-// 		if (ft_strcmp(use_data()->new_env[i], next_var) < 0
-// 			&& (last_var == NULL
-// 				|| ft_strcmp(use_data()->new_env[i], last_var) > 0))
-// 		{
-// 			free(next_var);
-// 			next_var = ft_strdup(use_data()->new_env[i]);
-// 		}
-// 	}
-// 	return (next_var);
-// }
 
 void	print_export(void)
 {
@@ -44,7 +23,7 @@ void	print_export(void)
 		if (var_value)
 			printf("declare -x %s=\"%s\"\n", var_name, var_value);
 		else
-			printf("declare -x %s\n", last_var);
+			printf("declare -x %s\n", sorted_env[i]);
 		free (var_name);
 		free (var_value);
 	}
