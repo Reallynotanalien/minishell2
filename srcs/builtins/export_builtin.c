@@ -1,17 +1,25 @@
 
 #include "../../includes/minishell.h"
 
+//sorting logic is dumb lol, try again
+//its almost works tho. Gotta compare it to something else than last_var tho.
 char	*get_next_var(char *last_var)
 {
 	int		i;
 	char	*next_var;
 
 	i = -1;
+	next_var = ft_strdup(use_data()->new_env[0]);
 	while (use_data()->new_env[++i])
+	{
 		if (ft_strcmp(use_data()->new_env[i], next_var) < 0
 			&& (last_var == NULL
 				|| ft_strcmp(use_data()->new_env[i], last_var) > 0))
-			next_var = use_data()->new_env[i];
+		{
+			free(next_var);
+			next_var = ft_strdup(use_data()->new_env[i]);
+		}
+	}
 	return (next_var);
 }
 
@@ -30,13 +38,13 @@ void	print_export(void)
 		nb_vars++;
 	while (printed != nb_vars)
 	{
-		last_var = get_next_var(last_var);
+		last_var = get_next_var(last_var); //this is not freed ! give get_next_var a buffer instead.
 		var_name = get_varname(last_var);
 		var_value = get_varvalue(last_var);
 		if (var_value)
-			printf("declare -x %s=\"%s\"", var_name, var_value);
+			printf("declare -x %s=\"%s\"\n", var_name, var_value);
 		else
-			printf("declare -c %s", last_var);
+			printf("declare -x %s\n", last_var);
 		free (var_name);
 		free (var_value);
 		printed++;
@@ -58,6 +66,7 @@ char	*get_varname(char *variable)
 		var_name[i] = variable[i];
 		i++;
 	}
+	var_name[i] = '\0';
 	return (var_name);
 }
 
@@ -72,10 +81,12 @@ char	*get_varvalue(char *variable)
 		i++;
 	if (!variable[i])
 		return (NULL);
-	value = ft_calloc(i + 1, sizeof(char));
+	value = ft_calloc(ft_strlen((variable) - i), sizeof(char));
 	i_value = 0;
+	i ++;
 	while (variable[i])
 		value[i_value++] = variable[i++];
+	value[i_value] = '\0';
 	return (value);
 }
 
@@ -107,7 +118,6 @@ int	export_builtin(char **cmd)
 	int		i_line;
 	char	*var_name;
 
-	i_cmd = -1;
 	if (!cmd[1])
 		print_export();
 	i_cmd = 1;

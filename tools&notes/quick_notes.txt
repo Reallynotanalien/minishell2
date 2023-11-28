@@ -1,6 +1,6 @@
-DO NEXT : test export_builtin, unset_builtin.
+DO NEXT : export for printing env is giving segfaults; help!, test export_builtin, unset_builtin.
 
-Ah shit, forgot to sort env when printing using export
+verify if export ( test= ) keeps the '='
 **need to protect variables from unset ? (ex : HOME, USER...)
 **when exporting a variable which has already been set before, export_builtin will place it at the end of the environment, not where it initially was.
 Handle errors, cleaning and return values --- Keep a variable with latest error code, maybe ?
@@ -8,3 +8,7 @@ Will need to add "check_builtin" function in exec, and rework it accordingly (ex
 Will need to remove quotes (except if quoted themselves) when builting command
 Test the behavior of substitutions when $HI=$HELLO
 cat | ls : minishell does not behave correctly; it should wait for input for cat.
+fix history
+fix signals
+fix ctrl+d (many times)
+

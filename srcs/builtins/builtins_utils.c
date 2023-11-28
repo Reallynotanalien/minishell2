@@ -29,10 +29,10 @@ int	check_builtin(char **cmd)
 		pwd_builtin(cmd);
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "export"))
 		export_builtin(cmd);
-	// else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "unset"))
-	// 	unset_builtin(cmd);
-	// else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "env"))
-	// 	env_builtin(cmd);
+	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "unset"))
+		unset_builtin(cmd);
+	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "env"))
+		env_builtin();
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "exit"))
 		exit_builtin(cmd);
 	else
