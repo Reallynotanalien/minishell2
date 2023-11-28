@@ -30,7 +30,11 @@ void	child_two(t_command **cmd)
 			dup2((*cmd)->outfile, STDOUT_FILENO);
 			close((*cmd)->outfile);
 		}
-		execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
+		if (!check_builtin(cmd))
+		{
+			get_path(*cmd);
+			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
+		}
 	}
 	else
 	{
@@ -48,7 +52,11 @@ void	child_one(t_command **cmd)
 	close((*cmd)->outfile);
 	dup2(use_data()->fd[1], STDOUT_FILENO);
 	close(use_data()->fd[1]);
-	execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
+	if (!check_builtin(cmd))
+	{
+		get_path(*cmd);
+		execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
+	}
 }
 
 void	pipex(t_command **cmd)
@@ -82,7 +90,6 @@ void	exec(t_command *cmd)
 	while (cmd && nb_cmds > 1)
 	{
 		cmd->cmd[0] = ft_strlower(cmd->cmd[0]);
-		get_path(cmd);
 		if (ft_strcmp(cmd->cmd[0], "cat") == 0)
 			signal(SIGINT, cat_handler);
 		pipex(&cmd);
@@ -91,7 +98,6 @@ void	exec(t_command *cmd)
 			cmd = cmd->next;
 	}
 	cmd->cmd[0] = ft_strlower(cmd->cmd[0]);
-	get_path(cmd);
 	if (ft_strcmp(cmd->cmd[0], "cat") == 0)
 		signal(SIGINT, cat_handler);
 	child_two(&cmd);
