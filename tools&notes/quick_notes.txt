@@ -1,4 +1,4 @@
-DO NEXT : export for printing env is giving segfaults; help!, test export_builtin, unset_builtin.
+DO NEXT : change the strategy for printing with export (sort first, then print), test export_builtin, unset_builtin.
 
 verify if export ( test= ) keeps the '='
 **need to protect variables from unset ? (ex : HOME, USER...)

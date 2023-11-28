@@ -1,53 +1,52 @@
 
 #include "../../includes/minishell.h"
 
+char	**sort_env(char **env)
+{
+	
+}
+
 //sorting logic is dumb lol, try again
 //its almost works tho. Gotta compare it to something else than last_var tho.
-char	*get_next_var(char *last_var)
-{
-	int		i;
-	char	*next_var;
+// char	*get_next_var(char *last_var)
+// {
+// 	int		i;
+// 	char	*next_var;
 
-	i = -1;
-	next_var = ft_strdup(use_data()->new_env[0]);
-	while (use_data()->new_env[++i])
-	{
-		if (ft_strcmp(use_data()->new_env[i], next_var) < 0
-			&& (last_var == NULL
-				|| ft_strcmp(use_data()->new_env[i], last_var) > 0))
-		{
-			free(next_var);
-			next_var = ft_strdup(use_data()->new_env[i]);
-		}
-	}
-	return (next_var);
-}
+// 	i = -1;
+// 	next_var = ft_strdup(use_data()->new_env[0]);
+// 	while (use_data()->new_env[++i])
+// 	{
+// 		if (ft_strcmp(use_data()->new_env[i], next_var) < 0
+// 			&& (last_var == NULL
+// 				|| ft_strcmp(use_data()->new_env[i], last_var) > 0))
+// 		{
+// 			free(next_var);
+// 			next_var = ft_strdup(use_data()->new_env[i]);
+// 		}
+// 	}
+// 	return (next_var);
+// }
 
 void	print_export(void)
 {
-	int		printed;
-	int		nb_vars;
-	char	*last_var;
+	int		i;
+	char	**sorted_env;
 	char	*var_name;
 	char	*var_value;
 
-	last_var = NULL;
-	printed = 0;
-	nb_vars = 0;
-	while (use_data()->new_env[nb_vars])
-		nb_vars++;
-	while (printed != nb_vars)
+	i = -1;
+	sorted_env = sort_env(use_data()->new_env);
+	while (sorted_env[++i])
 	{
-		last_var = get_next_var(last_var); //this is not freed ! give get_next_var a buffer instead.
-		var_name = get_varname(last_var);
-		var_value = get_varvalue(last_var);
+		var_name = get_varname(sorted_env[i]);
+		var_value = get_varvalue(sorted_env[i]);
 		if (var_value)
 			printf("declare -x %s=\"%s\"\n", var_name, var_value);
 		else
 			printf("declare -x %s\n", last_var);
 		free (var_name);
 		free (var_value);
-		printed++;
 	}
 }
 
