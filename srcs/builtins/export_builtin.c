@@ -57,8 +57,8 @@ void	print_export(void)
 			printf("declare -x %s=\"%s\"\n", var_name, var_value);
 		else
 			printf("declare -x %s\n", sorted_env[i]);
-		// free (var_name);
-		// free (var_value);
+		free (var_name);
+		free (var_value);
 	}
 	free (sorted_env);
 }
@@ -72,20 +72,13 @@ char	*get_varname(char *variable)
 	while (variable[i] && variable[i] != '=')
 		i++;
 	var_name = ft_calloc(i + 1, sizeof(char));
-	i = 0;
-	while (variable[i] && variable[i] != '=')
-	{
-		var_name[i] = variable[i];
-		i++;
-	}
-	var_name[i] = '\0';
+	ft_memcpy(var_name, variable, i);
 	return (var_name);
 }
 
 char	*get_varvalue(char *variable)
 {
 	int		i;
-	int		i_value;
 	char	*value;
 
 	i = 0;
@@ -93,12 +86,9 @@ char	*get_varvalue(char *variable)
 		i++;
 	if (!variable[i])
 		return (NULL);
-	value = ft_calloc(ft_strlen((variable) - i), sizeof(char));
-	i_value = 0;
+	value = ft_calloc(ft_strlen((variable)) - i, sizeof(char));
 	i ++;
-	while (variable[i])
-		value[i_value++] = variable[i++];
-	value[i_value] = '\0';
+	ft_memcpy(value, &variable[i], ft_strlen(variable) - i);
 	return (value);
 }
 
@@ -118,7 +108,7 @@ void	add_varenv(char *add_var)
 	updated_env = ft_calloc(n_lines + 2, sizeof(char *));
 	n_lines = -1;
 	while (use_data()->new_env[++n_lines])
-		updated_env[n_lines] = use_data()->new_env[n_lines];
+		updated_env[n_lines] = ft_strdup(use_data()->new_env[n_lines]);
 	updated_env[n_lines] = add_var;
 	free (use_data()->new_env);
 	use_data()->new_env = updated_env;
