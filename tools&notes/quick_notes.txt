@@ -2,7 +2,6 @@ DO NEXT : change the strategy for printing with export (sort first, then print),
 
 verify if export ( test= ) keeps the '='
 **need to protect variables from unset ? (ex : HOME, USER...)
-**when exporting a variable which has already been set before, export_builtin will place it at the end of the environment, not where it initially was.
 Handle errors, cleaning and return values --- Keep a variable with latest error code, maybe ?
 Will need to add "check_builtin" function in exec, and rework it accordingly (ex: Will the nb of commands stay the same ?)
 Will need to remove quotes (except if quoted themselves) when builting command
@@ -11,4 +10,5 @@ cat | ls : minishell does not behave correctly; it should wait for input for cat
 fix history
 fix signals
 fix ctrl+d (many times)
-
+From time to time it seems like the last letter of cmd gets erased
+Make sure everything is cleaned (free(), close())

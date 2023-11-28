@@ -1,10 +1,43 @@
 
 #include "../../includes/minishell.h"
 
-//use "bubble sort" (swap two adjacent elements if they aren't in the right order). Check if char **env_cpy = env, env_cpy[i] = env_cpy[i] + 1 changes the order in env.
+char	**cpy_doublearray(char **array)
+{
+	char	**new_array;
+	int		i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	new_array = ft_calloc(i + 1, sizeof (char *));
+	i = -1;
+	while (array[++i])
+		new_array[i] = ft_strdup(array[i]);
+	return (new_array);
+}
+
+//use "bubble sort" (swap two adjacent elements if they aren't in the right order). Check if char **env_cpy = env, env_cpy[i] = env_cpy[i] + 1 changes the order in env - YES IT DOES D:
 char	**sort_env(char **env)
 {
+	char	**sorted_env;
+	char	*tmp;
+	int		i;
 
+	sorted_env = cpy_doublearray(env);
+	i = 0;
+	while (sorted_env[i + 1])
+	{
+		if (ft_strcmp(sorted_env[i], sorted_env[i + 1]) > 0)
+		{
+			tmp = sorted_env[i];
+			sorted_env[i] = sorted_env[i + 1];
+			sorted_env[i + 1] = tmp;
+			i = 0;
+		}
+		else
+			i++;
+	}
+	return (sorted_env);
 }
 
 void	print_export(void)
@@ -24,9 +57,10 @@ void	print_export(void)
 			printf("declare -x %s=\"%s\"\n", var_name, var_value);
 		else
 			printf("declare -x %s\n", sorted_env[i]);
-		free (var_name);
-		free (var_value);
+		// free (var_name);
+		// free (var_value);
 	}
+	free (sorted_env);
 }
 
 char	*get_varname(char *variable)
