@@ -32,6 +32,7 @@ void	child_two(t_command **cmd)
 		}
 		if (!check_builtin((*cmd)->cmd))
 		{
+			printf("stdin: %i\n", STDIN_FILENO);
 			get_path(*cmd);
 			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
 			exit(0);
@@ -84,23 +85,60 @@ void	pipex(t_command **cmd)
 	}
 }
 
+void	child_three(t_command **cmd)
+{
+	if ((*cmd)->infile != STDIN_FILENO)
+	{
+		dup2((*cmd)->infile, STDIN_FILENO);
+		close((*cmd)->infile);
+	}
+	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
+	if (ft_strcmp((*cmd)->cmd[0], "cat") == 0)
+		signal(SIGINT, cat_handler);
+	use_data()->pid = fork();
+	if (use_data()->pid == -1)
+		printf("FORK did not work\n");
+	else if (use_data()->pid == 0)
+	{
+		use_data()->child = YES;
+		if ((*cmd)->outfile != STDOUT_FILENO)
+		{
+			dup2((*cmd)->outfile, STDOUT_FILENO);
+			close((*cmd)->outfile);
+		}
+		if (!check_builtin((*cmd)->cmd))
+		{
+			get_path(*cmd);
+			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
+			exit(0);
+		}
+	}
+	else
+		waitpid(use_data()->pid, NULL, 0);
+}
+
 void	exec(t_command *cmd)
 {
 	int	nb_cmds;
 
 	nb_cmds = count_commands(cmd);
-	while (cmd && nb_cmds > 1)
+	if (nb_cmds == 1)
+		child_three(&cmd);
+	else
 	{
+		while (cmd && nb_cmds > 1)
+		{
+			cmd->cmd[0] = ft_strlower(cmd->cmd[0]);
+			if (ft_strcmp(cmd->cmd[0], "cat") == 0)
+				signal(SIGINT, cat_handler);
+			pipex(&cmd);
+			nb_cmds--;
+			if (cmd->next)
+				cmd = cmd->next;
+		}
 		cmd->cmd[0] = ft_strlower(cmd->cmd[0]);
 		if (ft_strcmp(cmd->cmd[0], "cat") == 0)
 			signal(SIGINT, cat_handler);
-		pipex(&cmd);
-		nb_cmds--;
-		if (cmd->next)
-			cmd = cmd->next;
+		child_two(&cmd);
 	}
-	cmd->cmd[0] = ft_strlower(cmd->cmd[0]);
-	if (ft_strcmp(cmd->cmd[0], "cat") == 0)
-		signal(SIGINT, cat_handler);
-	child_two(&cmd);
 }
