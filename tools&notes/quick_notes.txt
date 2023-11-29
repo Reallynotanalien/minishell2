@@ -1,6 +1,8 @@
-DO NEXT : change the strategy for printing with export (sort first, then print), test export_builtin, unset_builtin.
+DOING : export test && export test= creates two different variables, echo won't print exported variables somehow, when exporting an existing variable, first time it creates a cpy, second time it segfaults --> it doesn't check last var in env I think. (export -> add_varenv -> is_envar -> ft_getenv) (test export_builtin, unset_builtin.)
+*I think there's an issue with how new_env is set...
 
-verify if export ( test= ) keeps the '='
+
+verify if export ( test= ) keeps the '=' : It does !
 **need to protect variables from unset ? (ex : HOME, USER...)
 Handle errors, cleaning and return values --- Keep a variable with latest error code, maybe ?
 Will need to add "check_builtin" function in exec, and rework it accordingly (ex: Will the nb of commands stay the same ?)

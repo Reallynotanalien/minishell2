@@ -57,10 +57,10 @@ void	print_export(void)
 			printf("declare -x %s=\"%s\"\n", var_name, var_value);
 		else
 			printf("declare -x %s\n", sorted_env[i]);
-		free (var_name);
-		free (var_value);
+		// free (var_name);
+		// free (var_value);
 	}
-	free (sorted_env);
+	// free (sorted_env);
 }
 
 char	*get_varname(char *variable)
@@ -100,17 +100,20 @@ void	add_varenv(char *add_var)
 
 	tmp = get_varname(add_var);
 	if (is_envvar(tmp))
-		unset_builtin(&add_var);
-	free (tmp);
+		unset_var(add_var);
+	// free (tmp);
 	n_lines = 0;
 	while (use_data()->new_env[n_lines])
 		n_lines++;
 	updated_env = ft_calloc(n_lines + 2, sizeof(char *));
-	n_lines = -1;
-	while (use_data()->new_env[++n_lines])
+	n_lines = 0;
+	while (use_data()->new_env[n_lines])
+	{
 		updated_env[n_lines] = ft_strdup(use_data()->new_env[n_lines]);
+		n_lines++;
+	}
 	updated_env[n_lines] = add_var;
-	free (use_data()->new_env);
+	// free (use_data()->new_env);
 	use_data()->new_env = updated_env;
 }
 
