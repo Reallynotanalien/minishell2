@@ -8,6 +8,8 @@ int	echo_builtin(char	**cmd)
 	i = 0;
 	while (cmd[++i])
 	{
+		if (cmd[i][0] == '"')
+			cmd[i] = ft_substr(cmd[i], 1, ft_strlen(cmd[i]) - 2);
 		ft_putstr_fd(cmd[i], STDOUT_FILENO);
 		ft_putchar_fd(' ', STDOUT_FILENO);
 	}
