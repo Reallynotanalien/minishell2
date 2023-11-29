@@ -6,7 +6,6 @@ int	echo_builtin(char	**cmd)
 	int	i;
 
 	i = 0;
-	write(1, "im in echo\n", 11);
 	while (cmd[++i])
 	{
 		ft_putstr_fd(cmd[i], STDOUT_FILENO);
@@ -14,7 +13,7 @@ int	echo_builtin(char	**cmd)
 	}
 	if (cmd[1] && ft_strcmp(cmd[1], "-n"))
 		ft_putchar_fd('\n', STDIN_FILENO);
-	return (0);
+	return (exit(0), 0);
 }
 
 //changes current working directory (env ? check allowed functions !)
@@ -24,7 +23,7 @@ int	cd_builtin(char **cmd)
 		tmp_error("error with cd; too many or too few args\n");
 	if (!chdir(cmd[1]))
 		perror("ERROR : ");
-	return (0);
+	return (exit(0), 0);
 }
 
 // print current working directory on STDOUT_FILENO
@@ -38,7 +37,7 @@ int	pwd_builtin(char **cmd)
 	ft_putstr_fd(cwd, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	free (cwd);
-	return (0);
+	return (exit(0), 0);
 }
 
 //unsets an environment variable
@@ -71,7 +70,7 @@ int	unset_builtin(char **cmd)
 	}
 	free (use_data()->new_env);
 	use_data()->new_env = updated_env;
-	return (0);
+	return (exit(0), 0);
 }
 
 //prints env
