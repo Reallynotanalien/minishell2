@@ -64,12 +64,11 @@ char	*ft_getenv(char *var_name)
 	char	*tmp;
 	int		i;
 
-	i = 0;
-	tmp = get_varname(use_data()->new_env[i]);
-	while (use_data()->new_env[i] && ft_strcmp(var_name, tmp))
+	i = -1;
+	tmp = get_varname(use_data()->new_env[0]);
+	while (use_data()->new_env[++i] && ft_strcmp(var_name, tmp))
 	{
 		free (tmp);
-		i++;
 		tmp = get_varname(use_data()->new_env[i]);
 	}
 	if (!use_data()->new_env[i])
