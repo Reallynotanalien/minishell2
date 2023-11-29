@@ -34,6 +34,7 @@ void	child_two(t_command **cmd)
 		{
 			get_path(*cmd);
 			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
+			exit(0);
 		}
 	}
 	else
@@ -56,6 +57,7 @@ void	child_one(t_command **cmd)
 	{
 		get_path(*cmd);
 		execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
+		exit(0);
 	}
 }
 

@@ -1,0 +1,2 @@
+echo -n imprime -n, mais ça devrais juste supprimer le newline à la fin
+plusieurs fois ctrl+c une après l'autre renvoie la ligne au début du prompt
