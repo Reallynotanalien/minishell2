@@ -87,11 +87,6 @@ void	pipex(t_command **cmd)
 
 void	child_three(t_command **cmd)
 {
-	if ((*cmd)->infile != STDIN_FILENO)
-	{
-		dup2((*cmd)->infile, STDIN_FILENO);
-		close((*cmd)->infile);
-	}
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	if (ft_strcmp((*cmd)->cmd[0], "cat") == 0)
 		signal(SIGINT, cat_handler);
@@ -100,7 +95,11 @@ void	child_three(t_command **cmd)
 		printf("FORK did not work\n");
 	else if (use_data()->pid == 0)
 	{
-		use_data()->child = YES;
+		if ((*cmd)->infile != STDIN_FILENO)
+		{
+			dup2((*cmd)->infile, STDIN_FILENO);
+			close((*cmd)->infile);
+		}
 		if ((*cmd)->outfile != STDOUT_FILENO)
 		{
 			dup2((*cmd)->outfile, STDOUT_FILENO);
@@ -110,7 +109,7 @@ void	child_three(t_command **cmd)
 		{
 			get_path(*cmd);
 			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
-			exit(0);
+			exit_program(0);
 		}
 	}
 	else
