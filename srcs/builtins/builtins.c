@@ -51,18 +51,17 @@ int	unset_var(char *variable)
 	if (!isvalid_varname(tmp))
 		return (/*free(tmp),*/ tmp_error("invalid identifier in unset builtin"), 1);
 	// free (tmp);
-	i = 0;
-	while (use_data()->new_env[i])
+	i = -1;
+	while (use_data()->new_env[++i])
 	{
 		tmp = get_varname(use_data()->new_env[i]);
-		if (ft_strcmp(tmp, variable))
+		if (!ft_strcmp(tmp, variable))
 		{
+			free (use_data()->new_env[i]);
 		 	use_data()->new_env[i] = NULL;
-			while (use_data()->new_env[++i])
+			while (use_data()->new_env[i])
 				use_data()->new_env[i] = use_data()->new_env[i + 1];
 		}
-		else
-			i++;
 		free (tmp);
 	}
 	return (0);

@@ -100,7 +100,7 @@ void	add_varenv(char *add_var)
 
 	tmp = get_varname(add_var);
 	if (is_envvar(tmp))
-		unset_var(add_var);
+		unset_var(get_varname(add_var));
 	// free (tmp);
 	n_lines = 0;
 	while (use_data()->new_env[n_lines])
