@@ -15,15 +15,15 @@ int	count_commands(t_command *cmd)
 
 void	child_two(t_command **cmd)
 {
-	if (pipe(use_data()->fd) < 0)
-		printf("PIPE did not work\n");
+	// if (pipe(use_data()->fd) < 0)
+	// 	printf("PIPE did not work\n");
 	use_data()->pid = fork();
 	if (use_data()->pid == -1)
 		printf("FORK did not work\n");
 	else if (use_data()->pid == 0)
 	{
 		// close(use_data()->fd[0]);
-		close(use_data()->fd[1]);
+		// close(use_data()->fd[1]);
 		if ((*cmd)->infile != STDIN_FILENO)
 		{
 			dup2((*cmd)->infile, STDIN_FILENO);
@@ -46,21 +46,22 @@ void	child_two(t_command **cmd)
 	}
 	else
 	{
-		use_data()->child = NO;
-		close(use_data()->fd[0]);
-		close(use_data()->fd[1]);
+		// use_data()->child = NO;
+		// close(use_data()->fd[0]);
+		// close(use_data()->fd[1]);
 		waitpid(use_data()->pid, NULL, 0);
 	}
 }
 
 void	child_one(t_command **cmd)
 {
-	printf("im in childone????\n");
-	use_data()->child = YES;
 	close(use_data()->fd[0]);
 	// if ((*cmd)->outfile != STDOUT_FILENO)
 	// 	close((*cmd)->outfile);
-	dup2(use_data()->fd[1], STDOUT_FILENO);
+	printf("IM IN CHILD ONE: %i\n", use_data()->fd[1]);
+	printf("child one infile: %i\n", STDIN_FILENO);
+	if (!dup2(use_data()->fd[1], STDOUT_FILENO))
+		printf("DUP2 NOT WORKING\n");
 	close(use_data()->fd[1]);
 	printf("IM IN CHILD ONE outfile: %i\n", STDOUT_FILENO);
 	if (!check_builtin((*cmd)->cmd))
@@ -73,12 +74,6 @@ void	child_one(t_command **cmd)
 
 void	pipex(t_command **cmd)
 {
-	if ((*cmd)->infile != STDIN_FILENO)
-	{
-		dup2((*cmd)->infile, STDIN_FILENO);
-		close((*cmd)->infile);
-		printf("IM IN PIPEX infile: %i\n", (*cmd)->infile);
-	}
 	if (pipe(use_data()->fd) < 0)
 		printf("PIPE did not work\n");
 	printf("fd[0]: %i, fd[1]: %i\n", use_data()->fd[0], use_data()->fd[1]);
@@ -86,13 +81,20 @@ void	pipex(t_command **cmd)
 	if (use_data()->pid == -1)
 		printf("FORK did not work\n");
 	else if (use_data()->pid == 0)
+	{
+		if ((*cmd)->infile != STDIN_FILENO)
+		{
+			dup2((*cmd)->infile, STDIN_FILENO);
+			close((*cmd)->infile);
+			printf("IM IN PIPEX infile: %i\n", (*cmd)->infile);
+		}
 		child_one(cmd);
+	}
 	else
 	{
-		use_data()->child = NO;
 		close(use_data()->fd[1]);
 		(*cmd)->next->infile = use_data()->fd[0];
-		close(use_data()->fd[0]);
+		// close(use_data()->fd[0]);
 	}
 }
 
