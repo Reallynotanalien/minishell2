@@ -40,11 +40,10 @@ int	pwd_builtin(char **cmd)
 	return (0);
 }
 
+//when name is equal, set to null. then, until !new_env[i], new_env = new_env[i + 1];
 int	unset_var(char *variable)
 {
 	int		i;
-	int		i_update;
-	char	**updated_env;
 	char	*tmp;
 
 	i = 0;
@@ -52,20 +51,20 @@ int	unset_var(char *variable)
 	if (!isvalid_varname(tmp))
 		return (/*free(tmp),*/ tmp_error("invalid identifier in unset builtin"), 1);
 	// free (tmp);
-	updated_env = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
-	i_update = 0;
 	while (use_data()->new_env[i])
 	{
 		tmp = get_varname(use_data()->new_env[i]);
 		if (ft_strcmp(tmp, variable))
-			updated_env[i_update++] = use_data()->new_env[i++];
+		{
+		 	use_data()->new_env[i] = NULL;
+			while (use_data()->new_env[++i])
+				use_data()->new_env[i] = use_data()->new_env[i + 1];
+		}
 		else
 			i++;
-		// free (tmp);
+		free (tmp);
 	}
-	// free (use_data()->new_env);
-	use_data()->new_env = updated_env;
 	return (0);
 }
 
@@ -125,4 +124,3 @@ int	exit_builtin(char **cmd)
 	}
 	return (exit_program(ft_atoi(cmd[1])), 0);
 }
-

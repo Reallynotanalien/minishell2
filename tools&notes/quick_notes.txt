@@ -1,7 +1,11 @@
-DOING : export test && export test= creates two different variables, echo won't print exported variables somehow, when exporting an existing variable, first time it creates a cpy, second time it segfaults --> it doesn't check last var in env I think. (export -> add_varenv -> is_envar -> ft_getenv) (test export_builtin, unset_builtin.)
+DOING : unset is not working.... 
+
+error handling. Check return values for builtins, else use waitpid
+export test && export test= creates two different variables, echo won't print exported variables somehow, when exporting an existing variable, first time it creates a cpy, second time it segfaults --> it doesn't check last var in env I think. (export -> add_varenv -> is_envar -> ft_getenv) (test export_builtin, unset_builtin.)
 *I think there's an issue with how new_env is set...
+allocate only when adding new env.
 
-
+**will need to handle !new_env[0]
 verify if export ( test= ) keeps the '=' : It does !
 **need to protect variables from unset ? (ex : HOME, USER...)
 Handle errors, cleaning and return values --- Keep a variable with latest error code, maybe ?

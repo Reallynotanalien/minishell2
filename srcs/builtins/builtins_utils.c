@@ -58,10 +58,16 @@ int	isvalid_varname(char *variable_name)
 
 int	is_envvar(char	*varname)
 {
+	int		i;
 	char	*tmp;
 
-	tmp = ft_getenv(varname);
-	if (!tmp)
-		return (0);
-	return (free(tmp), 1);
+	i = -1;
+	while (use_data()->new_env[++i])
+	{
+		tmp = get_varname(use_data()->new_env[i]);
+		if (!ft_strcmp(varname, tmp))
+			return (1);
+		free (tmp);
+	}
+	return (0);
 }
