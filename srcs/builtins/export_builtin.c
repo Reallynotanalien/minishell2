@@ -57,10 +57,10 @@ void	print_export(void)
 			printf("declare -x %s=\"%s\"\n", var_name, var_value);
 		else
 			printf("declare -x %s\n", sorted_env[i]);
-		// free (var_name);
-		// free (var_value);
+		free (var_name);
+		free (var_value);
 	}
-	// free (sorted_env);
+	free (sorted_env);
 }
 
 char	*get_varname(char *variable)
@@ -101,7 +101,7 @@ void	add_varenv(char *add_var)
 	tmp = get_varname(add_var);
 	if (is_envvar(tmp))
 		unset_var(get_varname(add_var));
-	// free (tmp);
+	free (tmp);
 	n_lines = 0;
 	while (use_data()->new_env[n_lines])
 		n_lines++;
@@ -109,11 +109,13 @@ void	add_varenv(char *add_var)
 	n_lines = 0;
 	while (use_data()->new_env[n_lines])
 	{
+		tmp = use_data()->new_env[n_lines];
 		updated_env[n_lines] = ft_strdup(use_data()->new_env[n_lines]);
+		free (tmp);
 		n_lines++;
 	}
 	updated_env[n_lines] = add_var;
-	// free (use_data()->new_env);
+	free (use_data()->new_env);
 	use_data()->new_env = updated_env;
 }
 
@@ -131,9 +133,11 @@ int	export_builtin(char **cmd)
 	{
 		var_name = get_varname(cmd[i_cmd]);
 		if (!isvalid_varname(var_name))
-			return (tmp_error("invalid identifier in export builtin"), 1);
+			return (free(var_name), tmp_error("invalid identifier in export builtin"), 1);
 		add_varenv(ft_strdup(cmd[i_cmd]));
 		i_cmd++;
+		free(var_name);
 	}
 	return (0);
+	
 }
