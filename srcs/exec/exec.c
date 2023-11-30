@@ -22,11 +22,17 @@ void	child_two(t_command **cmd)
 		printf("FORK did not work\n");
 	else if (use_data()->pid == 0)
 	{
-		use_data()->child = YES;
-		close(use_data()->fd[0]);
+		// close(use_data()->fd[0]);
 		close(use_data()->fd[1]);
+		if ((*cmd)->infile != STDIN_FILENO)
+		{
+			dup2((*cmd)->infile, STDIN_FILENO);
+			close((*cmd)->infile);
+			printf("IM IN CHILD TWO infile: %i\n", (*cmd)->infile);
+		}
 		if ((*cmd)->outfile != STDOUT_FILENO)
 		{
+			printf("IM IN CHILD TWO outfile: %i\n", (*cmd)->outfile);
 			dup2((*cmd)->outfile, STDOUT_FILENO);
 			close((*cmd)->outfile);
 		}
@@ -49,11 +55,14 @@ void	child_two(t_command **cmd)
 
 void	child_one(t_command **cmd)
 {
+	printf("im in childone????\n");
 	use_data()->child = YES;
 	close(use_data()->fd[0]);
-	close((*cmd)->outfile);
+	// if ((*cmd)->outfile != STDOUT_FILENO)
+	// 	close((*cmd)->outfile);
 	dup2(use_data()->fd[1], STDOUT_FILENO);
 	close(use_data()->fd[1]);
+	printf("IM IN CHILD ONE outfile: %i\n", STDOUT_FILENO);
 	if (!check_builtin((*cmd)->cmd))
 	{
 		get_path(*cmd);
@@ -68,9 +77,11 @@ void	pipex(t_command **cmd)
 	{
 		dup2((*cmd)->infile, STDIN_FILENO);
 		close((*cmd)->infile);
+		printf("IM IN PIPEX infile: %i\n", (*cmd)->infile);
 	}
 	if (pipe(use_data()->fd) < 0)
 		printf("PIPE did not work\n");
+	printf("fd[0]: %i, fd[1]: %i\n", use_data()->fd[0], use_data()->fd[1]);
 	use_data()->pid = fork();
 	if (use_data()->pid == -1)
 		printf("FORK did not work\n");
