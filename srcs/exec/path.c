@@ -56,12 +56,7 @@ t_command	*find_cmd(t_command **cmd)
 void	get_path(t_command *cmd)
 {
 	if (access(cmd->cmd[0], F_OK) == 0)
-	{
 		cmd->path = cmd->cmd[0];
-		printf("is an absolute path\n");
-	}
-	else if (cmd->builtin_flag == YES)
-		printf("is a builtin)\n");
 	else
 		find_cmd(&cmd);
 }

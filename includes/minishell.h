@@ -119,7 +119,7 @@ char		*find_path(t_command **cmd, char **env);
 t_command	*find_cmd(t_command **cmd);
 void		get_path(t_command *cmd);
 
-void		cat_handler(int signum);
+void		child_handler(int signum);
 
 //builtins
 int			echo_builtin(char **cmd);
@@ -139,5 +139,7 @@ int			check_builtin(char **cmd);
 int			token_redirin(t_token *token);
 int			token_redirout(t_token *token);
 int			token_redirappend(t_token *token);
+
+void		interruption_handler(int signum);
 
 #endif
