@@ -8,7 +8,15 @@
 
 //Allocated in use_data() :
 /*
-
+use_data()->cmd->cmd(char **)
+use_data()->cmd->path(char *)
+use_data()->cmd(t_command *)
+use_data()->token->token(char *)
+use_data()->token(t_token *)
+use_data()->new_env(char **)
+use_data()->line(char *)
+use_data()->line_cpy(char *)
+use_data()(t_data *)
 */
 void	clean_data(void)
 {
