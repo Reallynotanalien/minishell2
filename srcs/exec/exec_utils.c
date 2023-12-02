@@ -15,6 +15,8 @@ int	count_commands(t_command *cmd)
 	return (i);
 }
 
+/*If the infile is different than the STDIN_FILENO, the 
+STDIN_FILENO gets replaced by the infile.*/
 void	dup_infile(t_command **cmd)
 {
 	if ((*cmd)->infile != STDIN_FILENO)
@@ -24,6 +26,8 @@ void	dup_infile(t_command **cmd)
 	}
 }
 
+/*If the outfile is different than the STDOUT_FILENO, the
+STDOUT_FILENO gets replaced by the outfile.*/
 void	dup_outfile(t_command **cmd)
 {
 	if ((*cmd)->outfile != STDOUT_FILENO)
