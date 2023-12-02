@@ -21,7 +21,7 @@ void	child_two(t_command **cmd)
 		dup_outfile(cmd);
 		if (!check_builtin((*cmd)->cmd))
 			execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env);
-		exit(0);
+		// exit(0);
 	}
 	else
 		waitpid(use_data()->pid, NULL, 0);
@@ -39,7 +39,7 @@ void	child_one(t_command **cmd)
 	close(use_data()->fd[1]);
 	if (!check_builtin((*cmd)->cmd))
 		execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env);
-	exit(0);
+	// exit(0);
 }
 
 /*Changes the command to lowercase to make sure it's useable, then
