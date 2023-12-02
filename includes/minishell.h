@@ -110,8 +110,6 @@ t_command	*add_command(char *command, int infile, int outfile);
 void		free_commands_if_not_empty(void);
 void		view_commands(void);
 
-void		exec(t_command *cmd);
-
 //path.c
 char		*access_path(t_command *cmd, char **path_env);
 char		*find_path(t_command **cmd, char **env);
@@ -120,20 +118,6 @@ char		*get_path(t_command *cmd);
 
 void		child_handler(int signum);
 
-//builtins
-int			echo_builtin(char **cmd);
-int			cd_builtin(char **cmd);
-int			pwd_builtin(char **cmd);
-int			export_builtin(char **cmd);
-// int			env_builtin();
-int			exit_builtin(char **cmd);
-int			unset_builtin(char **cmd);
-char		*ft_lowerbuiltin(char *str, char *buff);
-char		*get_varname(char *variable);
-char		*get_varvalue(char *variable);
-int			isvalid_varname(char *variable_name);
-int			check_builtin(char **cmd);
-
 //redirections
 int			token_redirin(t_token *token);
 int			token_redirout(t_token *token);
@@ -141,8 +125,32 @@ int			token_redirappend(t_token *token);
 
 void		interruption_handler(int signum);
 
+/*BUILTINS*/
+//builtins_utils
+char		*ft_lowerbuiltin(char *str, char *buff);
+int			check_builtin(char **cmd);
+int			isvalid_varname(char *variable_name);
+
+//builtins
+int			echo_builtin(char **cmd);
+int			cd_builtin(char **cmd);
+int			pwd_builtin(char **cmd);
+int			unset_builtin(char **cmd);
+int			exit_builtin(char **cmd);
+
+//export_builtin
+char		*get_varname(char *variable);
+char		*get_varvalue(char *variable);
+int			export_builtin(char **cmd);
+
+/*EXEC*/
+
+//exec_utils
 int			count_commands(t_command *cmd);
 void		dup_infile(t_command **cmd);
 void		dup_outfile(t_command **cmd);
+
+//exec
+void		exec(t_command *cmd);
 
 #endif

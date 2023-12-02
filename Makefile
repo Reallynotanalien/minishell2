@@ -22,8 +22,8 @@ SRCS =	./srcs/init.c \
 		./srcs/parsing/signals.c \
 		./srcs/parsing/parsing.c \
 		./srcs/parsing/error.c \
-		./srcs/exec/exec.c \
 		./srcs/exec/exec_utils.c \
+		./srcs/exec/exec.c \
 		./srcs/exec/path.c \
 		./srcs/builtins/builtins_utils.c \
 		./srcs/builtins/export_builtin.c \
