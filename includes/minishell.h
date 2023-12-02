@@ -6,7 +6,6 @@
 # include "libft/libft.h"
 # include "./readline/history.h"
 # include "./readline/readline.h"
-# include "exec.h"
 # include "parsing.h"
 # include "builtins.h"
 # include <fcntl.h>
