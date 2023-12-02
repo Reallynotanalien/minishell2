@@ -66,16 +66,12 @@ t_token	*add_token(char *token)
 	new->token = ft_strdup(token);
 	new->type = check_type(token);
 	if (use_data()->token == NULL)
-	{
 		use_data()->token = new;
-		use_data()->token->prev = NULL;
-	}
 	else
 	{
 		next = use_data()->token;
 		while (next->next != NULL)
 			next = next->next;
-		new->prev = next;
 		next->next = new;
 	}
 	return (use_data()->token);
@@ -95,20 +91,4 @@ void	free_tokens_if_not_empty(void)
 		free(use_data()->token);
 		use_data()->token = temp;
 	}
-}
-
-/*Returns the adress of the previous token's node or 
-NULL if there is no previous token.*/
-t_token	*lstget_prev(t_token *lst, t_token *reference)
-{
-	t_token	*previous;
-
-	while (lst != reference)
-	{
-		previous = lst;
-		lst = lst->next;
-	}
-	if (previous == lst)
-		return (NULL);
-	return (previous);
 }

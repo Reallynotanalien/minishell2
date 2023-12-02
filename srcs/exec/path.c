@@ -1,5 +1,7 @@
 # include "../../includes/minishell.h"
 
+/*Tests all of the paths in the environnment and return the one
+that is executable.*/
 char	*access_path(t_command *cmd, char **path_env)
 {
 	int		i;
@@ -42,26 +44,25 @@ char	*find_path(t_command **cmd, char **env)
 	return ((*cmd)->path);
 }
 
+/*Looks for the path, checks if it is valid and returns it.*/
 t_command	*find_cmd(t_command **cmd)
 {
+	//need to return the right error codes
 	(*cmd)->path = find_path(cmd, use_data()->new_env);
 	if ((*cmd)->path == NULL
 		|| ft_strncmp(FIND_PATH_ERROR, (*cmd)->path, 43) == 0)
-	{
 		printf("COULD NOT FIND PATH\n");
-	}
 	return (*cmd);
 }
 
-void	get_path(t_command *cmd)
+/*If we have an absolute path, then we use it as the cmd->path and
+return it as is. If not, we find the path and as well as changing 
+it directly in the struct, we return it.*/
+char	*get_path(t_command *cmd)
 {
 	if (access(cmd->cmd[0], F_OK) == 0)
-	{
 		cmd->path = cmd->cmd[0];
-		printf("is an absolute path\n");
-	}
-	else if (cmd->builtin_flag == YES)
-		printf("is a builtin)\n");
 	else
 		find_cmd(&cmd);
+	return (cmd->path);
 }

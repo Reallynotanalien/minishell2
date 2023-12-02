@@ -86,7 +86,11 @@ int	split_tokens(void)
 			end++;
 			if (use_data()->line_cpy[start] == '<'
 				|| use_data()->line_cpy[start] == '>')
-				end = iterate_until_space(use_data()->line_cpy, end);
+			{
+				if (use_data()->line_cpy[start + 1] == '>')
+					end++;
+			end = iterate_until_space(use_data()->line_cpy, end);
+			}
 		}
 		new_token(start, end);
 		start = end + 1;

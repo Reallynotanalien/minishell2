@@ -17,7 +17,7 @@ void	interruption_handler(int signum)
 	rl_redisplay();
 }
 
-void	cat_handler(int signum)
+void	child_handler(int signum)
 {
 	(void) signum;
 	printf("");

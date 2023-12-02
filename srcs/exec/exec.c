@@ -1,156 +1,92 @@
 # include "../../includes/minishell.h"
 
-int	count_commands(t_command *cmd)
-{
-	int	i;
-
-	i = 1;
-	while (cmd->next)
-	{
-		cmd = cmd->next;
-		i++;
-	}
-	return (i);
-}
-
+/*Changes the command to lowercase to make sure it's useable, then
+opens a pipe and creates a child. The signal is changed to make sure 
+ctrl+c closes the child properly when a command is hanged. 
+If we are in the child, we duplicate the infile and outfile of the 
+command into the right STD_FILENO. Then, if the command is a builtin,
+the associated function executes; else, execve takes charge of it
+with the path.*/
 void	child_two(t_command **cmd)
 {
-	// if (pipe(use_data()->fd) < 0)
-	// 	printf("PIPE did not work\n");
+	//need to give the right error codes to the errors.
+	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	use_data()->pid = fork();
+	signal(SIGINT, child_handler);
 	if (use_data()->pid == -1)
 		printf("FORK did not work\n");
 	else if (use_data()->pid == 0)
 	{
-		// close(use_data()->fd[0]);
-		// close(use_data()->fd[1]);
-		if ((*cmd)->infile != STDIN_FILENO)
-		{
-			dup2((*cmd)->infile, STDIN_FILENO);
-			close((*cmd)->infile);
-			printf("IM IN CHILD TWO infile: %i\n", (*cmd)->infile);
-		}
-		if ((*cmd)->outfile != STDOUT_FILENO)
-		{
-			printf("IM IN CHILD TWO outfile: %i\n", (*cmd)->outfile);
-			dup2((*cmd)->outfile, STDOUT_FILENO);
-			close((*cmd)->outfile);
-		}
+		dup_infile(cmd);
+		dup_outfile(cmd);
 		if (!check_builtin((*cmd)->cmd))
-		{
-			printf("stdin: %i\n", STDIN_FILENO);
-			get_path(*cmd);
-			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
-			exit(0);
-		}
-	}
-	else
-	{
-		// use_data()->child = NO;
-		// close(use_data()->fd[0]);
-		// close(use_data()->fd[1]);
-		waitpid(use_data()->pid, NULL, 0);
-	}
-}
-
-void	child_one(t_command **cmd)
-{
-	close(use_data()->fd[0]);
-	// if ((*cmd)->outfile != STDOUT_FILENO)
-	// 	close((*cmd)->outfile);
-	printf("IM IN CHILD ONE: %i\n", use_data()->fd[1]);
-	printf("child one infile: %i\n", STDIN_FILENO);
-	if (!dup2(use_data()->fd[1], STDOUT_FILENO))
-		printf("DUP2 NOT WORKING\n");
-	close(use_data()->fd[1]);
-	printf("IM IN CHILD ONE outfile: %i\n", STDOUT_FILENO);
-	if (!check_builtin((*cmd)->cmd))
-	{
-		get_path(*cmd);
-		execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
+			execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env);
 		exit(0);
 	}
+	else
+		waitpid(use_data()->pid, NULL, 0);
 }
 
+/*We duplicate the infile of the command as STDIN_FILENO and then we
+duplicate the end of the pipe we want as the STDOUT_FILENO. Then, if 
+the command is a builtin, the associated function executes; else, 
+execve takes charge of it with the path.*/
+void	child_one(t_command **cmd)
+{
+	dup_infile(cmd);
+	close(use_data()->fd[0]);
+	dup2(use_data()->fd[1], STDOUT_FILENO);
+	close(use_data()->fd[1]);
+	if (!check_builtin((*cmd)->cmd))
+		execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env);
+	exit(0);
+}
+
+/*Changes the command to lowercase to make sure it's useable, then
+opens a pipe and creates a child. The signal is changed to make sure
+ctrl+c closes the child properly when a command is hanged.
+If we are in the child, then we use the execution function (child one).
+If not, we close the end of the pipe we will not be using and store
+the other end into the next command's infile fd.*/
 void	pipex(t_command **cmd)
 {
+	//need to give the right error codes to the errors
+	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	if (pipe(use_data()->fd) < 0)
 		printf("PIPE did not work\n");
-	printf("fd[0]: %i, fd[1]: %i\n", use_data()->fd[0], use_data()->fd[1]);
 	use_data()->pid = fork();
+	signal(SIGINT, child_handler);
 	if (use_data()->pid == -1)
 		printf("FORK did not work\n");
 	else if (use_data()->pid == 0)
-	{
-		if ((*cmd)->infile != STDIN_FILENO)
-		{
-			dup2((*cmd)->infile, STDIN_FILENO);
-			close((*cmd)->infile);
-			printf("IM IN PIPEX infile: %i\n", (*cmd)->infile);
-		}
 		child_one(cmd);
-	}
 	else
 	{
 		close(use_data()->fd[1]);
 		(*cmd)->next->infile = use_data()->fd[0];
-		// close(use_data()->fd[0]);
 	}
 }
 
-void	child_three(t_command **cmd)
-{
-	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
-	if (ft_strcmp((*cmd)->cmd[0], "cat") == 0)
-		signal(SIGINT, cat_handler);
-	use_data()->pid = fork();
-	if (use_data()->pid == -1)
-		printf("FORK did not work\n");
-	else if (use_data()->pid == 0)
-	{
-		if ((*cmd)->infile != STDIN_FILENO)
-		{
-			dup2((*cmd)->infile, STDIN_FILENO);
-			close((*cmd)->infile);
-		}
-		if ((*cmd)->outfile != STDOUT_FILENO)
-		{
-			dup2((*cmd)->outfile, STDOUT_FILENO);
-			close((*cmd)->outfile);
-		}
-		if (!check_builtin((*cmd)->cmd))
-		{
-			get_path(*cmd);
-			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
-			exit_program(0);
-		}
-	}
-	else
-		waitpid(use_data()->pid, NULL, 0);
-}
-
+/*Counts the number of commands in the struct, and uses pipex
+until the last command to open pipes and execute them. Then, 
+executes the last command separately (if there is only one
+command, it will jump right to this point) and when all is 
+done, the signal handler is reset to the main handler.*/
 void	exec(t_command *cmd)
 {
 	int	nb_cmds;
 
-	nb_cmds = count_commands(cmd);
-	if (nb_cmds == 1)
-		child_three(&cmd);
-	else
+	if (cmd->cmd != NULL)
 	{
+		nb_cmds = count_commands(cmd);
 		while (cmd && nb_cmds > 1)
 		{
-			cmd->cmd[0] = ft_strlower(cmd->cmd[0]);
-			if (ft_strcmp(cmd->cmd[0], "cat") == 0)
-				signal(SIGINT, cat_handler);
 			pipex(&cmd);
 			nb_cmds--;
 			if (cmd->next)
 				cmd = cmd->next;
 		}
-		cmd->cmd[0] = ft_strlower(cmd->cmd[0]);
-		if (ft_strcmp(cmd->cmd[0], "cat") == 0)
-			signal(SIGINT, cat_handler);
 		child_two(&cmd);
+		signal(SIGINT, interruption_handler);
 	}
 }

@@ -6,9 +6,7 @@
 # include "libft/libft.h"
 # include "./readline/history.h"
 # include "./readline/readline.h"
-# include "exec.h"
 # include "parsing.h"
-# include "builtins.h"
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/signal.h>
@@ -45,8 +43,6 @@ typedef struct s_command
 	int					infile;
 	int					outfile;
 	int					builtin_flag;
-	int					pid;
-	int					fd[2];
 	char				*path;
 	char				**cmd;
 	struct s_command	*next;
@@ -59,7 +55,6 @@ typedef struct s_token
 	char			*token;
 	int				type;
 	struct s_token	*next;
-	struct s_token	*prev;
 }	t_token;
 
 //This will be the main static struct, to be modified as we go!
@@ -112,35 +107,50 @@ t_command	*add_command(char *command, int infile, int outfile);
 void		free_commands_if_not_empty(void);
 void		view_commands(void);
 
-void		exec(t_command *cmd);
-
 //path.c
 char		*access_path(t_command *cmd, char **path_env);
 char		*find_path(t_command **cmd, char **env);
 t_command	*find_cmd(t_command **cmd);
-void		get_path(t_command *cmd);
+char		*get_path(t_command *cmd);
 
-void		cat_handler(int signum);
-
-//builtins
-int			echo_builtin(char **cmd);
-int			cd_builtin(char **cmd);
-int			pwd_builtin(char **cmd);
-int			export_builtin(char **cmd);
 int			env_builtin(void);
-int			exit_builtin(char **cmd);
-int			unset_builtin(char **cmd);
 int			unset_var(char *variable);
-char		*ft_lowerbuiltin(char *str, char *buff);
-char		*get_varname(char *variable);
-char		*get_varvalue(char *variable);
-int			isvalid_varname(char *variable_name);
 int			is_envvar(char	*varname);
-int			check_builtin(char **cmd);
+void		child_handler(int signum);
 
 //redirections
 int			token_redirin(t_token *token);
 int			token_redirout(t_token *token);
 int			token_redirappend(t_token *token);
+
+void		interruption_handler(int signum);
+
+/*BUILTINS*/
+//builtins_utils
+char		*ft_lowerbuiltin(char *str, char *buff);
+int			check_builtin(char **cmd);
+int			isvalid_varname(char *variable_name);
+
+//builtins
+int			echo_builtin(char **cmd);
+int			cd_builtin(char **cmd);
+int			pwd_builtin(char **cmd);
+int			unset_builtin(char **cmd);
+int			exit_builtin(char **cmd);
+
+//export_builtin
+char		*get_varname(char *variable);
+char		*get_varvalue(char *variable);
+int			export_builtin(char **cmd);
+
+/*EXEC*/
+
+//exec_utils
+int			count_commands(t_command *cmd);
+void		dup_infile(t_command **cmd);
+void		dup_outfile(t_command **cmd);
+
+//exec
+void		exec(t_command *cmd);
 
 #endif
