@@ -1,3 +1,4 @@
 echo -n imprime -n, mais ça devrais juste supprimer le newline à la fin
 l|l
 signal heredoc
+fonctions coupée desfois
