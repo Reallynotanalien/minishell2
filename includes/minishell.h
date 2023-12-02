@@ -94,6 +94,7 @@ int			find_index(char *str, char target);
 void		tmp_error(char *error_message);
 char		*ft_strlower(char *str);
 char		*ft_getenv(char *var_name);
+void		print_array(void);
 
 //linked_list.c
 t_token		*add_token(char *token);
@@ -131,15 +132,17 @@ int			isvalid_varname(char *variable_name);
 int			echo_builtin(char **cmd);
 int			cd_builtin(char **cmd);
 int			pwd_builtin(char **cmd);
-int			unset_builtin(char **cmd);
+int			export_builtin(char **cmd);
+int			env_builtin(void);
 int			exit_builtin(char **cmd);
-
-//export_builtin
+int			unset_builtin(char **cmd);
+int			unset_var(char *variable);
+char		*ft_lowerbuiltin(char *str, char *buff);
 char		*get_varname(char *variable);
 char		*get_varvalue(char *variable);
-int			export_builtin(char **cmd);
-
-/*EXEC*/
+int			isvalid_varname(char *variable_name);
+int			is_envvar(char	*varname);
+int			check_builtin(char **cmd);
 
 //exec_utils
 int			count_commands(t_command *cmd);
