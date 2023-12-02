@@ -52,7 +52,7 @@ void	line_parsing(void)
 	do_substitutions(use_data()->line_cpy);
 	if (split_tokens() == ERROR)
 		return (free_tokens_if_not_empty(), free(use_data()->line_cpy));
-	view_list();
+	// view_list();
 	//check whitespaces function because now the éèà characters won't print 
 	//if they are at the beginning of a sentence
 	build_commands();
