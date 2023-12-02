@@ -15,7 +15,7 @@ use_data()->line_cpy(char *)
 use_data()(t_data *)
 */
 
-void	free_array(char ***array)
+void	free_array(char **array)
 {
 	int	i;
 
@@ -55,7 +55,7 @@ void	clean_cmds(void)
 
 void	clean_tokens(void)
 {
-	t_command	*tmp;
+	t_token	*tmp;
 
 	while (use_data()->token)
 	{
@@ -84,7 +84,7 @@ void	clean_data(void)
 		free (use_data()->line);
 	if (use_data()->line_cpy)
 		free (use_data()->line_cpy);
-	free(use_data());
+	free (use_data());
 }
 
 /*Clears the readline history and frees the data struct.*/
@@ -93,4 +93,3 @@ void	cleanup(void)
 	rl_clear_history();
 	clean_data();
 }
-
