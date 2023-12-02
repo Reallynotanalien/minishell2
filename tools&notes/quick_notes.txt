@@ -1,13 +1,20 @@
-DO NEXT : test export_builtin, unset_builtin. Merge everything on master once this is done.
+DOING : test builtins, finish init_data, clean_data, error handling and cleaning functions
 
-Ah shit, forgot to sort env when printing using export
+error handling. Check return values for builtins, else use waitpid
+export test && export test= creates two different variables, echo won't print exported variables somehow, when exporting an existing variable, first time it creates a cpy, second time it segfaults --> it doesn't check last var in env I think. (export -> add_varenv -> is_envar -> ft_getenv) (test export_builtin, unset_builtin.)
+*I think there's an issue with how new_env is set...
+allocate only when adding new env.
+
+**will need to handle !new_env[0]
+verify if export ( test= ) keeps the '=' : It does !
 **need to protect variables from unset ? (ex : HOME, USER...)
-**when exporting a variable which has already been set before, this will place it at the end of the environment, not where it initially was.
-Make is_envvar(). replace ft_getenv when used in an if statement.
 Handle errors, cleaning and return values --- Keep a variable with latest error code, maybe ?
-These functions will not redirect input/output. They will read from/write on STDIN/STDOUT, which will need to be redirected if necessary. \/ Check if it really works ! \/
-Make sure pipes are handled outside of my functions, even with builtins (in exec)
 Will need to add "check_builtin" function in exec, and rework it accordingly (ex: Will the nb of commands stay the same ?)
 Will need to remove quotes (except if quoted themselves) when builting command
 Test the behavior of substitutions when $HI=$HELLO
 cat | ls : minishell does not behave correctly; it should wait for input for cat.
+fix history
+fix signals
+fix ctrl+d (many times)
+From time to time it seems like the last letter of cmd gets erased
+Make sure everything is cleaned (free(), close())

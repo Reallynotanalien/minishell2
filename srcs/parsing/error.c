@@ -11,6 +11,8 @@ int	parsing_error(char *error)
 	return (ERROR);
 }
 
+
+
 void	clean_data(void)
 {
 	if (use_data()->token)
@@ -39,8 +41,8 @@ void	exit_program(int code)
 {
 	cleanup();
 	//printf to be deleted later on
-	printf("Cleanup done!\n");
-	restore_attributes();
+	// printf("Cleanup done!\n");
+	// restore_attributes();
 	exit(code);
 }
 

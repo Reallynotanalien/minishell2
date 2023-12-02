@@ -29,10 +29,10 @@ int	check_builtin(char **cmd)
 		pwd_builtin(cmd);
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "export"))
 		export_builtin(cmd);
-	// else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "unset"))
-	// 	unset_builtin(cmd);
-	// else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "env"))
-	// 	env_builtin(cmd);
+	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "unset"))
+		unset_builtin(cmd);
+	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "env"))
+		env_builtin();
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "exit"))
 		exit_builtin(cmd);
 	else
@@ -54,4 +54,20 @@ int	isvalid_varname(char *variable_name)
 			return (0);
 	}
 	return (1);
+}
+
+int	is_envvar(char	*varname)
+{
+	int		i;
+	char	*tmp;
+
+	i = -1;
+	while (use_data()->new_env[++i])
+	{
+		tmp = get_varname(use_data()->new_env[i]);
+		if (!ft_strcmp(varname, tmp))
+			return (1);
+		free (tmp);
+	}
+	return (0);
 }

@@ -64,15 +64,24 @@ char	*ft_getenv(char *var_name)
 	char	*tmp;
 	int		i;
 
-	i = 0;
-	tmp = get_varname(use_data()->new_env[i]);
-	while (use_data()->new_env[i] && ft_strcmp(var_name, tmp))
+	i = -1;
+	tmp = get_varname(use_data()->new_env[0]);
+	while (use_data()->new_env[++i] && ft_strcmp(var_name, tmp))
 	{
 		free (tmp);
-		i++;
 		tmp = get_varname(use_data()->new_env[i]);
 	}
-	if (!use_data()->new_env[i])
-		return (free (tmp), NULL);
-	return (free (tmp), get_varvalue(use_data()->new_env[i]));
+	if (!ft_strcmp(var_name, tmp))
+		return (free (tmp), get_varvalue(use_data()->new_env[i - 1]));
+	else
+		return (NULL);
+}
+
+void	print_array(void)
+{
+	int	i;
+
+	i = -1;
+	while (use_data()->new_env[++i])
+		printf("%s\n", use_data()->new_env[i]);
 }
