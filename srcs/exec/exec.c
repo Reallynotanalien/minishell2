@@ -76,14 +76,17 @@ void	exec(t_command *cmd)
 {
 	int	nb_cmds;
 
-	nb_cmds = count_commands(cmd);
-	while (cmd && nb_cmds > 1)
+	if (cmd->cmd != NULL)
 	{
-		pipex(&cmd);
-		nb_cmds--;
-		if (cmd->next)
-			cmd = cmd->next;
+		nb_cmds = count_commands(cmd);
+		while (cmd && nb_cmds > 1)
+		{
+			pipex(&cmd);
+			nb_cmds--;
+			if (cmd->next)
+				cmd = cmd->next;
+		}
+		child_two(&cmd);
+		signal(SIGINT, interruption_handler);
 	}
-	child_two(&cmd);
-	signal(SIGINT, interruption_handler);
 }

@@ -16,8 +16,8 @@ t_command	*add_command(char *command, int infile, int outfile)
 	t_command	*new;
 	t_command	*next;
 
-	if (command == NULL)
-		return (NULL);
+	// if (command == NULL)
+	// 	return (NULL);
 	new = create_command();
 	if (!new)
 		return (NULL);
@@ -63,10 +63,15 @@ void	view_commands(void)
 		j = 0;
 		printf("----------------\n");
 		printf("command%d\n", i++);
-		while (cmd->cmd[j] != NULL)
+		if (cmd->cmd == NULL)
+			printf("NULL\n");
+		else
 		{
-			printf("%d:[%s]\n", j, (char *)cmd->cmd[j]);
-			j++;
+			while (cmd->cmd[j] != NULL)
+			{
+				printf("%d:[%s]\n", j, (char *)cmd->cmd[j]);
+				j++;
+			}
 		}
 		printf("infile no: %i\n", cmd->infile);
 		printf("outfile no: %i\n", cmd->outfile);
