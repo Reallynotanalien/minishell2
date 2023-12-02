@@ -1,7 +1,7 @@
 DOING : test builtins, finish init_data, clean_data, error handling and cleaning functions
 
 error handling. Check return values for builtins, else use waitpid
-export test && export test= creates two different variables, echo won't print exported variables somehow, when exporting an existing variable, first time it creates a cpy, second time it segfaults --> it doesn't check last var in env I think. (export -> add_varenv -> is_envar -> ft_getenv) (test export_builtin, unset_builtin.)
+ctrl+d multiple times after builtin, ctrl+c weird, erased last cmd char
 *I think there's an issue with how new_env is set...
 allocate only when adding new env.
 

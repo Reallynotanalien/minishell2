@@ -6,6 +6,8 @@ int	echo_builtin(char	**cmd)
 	int	i;
 
 	i = 0;
+	if (!cmd[1])
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	while (cmd[++i])
 	{
 		if (cmd[i][0] == '"')
