@@ -1,7 +1,15 @@
 # include "../../includes/minishell.h"
 
+/*Changes the command to lowercase to make sure it's useable, then
+opens a pipe and creates a child. The signal is changed to make sure 
+ctrl+c closes the child properly when a command is hanged. 
+If we are in the child, we duplicate the infile and outfile of the 
+command into the right STD_FILENO. Then, if the command is a builtin,
+the associated function executes; else, execve takes charge of it
+with the path.*/
 void	child_two(t_command **cmd)
 {
+	//need to give the right error codes to the errors.
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	use_data()->pid = fork();
 	signal(SIGINT, child_handler);
@@ -19,6 +27,10 @@ void	child_two(t_command **cmd)
 		waitpid(use_data()->pid, NULL, 0);
 }
 
+/*We duplicate the infile of the command as STDIN_FILENO and then we
+duplicate the end of the pipe we want as the STDOUT_FILENO. Then, if 
+the command is a builtin, the associated function executes; else, 
+execve takes charge of it with the path.*/
 void	child_one(t_command **cmd)
 {
 	dup_infile(cmd);
@@ -30,8 +42,15 @@ void	child_one(t_command **cmd)
 	exit(0);
 }
 
+/*Changes the command to lowercase to make sure it's useable, then
+opens a pipe and creates a child. The signal is changed to make sure
+ctrl+c closes the child properly when a command is hanged.
+If we are in the child, then we use the execution function (child one).
+If not, we close the end of the pipe we will not be using and store
+the other end into the next command's infile fd.*/
 void	pipex(t_command **cmd)
 {
+	//need to give the right error codes to the errors
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	if (pipe(use_data()->fd) < 0)
 		printf("PIPE did not work\n");
