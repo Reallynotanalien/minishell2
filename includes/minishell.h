@@ -117,7 +117,7 @@ void		exec(t_command *cmd);
 char		*access_path(t_command *cmd, char **path_env);
 char		*find_path(t_command **cmd, char **env);
 t_command	*find_cmd(t_command **cmd);
-void		get_path(t_command *cmd);
+char		*get_path(t_command *cmd);
 
 void		child_handler(int signum);
 
@@ -141,5 +141,9 @@ int			token_redirout(t_token *token);
 int			token_redirappend(t_token *token);
 
 void		interruption_handler(int signum);
+
+int			count_commands(t_command *cmd);
+void		dup_infile(t_command **cmd);
+void		dup_outfile(t_command **cmd);
 
 #endif

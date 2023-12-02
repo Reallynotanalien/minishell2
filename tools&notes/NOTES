@@ -1,3 +1,3 @@
 echo -n imprime -n, mais ça devrais juste supprimer le newline à la fin
-plusieurs fois ctrl+c une après l'autre renvoie la ligne au début du prompt
-wc reste hanging comme cat, c'est normal si c'est la seule commande par contre ça devrait marcher avec un input
+l|l
+signal heredoc

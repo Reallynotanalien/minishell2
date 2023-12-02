@@ -53,10 +53,11 @@ t_command	*find_cmd(t_command **cmd)
 	return (*cmd);
 }
 
-void	get_path(t_command *cmd)
+char	*get_path(t_command *cmd)
 {
 	if (access(cmd->cmd[0], F_OK) == 0)
 		cmd->path = cmd->cmd[0];
 	else
 		find_cmd(&cmd);
+	return (cmd->path);
 }

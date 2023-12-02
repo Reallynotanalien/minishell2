@@ -1,20 +1,5 @@
 # include "../../includes/minishell.h"
 
-/*Iterates through the command struct to find out how many there
-are, and returns it.*/
-int	count_commands(t_command *cmd)
-{
-	int	i;
-
-	i = 1;
-	while (cmd->next)
-	{
-		cmd = cmd->next;
-		i++;
-	}
-	return (i);
-}
-
 void	child_two(t_command **cmd)
 {
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
@@ -24,21 +9,11 @@ void	child_two(t_command **cmd)
 		printf("FORK did not work\n");
 	else if (use_data()->pid == 0)
 	{
-		if ((*cmd)->infile != STDIN_FILENO)
-		{
-			dup2((*cmd)->infile, STDIN_FILENO);
-			close((*cmd)->infile);
-		}
-		if ((*cmd)->outfile != STDOUT_FILENO)
-		{
-			dup2((*cmd)->outfile, STDOUT_FILENO);
-			close((*cmd)->outfile);
-		}
+		dup_infile(cmd);
+		dup_outfile(cmd);
 		if (!check_builtin((*cmd)->cmd))
-		{
-			get_path(*cmd);
-			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
-		}
+			execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env);
+		exit(0);
 	}
 	else
 		waitpid(use_data()->pid, NULL, 0);
@@ -46,19 +21,13 @@ void	child_two(t_command **cmd)
 
 void	child_one(t_command **cmd)
 {
-	if ((*cmd)->infile != STDIN_FILENO)
-	{
-		dup2((*cmd)->infile, STDIN_FILENO);
-		close((*cmd)->infile);
-	}
+	dup_infile(cmd);
 	close(use_data()->fd[0]);
 	dup2(use_data()->fd[1], STDOUT_FILENO);
 	close(use_data()->fd[1]);
 	if (!check_builtin((*cmd)->cmd))
-	{
-		get_path(*cmd);
-		execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
-	}
+		execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env);
+	exit(0);
 }
 
 void	pipex(t_command **cmd)
