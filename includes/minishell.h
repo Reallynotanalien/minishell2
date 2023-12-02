@@ -55,7 +55,6 @@ typedef struct s_token
 	char			*token;
 	int				type;
 	struct s_token	*next;
-	struct s_token	*prev;
 }	t_token;
 
 //This will be the main static struct, to be modified as we go!
