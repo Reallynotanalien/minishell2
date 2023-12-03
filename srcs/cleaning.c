@@ -15,19 +15,19 @@ use_data()->line_cpy(char *)
 use_data()(t_data *)
 */
 
-void	free_array(char ***array)
+char	**free_array(char **array)
 {
 	int	i;
 
 	i = -1;
-	while (*array[++i])
+	while (array[++i])
 	{
-		free (*array[i]);
-		*array[i] = NULL;
+		free (array[i]);
+		array[i] = NULL;
 		i++;
 	}
-	free (*array);
-	*array = NULL;
+	free (array);
+	return (NULL);
 }
 
 void	clean_cmds(void)
@@ -38,7 +38,7 @@ void	clean_cmds(void)
 	{
 		tmp = use_data()->cmd->next;
 		if (use_data()->cmd->cmd)
-			free_array(use_data()->cmd->cmd);
+			use_data()->cmd->cmd = free_array(use_data()->cmd->cmd);
 		if (use_data()->cmd->path)
 		{
 			free (use_data()->cmd->path);
@@ -55,7 +55,7 @@ void	clean_cmds(void)
 
 void	clean_tokens(void)
 {
-	t_command	*tmp;
+	t_token	*tmp;
 
 	while (use_data()->token)
 	{
@@ -79,12 +79,12 @@ void	clean_data(void)
 	if (use_data()->token)
 		clean_tokens();
 	if (use_data()->new_env)
-		free_array (&(use_data()->new_env));
+		use_data()->new_env = free_array(use_data()->new_env);
 	if (use_data()->line)
 		free (use_data()->line);
 	if (use_data()->line_cpy)
 		free (use_data()->line_cpy);
-	free(use_data());
+	free (use_data());
 }
 
 /*Clears the readline history and frees the data struct.*/
@@ -93,4 +93,3 @@ void	cleanup(void)
 	rl_clear_history();
 	clean_data();
 }
-

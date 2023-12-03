@@ -11,23 +11,6 @@ int	parsing_error(char *error)
 	return (ERROR);
 }
 
-
-
-void	clean_data(void)
-{
-	if (use_data()->token)
-		free (use_data()->token);
-	if (use_data())
-		free (use_data());
-}
-
-/*Clears the readline history and frees the data struct.*/
-void	cleanup(void)
-{
-	rl_clear_history();
-	clean_data();
-}
-
 int	print_error(char *message)
 {
 	printf("%s\n", message);
