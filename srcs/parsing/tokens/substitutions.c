@@ -111,7 +111,7 @@ void	do_substitutions(char *line)
 	int		i;
 
 	nb_blocks = count_nbblocks(line);
-	blocks = ft_calloc(nb_blocks, sizeof(char *));
+	blocks = ft_calloc(nb_blocks + 1, sizeof(char *));
 	create_blocks(line, blocks);
 	new_line = ft_strdup(blocks[0]);
 	i = 1;
