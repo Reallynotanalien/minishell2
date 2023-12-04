@@ -15,3 +15,7 @@ fix signals
 fix ctrl+d (many times)
 From time to time it seems like the last letter of cmd gets erased
 Make sure everything is cleaned (free(), close())
+
+valgrind :
+ valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --track-origins=yes --track-fds=yes --trace-children=yes ./minishell
+ 
