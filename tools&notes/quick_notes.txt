@@ -1,15 +1,12 @@
 DOING : test builtins, finish init_data, clean_data, error handling and cleaning functions
+: Checking for leaks
+: Error handling ; with excve -> use waitpid and MACROS (changes whether child exited normally or not) with builtins -> manually set return values.
 
 error handling. Check return values for builtins, else use waitpid
-ctrl+d multiple times after builtin, ctrl+c weird, erased last cmd char
-*I think there's an issue with how new_env is set...
-allocate only when adding new env.
 
 **will need to handle !new_env[0]
 verify if export ( test= ) keeps the '=' : It does !
 **need to protect variables from unset ? (ex : HOME, USER...)
-Handle errors, cleaning and return values --- Keep a variable with latest error code, maybe ?
-Will need to add "check_builtin" function in exec, and rework it accordingly (ex: Will the nb of commands stay the same ?)
 Will need to remove quotes (except if quoted themselves) when builting command
 Test the behavior of substitutions when $HI=$HELLO
 cat | ls : minishell does not behave correctly; it should wait for input for cat.
