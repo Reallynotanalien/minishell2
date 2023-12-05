@@ -37,8 +37,7 @@ int	check_builtin(char **cmd)
 		use_data()->exstat = exit_builtin(cmd);
 	else
 		return (free(lower_cmd), 0);
-	free(lower_cmd);
-	return (1);
+	return (free(lower_cmd), 1);
 }
 
 int	isvalid_varname(char *variable_name)

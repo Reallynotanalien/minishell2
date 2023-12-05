@@ -92,7 +92,6 @@ void		init_data(t_data *data);
 t_data		*use_data(void);
 void		view_list(void);
 int			find_index(char *str, char target);
-void		tmp_error(char *error_message);
 char		*ft_strlower(char *str);
 char		*ft_getenv(char *var_name);
 void		print_array(void);
