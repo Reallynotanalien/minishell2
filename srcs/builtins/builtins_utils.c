@@ -26,7 +26,7 @@ int	check_builtin(char **cmd)
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "cd"))
 		use_data()->exstat = cd_builtin(cmd);
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "pwd"))
-		use_data()->exstat = pwd_builtin(cmd);
+		use_data()->exstat = pwd_builtin();
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "export"))
 		use_data()->exstat = export_builtin(cmd);
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "unset"))
