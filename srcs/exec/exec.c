@@ -27,7 +27,7 @@ void	child_two(t_command **cmd)
 	}
 	else
 	{
-		waitpid(use_data()->pid, status, 0);
+		waitpid(use_data()->pid, &status, 0);
 	if (WIFEXITED(status))
     	use_data()->exstat = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
