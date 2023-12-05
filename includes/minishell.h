@@ -57,11 +57,19 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+//Keeps all data usefull for displaying error messages
+typedef struct s_error_info
+{
+	int				errno;
+	char			*source;
+}	t_error_info;
+
 //This will be the main static struct, to be modified as we go!
 typedef struct s_data
 {
 	struct s_token		*token;
 	struct s_command	*cmd;
+	struct s_error		*error_info;
 	int					error_flag;
 	int					quote_flag;
 	int					heredoc_flag;
