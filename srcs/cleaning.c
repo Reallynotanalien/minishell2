@@ -15,19 +15,32 @@ use_data()->line_cpy(char *)
 use_data()(t_data *)
 */
 
-char	**free_array(char **array)
+void	safe_free_ptr(void ***ptr)
+{
+	if (ptr && *ptr)
+	{
+		free (*ptr);
+		*ptr = NULL;
+	}
+}
+
+void	safe_free(void **ptr)
+{
+	if (ptr && *ptr)
+	{
+		free (*ptr);
+		*ptr = NULL;
+	}
+}
+
+void	free_array(char **array)
 {
 	int	i;
 
 	i = -1;
 	while (array[++i])
-	{
-		free (array[i]);
-		array[i] = NULL;
-		i++;
-	}
-	free (array);
-	return (NULL);
+		safe_free ((void **)&(array[i]));
+	safe_free_ptr((void ***)&array);
 }
 
 void	clean_cmds(void)
@@ -37,18 +50,9 @@ void	clean_cmds(void)
 	while (use_data()->cmd)
 	{
 		tmp = use_data()->cmd->next;
-		if (use_data()->cmd->cmd)
-			use_data()->cmd->cmd = free_array(use_data()->cmd->cmd);
-		if (use_data()->cmd->path)
-		{
-			free (use_data()->cmd->path);
-			use_data()->cmd->path = NULL;
-		}
-		if (use_data()->cmd)
-		{
-			free (use_data()->cmd);
-			use_data()->cmd = NULL;
-		}
+		free_array(use_data()->cmd->cmd);
+		safe_free ((void **)&use_data()->cmd->path);
+		safe_free ((void **)use_data()->cmd);
 		use_data()->cmd = tmp;
 	}
 }
@@ -60,13 +64,8 @@ void	clean_tokens(void)
 	while (use_data()->token)
 	{
 		tmp = use_data()->token->next;
-		if (use_data()->token->token)
-			free (use_data()->token->token);
-		if (use_data()->token)
-		{
-			free (use_data()->token);
-			use_data()->token = NULL;
-		}
+		safe_free ((void **)&use_data()->token->token);
+		safe_free ((void **)&use_data()->token);
 		use_data()->token = tmp;
 	}
 }
@@ -79,12 +78,11 @@ void	clean_data(void)
 	if (use_data()->token)
 		clean_tokens();
 	if (use_data()->new_env)
-		use_data()->new_env = free_array(use_data()->new_env);
-	if (use_data()->line)
-		free (use_data()->line);
-	if (use_data()->line_cpy)
-		free (use_data()->line_cpy);
-	free (use_data());
+		free_array(use_data()->new_env);
+	safe_free ((void **)&use_data()->line);
+	safe_free ((void **)&use_data()->line_cpy);
+	if (use_data())
+		free (use_data());
 }
 
 /*Clears the readline history and frees the data struct.*/

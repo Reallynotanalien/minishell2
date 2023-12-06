@@ -1,20 +1,20 @@
-DOING : test builtins, finish init_data, clean_data, error handling and cleaning functions
+DOING : Trying to fix random missing char in cmds (it seems to be comming from "build_commands". However it might also be coming from a function used in it, for example strdup... The origin could then variate.)
 
-error handling. Check return values for builtins, else use waitpid
-ctrl+d multiple times after builtin, ctrl+c weird, erased last cmd char
-*I think there's an issue with how new_env is set...
-allocate only when adding new env.
+Return values for childs and builtins should work properly. Will require testing once loop is okay. Builtins should not have to handle signals. Check for signals in here_doc however, and return_value also. (returns 1 when ctrl+c, 0 for ctrl+d)
+Checking for leaks
 
+test builtins, 
+cleaning functions (free + close)
 **will need to handle !new_env[0]
-verify if export ( test= ) keeps the '=' : It does !
 **need to protect variables from unset ? (ex : HOME, USER...)
-Handle errors, cleaning and return values --- Keep a variable with latest error code, maybe ?
-Will need to add "check_builtin" function in exec, and rework it accordingly (ex: Will the nb of commands stay the same ?)
 Will need to remove quotes (except if quoted themselves) when builting command
 Test the behavior of substitutions when $HI=$HELLO
 cat | ls : minishell does not behave correctly; it should wait for input for cat.
-fix history
-fix signals
+test history
+test signals
 fix ctrl+d (many times)
 From time to time it seems like the last letter of cmd gets erased
-Make sure everything is cleaned (free(), close())
+
+valgrind :
+ valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --track-origins=yes --track-fds=yes --trace-children=yes ./minishell
+ 

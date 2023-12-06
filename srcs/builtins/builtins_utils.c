@@ -22,23 +22,22 @@ int	check_builtin(char **cmd)
 
 	lower_cmd = ft_calloc(7, sizeof(char));
 	if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "echo"))
-		echo_builtin(cmd);
+		use_data()->exstat = echo_builtin(cmd);
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "cd"))
-		cd_builtin(cmd);
+		use_data()->exstat = cd_builtin(cmd);
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "pwd"))
-		pwd_builtin(cmd);
+		use_data()->exstat = pwd_builtin();
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "export"))
-		export_builtin(cmd);
+		use_data()->exstat = export_builtin(cmd);
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "unset"))
-		unset_builtin(cmd);
+		use_data()->exstat = unset_builtin(cmd);
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "env"))
-		env_builtin();
+		use_data()->exstat = env_builtin();
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "exit"))
-		exit_builtin(cmd);
+		use_data()->exstat = exit_builtin(cmd);
 	else
 		return (free(lower_cmd), 0);
-	free(lower_cmd);
-	return (1);
+	return (free(lower_cmd), 1);
 }
 
 int	isvalid_varname(char *variable_name)

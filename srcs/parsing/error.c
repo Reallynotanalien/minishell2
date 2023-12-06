@@ -28,9 +28,3 @@ void	exit_program(int code)
 	// restore_attributes();
 	exit(code);
 }
-
-//Used to indicate an error, to be replaced by proper error printing and handling.
-void	tmp_error(char *error_message)
-{
-	printf("tmp error : %s", error_message);
-}

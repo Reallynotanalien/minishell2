@@ -9,6 +9,8 @@ the associated function executes; else, execve takes charge of it
 with the path.*/
 void	child_two(t_command **cmd)
 {
+	int	status;
+
 	//need to give the right error codes to the errors.
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	use_data()->pid = fork();
@@ -24,7 +26,15 @@ void	child_two(t_command **cmd)
 		// exit(0);
 	}
 	else
-		waitpid(use_data()->pid, NULL, 0);
+	{
+		waitpid(use_data()->pid, &status, 0);
+	if (WIFEXITED(status))
+    	use_data()->exstat = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+    	use_data()->exstat = 128 + WTERMSIG(status);
+	else
+		use_data()->exstat = status;
+	}
 }
 
 /*We duplicate the infile of the command as STDIN_FILENO and then we
