@@ -64,10 +64,12 @@ int	token_redirin(t_token *token)
 {
 	int		fd;
 	char	*token_lower;
+	char	*tmp;
 	char	*token_copy;
 
-	token_copy = ft_substr(token->token, 2, ft_strlen(token->token));
-	token_copy = ft_strtrim_whitespaces(token_copy);
+	tmp = ft_substr(token->token, 2, ft_strlen(token->token));
+	token_copy = ft_strtrim_whitespaces(tmp);
+	free(tmp);
 	token_lower = ft_substr(token_copy, 0, ft_strlen(token_copy));
 	ft_strlower(token_lower);
 	fd = open(token_copy, O_RDONLY);
