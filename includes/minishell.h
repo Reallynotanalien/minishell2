@@ -42,7 +42,6 @@ typedef struct s_command
 {
 	int					infile;
 	int					outfile;
-	int					builtin_flag;
 	char				*path;
 	char				**cmd;
 	struct s_command	*next;
@@ -64,7 +63,6 @@ typedef struct s_data
 	struct s_command	*cmd;
 	char				*error_source;
 	int					error_flag;
-	int					quote_flag;
 	int					heredoc_flag;
 	int					exstat;
 	int					infile;
