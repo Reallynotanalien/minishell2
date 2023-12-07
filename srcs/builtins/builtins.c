@@ -17,7 +17,7 @@ int	echo_builtin(char	**cmd)
 	}
 	if (cmd[1] && ft_strcmp(cmd[1], "-n"))
 		ft_putchar_fd('\n', STDIN_FILENO);
-	return (exit(0), 0);
+	return (0);
 }
 
 //changes current working directory (env ? check allowed functions !)
@@ -27,7 +27,7 @@ int	cd_builtin(char **cmd)
 		tmp_error("error with cd; too many or too few args\n");
 	if (!chdir(cmd[1]))
 		perror("ERROR : ");
-	return (exit(0), 0);
+	return (0);
 }
 
 // print current working directory on STDOUT_FILENO
@@ -41,7 +41,7 @@ int	pwd_builtin(char **cmd)
 	ft_putstr_fd(cwd, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	free (cwd);
-	return (exit(0), 0);
+	return (0);
 }
 
 //when name is equal, set to null. then, until !new_env[i], new_env = new_env[i + 1];

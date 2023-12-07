@@ -14,6 +14,32 @@ char	*ft_lowerbuiltin(char *str, char *buff)
 	return (buff);
 }
 
+int	confirm_builtin(char **cmd)
+{
+	char	*lower_cmd;
+
+	lower_cmd = ft_calloc(7, sizeof(char));
+	if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "echo"))
+		return (1);
+	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "cd"))
+		return (1);
+	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "pwd"))
+		return (1);
+	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "export"))
+		return (1);
+	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "unset"))
+		return (1);
+	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "env"))
+		return (1);
+	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "exit"))
+		return (1);
+	else
+		return (free(lower_cmd), 0);
+	free(lower_cmd);
+	return (1);
+}
+
+
 /* calls the relevant function from builtin name, 
 or returns 0 if it isn't a builtin.*/
 int	check_builtin(char **cmd)
