@@ -1,10 +1,19 @@
 check problems to fix from master. Update master.
 Problems :
-- random missing char
 - childs for builtins
+- random missing char
 - exit (cmd[2])
 - leaks
 - here_doc
+- signals
+
+exec :
+	/*
+	1 : créer les pipes (dépendant du nomdre de nodes dans cmd). Vérifier comment gérer les pipes pour les builtins.
+	2 : pendant que cmd existe, soit execve, soit builtin.
+	3 : **changer les signaux dépendant de la commande !**
+	*/
+
 
 DOING : Trying to fix random missing char in cmds (it seems to be comming from "build_commands". However it might also be coming from a function used in it, for example strdup... The origin could then variate.)
 

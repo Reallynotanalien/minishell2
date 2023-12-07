@@ -94,6 +94,7 @@ char		*ft_strlower(char *str);
 char		*ft_getenv(char *var_name);
 void		print_array(void);
 void		safe_free(void **ptr);
+void		clean_data(void);
 
 //linked_list.c
 t_token		*add_token(char *token);
