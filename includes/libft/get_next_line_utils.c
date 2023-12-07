@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:38:25 by kafortin          #+#    #+#             */
-/*   Updated: 2023/02/21 17:44:11 by kafortin         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:05:08 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ unsigned int	find_len_until(const char *str, const char to_find)
 }
 
 char	*copy_from_src(char *dest, const char *src, unsigned int len)
-{	
+{
 	unsigned int	index;
 
 	if (!src || !dest)

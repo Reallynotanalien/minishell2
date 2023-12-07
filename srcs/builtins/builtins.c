@@ -155,4 +155,4 @@ int	exit_builtin(char **cmd)
 		return (exit_program(ft_atoi(cmd[1])), 0);
 	}
 	return (exit_program(0), 0);
-}  
+}

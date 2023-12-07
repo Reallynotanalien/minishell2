@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 16:12:46 by kafortin          #+#    #+#             */
-/*   Updated: 2023/12/05 15:25:06 by edufour          ###   ########.fr       */
+/*   Updated: 2023/12/07 12:12:25 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strdup(char *src)
 	copy = ft_calloc(sizeof(char), len + 1);
 	if (copy == NULL)
 		return (NULL);
-	ft_memmove(copy, src, len);
-	copy[ft_strlen(src)] = '\0';
+	ft_memcpy(copy, src, len);
+	// copy[ft_strlen(src)] = '\0';
 	return (copy);
 }
