@@ -9,8 +9,6 @@ the associated function executes; else, execve takes charge of it
 with the path.*/
 void	child_two(t_command **cmd)
 {
-	int	status;
-
 	//need to give the right error codes to the errors.
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	if (!confirm_builtin((*cmd)->cmd))
