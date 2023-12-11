@@ -1,35 +1,20 @@
-check problems to fix from master. Update master.
+DOING : Return values from chils.
+
 Problems :
-- childs for builtins
 - random missing char
 - exit (cmd[2])
 - leaks
 - here_doc
 - signals
 
-exec :
-	/*
-	1 : créer les pipes (dépendant du nomdre de nodes dans cmd). Vérifier comment gérer les pipes pour les builtins.
-	2 : pendant que cmd existe, soit execve, soit builtin.
-	3 : **changer les signaux dépendant de la commande !**
-	*/
-
-
-DOING : Trying to fix random missing char in cmds (it seems to be comming from "build_commands". However it might also be coming from a function used in it, for example strdup... The origin could then variate.)
-
 Return values for childs and builtins should work properly. Will require testing once loop is okay. Builtins should not have to handle signals. Check for signals in here_doc however, and return_value also. (returns 1 when ctrl+c, 0 for ctrl+d)
-Checking for leaks
 
 test builtins, -> exit isn't working... for some reason there's cmd[2] when running exit
-cleaning functions (free + close)
 **will need to handle !new_env[0]
-**need to protect variables from unset ? (ex : HOME, USER...)
-Test the behavior of substitutions when $HI=$HELLO -> need to wait for builtins to not fork anymore
+Test the behavior of substitutions when $HI=$HELLO -> segfaults
 cat | ls : minishell does not behave correctly; it should wait for input for cat.
-test history
 test signals
 ctrl+c should bring the history back to the bottom
-fix ctrl+d (many times)
 
 valgrind :
  valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --track-origins=yes --track-fds=yes --trace-children=yes ./minishell
