@@ -42,7 +42,6 @@ typedef struct s_command
 {
 	int					infile;
 	int					outfile;
-	int					builtin_flag;
 	char				*path;
 	char				**cmd;
 	struct s_command	*next;
@@ -62,8 +61,8 @@ typedef struct s_data
 {
 	struct s_token		*token;
 	struct s_command	*cmd;
+	char				*error_source;
 	int					error_flag;
-	int					quote_flag;
 	int					heredoc_flag;
 	int					exstat;
 	int					infile;
@@ -91,10 +90,11 @@ void		init_data(t_data *data);
 t_data		*use_data(void);
 void		view_list(void);
 int			find_index(char *str, char target);
-void		tmp_error(char *error_message);
 char		*ft_strlower(char *str);
 char		*ft_getenv(char *var_name);
 void		print_array(void);
+void		safe_free(void **ptr);
+void		clean_data(void);
 
 //linked_list.c
 t_token		*add_token(char *token);
@@ -135,7 +135,7 @@ int			isvalid_varname(char *variable_name);
 //builtins
 int			echo_builtin(char **cmd);
 int			cd_builtin(char **cmd);
-int			pwd_builtin(char **cmd);
+int			pwd_builtin();
 int			unset_builtin(char **cmd);
 int			exit_builtin(char **cmd);
 

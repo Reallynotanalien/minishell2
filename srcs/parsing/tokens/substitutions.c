@@ -111,18 +111,22 @@ void	do_substitutions(char *line)
 	int		i;
 
 	nb_blocks = count_nbblocks(line);
-	blocks = ft_calloc(nb_blocks, sizeof(char *));
+	if (nb_blocks == 1)
+		return ;
+	blocks = ft_calloc(nb_blocks + 1, sizeof(char *));
 	create_blocks(line, blocks);
 	new_line = ft_strdup(blocks[0]);
 	i = 1;
 	while (i < nb_blocks)
 	{
 		tmp = new_line;
-		new_line = ft_strjoin(new_line, blocks[i]);
+		new_line = ft_strjoin(tmp, blocks[i]);
 		free (tmp);
 		i++;
 	}
 	free (blocks);
 	free (line);
+	if (use_data()->line_cpy)
+		safe_free((void **)&use_data()->line_cpy);
 	use_data()->line_cpy = new_line;
 }

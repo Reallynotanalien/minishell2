@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 16:12:46 by kafortin          #+#    #+#             */
-/*   Updated: 2023/11/29 16:28:29 by edufour          ###   ########.fr       */
+/*   Updated: 2023/12/05 15:25:06 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@
 it.*/
 char	*ft_strdup(char *src)
 {
-	char	*ptr;
+	int		len;
+	char	*copy;
 
 	if (!src)
 		return (NULL);
-	ptr = malloc(ft_strlen(src) + 1);
-	if (!ptr)
+	len = ft_strlen(src);
+	copy = ft_calloc(sizeof(char), len + 1);
+	if (copy == NULL)
 		return (NULL);
-	ft_memcpy(ptr, src, ft_strlen(src) + 1);
-	ptr[ft_strlen(src)] = '\0';
-	return (ptr);
+	ft_memmove(copy, src, len);
+	copy[ft_strlen(src)] = '\0';
+	return (copy);
 }

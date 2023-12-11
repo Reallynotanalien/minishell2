@@ -3,40 +3,62 @@
 //print the args on STDOUT_FILENO
 int	echo_builtin(char	**cmd)
 {
-	int	i;
+	int	i_cmd;
+	int	i_line;
 
-	i = 0;
 	if (!cmd[1])
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	while (cmd[++i])
+	i_cmd = 1;
+	if (cmd[1] && !ft_strcmp(cmd[1], "-n"))
+		i_cmd++;
+	while (cmd[i_cmd])
 	{
-		if (cmd[i][0] == '"')
-			cmd[i] = ft_substr(cmd[i], 1, ft_strlen(cmd[i]) - 2);
-		ft_putstr_fd(cmd[i], STDOUT_FILENO);
+		if (!cmd[i_cmd][0])
+			i_cmd++;
+		i_line = -1;
+		while (cmd[i_cmd][++i_line])
+		{
+			if (double_quoted(cmd[i_cmd], i_line) 
+				|| single_quoted(cmd[i_cmd], i_line)
+				|| (cmd[i_cmd][i_line] != '\"' && cmd[i_cmd][i_line] != '\''))
+				ft_putchar_fd(cmd[i_cmd][i_line], STDOUT_FILENO);
+		}
+		i_cmd++;
 		ft_putchar_fd(' ', STDOUT_FILENO);
 	}
 	if (cmd[1] && ft_strcmp(cmd[1], "-n"))
-		ft_putchar_fd('\n', STDIN_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }
 
-//changes current working directory (env ? check allowed functions !)
+//changes current working directory
 int	cd_builtin(char **cmd)
 {
-	if (!cmd[1] || cmd[2])
-		tmp_error("error with cd; too many or too few args\n");
+	char	*tmp;
+
+	if (!cmd[1])
+	{
+		tmp = ft_getenv("HOME");
+		if (!chdir(tmp))
+		{
+			printf("minishell: cd: HOME not set\n");
+			return (free(tmp), 1);
+		}
+		free (tmp);
+	}
 	if (!chdir(cmd[1]))
-		perror("ERROR : ");
+	{
+		perror("minishell: cd: ");
+		return (1);
+	}
 	return (0);
 }
 
 // print current working directory on STDOUT_FILENO
-int	pwd_builtin(char **cmd)
+int	pwd_builtin(void)
 {
 	char	*cwd;
 
-	if (cmd[1])
-		tmp_error("too many args for pwd\n");
 	cwd = getcwd(NULL, 0);
 	ft_putstr_fd(cwd, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
@@ -51,10 +73,11 @@ int	unset_var(char *variable)
 	char	*tmp;
 
 	i = 0;
-	tmp = get_varname(variable);
-	if (!isvalid_varname(tmp))
-		return (/*free(tmp),*/ tmp_error("invalid identifier in unset builtin"), 1);
-	// free (tmp);
+	if (!isvalid_varname(variable))
+	{
+		printf("minishell: unset: \'%s\': not a valid identifier\n", variable);
+		return (1);
+	}
 	i = -1;
 	while (use_data()->new_env[++i])
 	{
@@ -62,7 +85,7 @@ int	unset_var(char *variable)
 		if (!ft_strcmp(tmp, variable))
 		{
 			free (use_data()->new_env[i]);
-		 	use_data()->new_env[i] = NULL;
+			use_data()->new_env[i] = NULL;
 			while (use_data()->new_env[i])
 				use_data()->new_env[i] = use_data()->new_env[i + 1];
 		}
@@ -93,6 +116,11 @@ int	env_builtin(void)
 	char	*tmp;
 
 	i = 0;
+	if (!use_data()->new_env || !use_data()->new_env[0])
+	{
+		printf("\n");
+		return (0);
+	}
 	tmp = get_varvalue(use_data()->new_env[0]);
 	while (use_data()->new_env[i])
 	{
@@ -112,18 +140,19 @@ int	exit_builtin(char **cmd)
 
 	i = -1;
 	if (cmd[2])
-		return (tmp_error("minishell: exit: too many arguments\n"), 1);
+		return (print_error("minishell: exit: too many arguments"), 1);
 	if (cmd[1])
 	{
 		while (cmd[1][++i])
 		{
 			if (!ft_isdigit(cmd[1][i]))
 			{
-				tmp_error("minishell: exit: a: numeric argument required\n");
-				return (exit_program(ft_atoi(cmd[1])), 0);
+				printf("minishell: exit: %s: numeric argument required\n", 
+					cmd[1]);
+				return (exit_program(255), 0);
 			}
 		}
 		return (exit_program(ft_atoi(cmd[1])), 0);
 	}
-	return (exit_program(ft_atoi(cmd[1])), 0);
-}
+	return (exit_program(0), 0);
+}  

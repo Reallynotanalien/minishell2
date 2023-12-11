@@ -36,7 +36,7 @@ char	*ft_strlower(char *str)
 	int		i;
 	char	*new_str;
 
-	new_str = ft_calloc(ft_strlen(str), sizeof(char));
+	new_str = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	i = -1;
 	while (str[++i])
 		new_str[i] = ft_tolower(str[i]);
