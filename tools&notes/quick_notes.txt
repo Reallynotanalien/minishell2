@@ -1,6 +1,21 @@
-DOING : test shit out of the loop (builtins, return values, etc) -- look for leaks at the same time btw
+check problems to fix from master. Update master.
+Problems :
+- childs for builtins
+- random missing char
+- exit (cmd[2])
+- leaks
+- here_doc
+- signals
 
-Trying to fix random missing char in cmds (it seems to be comming from "build_commands". However it might also be coming from a function used in it, for example strdup... The origin could then variate.)
+exec :
+	/*
+	1 : créer les pipes (dépendant du nomdre de nodes dans cmd). Vérifier comment gérer les pipes pour les builtins.
+	2 : pendant que cmd existe, soit execve, soit builtin.
+	3 : **changer les signaux dépendant de la commande !**
+	*/
+
+
+DOING : Trying to fix random missing char in cmds (it seems to be comming from "build_commands". However it might also be coming from a function used in it, for example strdup... The origin could then variate.)
 
 Return values for childs and builtins should work properly. Will require testing once loop is okay. Builtins should not have to handle signals. Check for signals in here_doc however, and return_value also. (returns 1 when ctrl+c, 0 for ctrl+d)
 Checking for leaks

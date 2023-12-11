@@ -94,6 +94,7 @@ char		*ft_strlower(char *str);
 char		*ft_getenv(char *var_name);
 void		print_array(void);
 void		safe_free(void **ptr);
+void		clean_data(void);
 
 //linked_list.c
 t_token		*add_token(char *token);
@@ -127,6 +128,7 @@ void		interruption_handler(int signum);
 /*BUILTINS*/
 //builtins_utils
 char		*ft_lowerbuiltin(char *str, char *buff);
+int			confirm_builtin(char **cmd);
 int			check_builtin(char **cmd);
 int			isvalid_varname(char *variable_name);
 
