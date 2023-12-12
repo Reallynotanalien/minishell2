@@ -126,7 +126,7 @@ void	do_substitutions(char *line)
 	}
 	free (blocks);
 	free (line);
-	if (use_data()->line_cpy)
-		safe_free((void **)&use_data()->line_cpy);
+	// if (use_data()->line_cpy)
+		// safe_free((void **)&use_data()->line_cpy);
 	use_data()->line_cpy = new_line;
 }

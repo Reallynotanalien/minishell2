@@ -9,6 +9,9 @@ the associated function executes; else, execve takes charge of it
 with the path.*/
 void	child_two(t_command **cmd)
 {
+	int	*status;
+
+	status = ft_calloc(1, sizeof(int));
 	//need to give the right error codes to the errors.
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	if (!confirm_builtin((*cmd)->cmd))
@@ -25,7 +28,11 @@ void	child_two(t_command **cmd)
 			exit(0);
 		}
 		else
-			waitpid(use_data()->pid, NULL, 0);
+		{
+			waitpid(use_data()->pid, status, 0);
+			set_exstat(status);
+			free (status);
+		}	
 	}
 	else
 	{
