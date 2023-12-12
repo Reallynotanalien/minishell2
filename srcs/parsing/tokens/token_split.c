@@ -88,8 +88,14 @@ int	split_tokens(void)
 				|| use_data()->line_cpy[start] == '>')
 			{
 				if (use_data()->line_cpy[start + 1] == '>')
-					end ++;
-			end = iterate_until_redir(use_data()->line_cpy, end, end);
+					end++;
+				if (use_data()->line_cpy[start + 1] == '<')
+				{
+					end++;
+					end = iterate_until_redir(use_data()->line_cpy, end, end);
+				}
+				else
+					end = iterate_until_space(use_data()->line_cpy, end);
 			}
 		}
 		new_token(start, end);

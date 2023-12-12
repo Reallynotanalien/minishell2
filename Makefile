@@ -44,7 +44,7 @@ COLOUR_END=\033[0m
 OBJS = $(SRCS:.c=.o)
 .SILENT: $(OBJS)
 CC = gcc
-CFLAGS = -g -Wall -Wextra
+CFLAGS = -g -Wall -Wextra 
 RM = rm -fr
 LIBS = ./includes/libft/libft.a ./includes/readline/libreadline.a ./includes/readline/libhistory.a -lreadline -lcurses
 
