@@ -69,7 +69,10 @@ int	token_redirin(t_token *token)
 
 	tmp = ft_substr(token->token, 2, ft_strlen(token->token));
 	token_copy = ft_strtrim_whitespaces(tmp);
-	free(tmp);
+	//if (tmp)
+	//	free(tmp);
+	//Elo j'ai commenté cette ligne-là parce que ça disait que
+	//c'était free en double, trimwhitespace le free déjà je crois
 	token_lower = ft_substr(token_copy, 0, ft_strlen(token_copy));
 	ft_strlower(token_lower);
 	fd = open(token_copy, O_RDONLY);
