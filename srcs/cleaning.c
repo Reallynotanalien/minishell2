@@ -52,8 +52,9 @@ void	clean_cmds(void)
 		tmp = use_data()->cmd->next;
 		free_array(use_data()->cmd->cmd);
 		safe_free ((void **)&use_data()->cmd->path);
-		safe_free ((void **)use_data()->cmd);
 		use_data()->cmd = tmp;
+		if (use_data()->cmd)
+			safe_free ((void **)use_data()->cmd);
 	}
 }
 

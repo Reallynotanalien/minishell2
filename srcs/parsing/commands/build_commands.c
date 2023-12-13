@@ -55,19 +55,18 @@ t_token	*command_loop(t_token *tokens)
 			break ;
 		printf("I got to the end of the command loop\n");
 	}
-	add_command(command, use_data()->infile, use_data()->outfile);
+	if (command)
+		add_command(command, use_data()->infile, use_data()->outfile);
 	return (tokens);
 }
 
 void	build_commands(void)
 {
 	t_token	*tokens;
-	char	*command;
 
 	tokens = use_data()->token;
 	while (tokens)
 	{
-		command = NULL;
 		use_data()->infile = STDIN_FILENO;
 		use_data()->outfile = STDOUT_FILENO;
 		tokens = command_loop(tokens);

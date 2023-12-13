@@ -4,12 +4,13 @@ Problems :
 - leaks
 - here_doc
 - signals
+- clean debug printfs
 
 redirections with builtins (still) doesnt work
 Different build_commands
 Return values for childs and builtins should work properly. Will require testing once loop is okay. Builtins should not have to handle signals. Check for signals in here_doc however, and return_value also. (returns 1 when ctrl+c, 0 for ctrl+d)
-test builtins, -> exit isn't working... for some reason there's cmd[2] when running exit -> might be because of same issue as missing char
-cat | ls : minishell does not behave correctly; it should wait for input for cat.
+test builtins, -> exit isn't working... for some reason there's cmd[2] when running exit
+cat | ls : minishell does not behave correctly; it should wait for input for cat. Now it sorta crashes. Need to stop with a signal ?
 test signals
 ctrl+c should bring the history back to the bottom
 
