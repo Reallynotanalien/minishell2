@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:03:42 by kafortin          #+#    #+#             */
-/*   Updated: 2023/11/23 17:01:11 by kafortin         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:18:51 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ static char	*ft_str_malloc_copy(char const *s, char c)
 			a -= 1;
 	}
 	str = ft_substr(s, (a - b), b);
-	str = ft_strtrim(str, &c);
 	return (str);
 }
 
