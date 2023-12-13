@@ -39,14 +39,14 @@ int	cd_builtin(char **cmd)
 	if (!cmd[1])
 	{
 		tmp = ft_getenv("HOME");
-		if (!chdir(tmp))
+		if (chdir("/Users/edufour"))
 		{
 			printf("minishell: cd: HOME not set\n");
-			return (free(tmp), 1);
+			return (free (tmp), 1);
 		}
 		free (tmp);
 	}
-	if (!chdir(cmd[1]))
+	else if (chdir(cmd[1]) == -1)
 	{
 		perror("minishell: cd: ");
 		return (1);
@@ -84,12 +84,21 @@ int	unset_var(char *variable)
 		tmp = get_varname(use_data()->new_env[i]);
 		if (!ft_strcmp(tmp, variable))
 		{
-			free (use_data()->new_env[i]);
-			use_data()->new_env[i] = NULL;
-			while (use_data()->new_env[i])
-				use_data()->new_env[i] = use_data()->new_env[i + 1];
+			free(tmp);
+			break ;
 		}
 		free (tmp);
+	}
+	if (!use_data()->new_env[i])
+		return (0);
+	while (use_data()->new_env[i])
+	{
+		free (use_data()->new_env[i]);
+		while (use_data()->new_env[i])
+		{
+			use_data()->new_env[i] = use_data()->new_env[i + 1];
+			i++;
+		}
 	}
 	return (0);
 }
