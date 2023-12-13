@@ -8,7 +8,7 @@ char	*join_command(char *str, char *add)
 	int		i_add;
 
 	if (str == NULL)
-		new_str = ft_calloc(ft_strlen(add) + 2, sizeof(char));
+		new_str = ft_calloc(ft_strlen(add) + 1, sizeof(char));
 	else
 		new_str = ft_calloc(ft_strlen(str) + ft_strlen(add) + 2, sizeof(char));
 	i = 0;
@@ -23,9 +23,9 @@ char	*join_command(char *str, char *add)
 	while (add[++i_add])
 		new_str[i + i_add] = add[i_add];
 	new_str[i + i_add] = '\0';
-	return (new_str);
 	if (str)
 		free (str);
+	return (new_str);
 }
 
 //needs to return the str containing everything but redirections and pipes

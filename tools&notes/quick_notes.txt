@@ -6,8 +6,10 @@ Problems :
 - here_doc
 - signals
 
+
+redirections with builtins (still) doesnt work
+Different build_commands
 Return values for childs and builtins should work properly. Will require testing once loop is okay. Builtins should not have to handle signals. Check for signals in here_doc however, and return_value also. (returns 1 when ctrl+c, 0 for ctrl+d)
-redirections with builtins doesnt work 
 test builtins, -> exit isn't working... for some reason there's cmd[2] when running exit -> might be because of same issue as missing char
 **will need to handle !new_env[0]
 Test the behavior of substitutions when $HI=$HELLO -> segfaults
