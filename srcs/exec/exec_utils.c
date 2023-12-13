@@ -21,6 +21,7 @@ void	dup_infile(t_command **cmd)
 {
 	if ((*cmd)->infile != STDIN_FILENO)
 	{
+		dup2(STDIN_FILENO, use_data()->old_stdin);
 		dup2((*cmd)->infile, STDIN_FILENO);
 		close((*cmd)->infile);
 	}
@@ -32,7 +33,16 @@ void	dup_outfile(t_command **cmd)
 {
 	if ((*cmd)->outfile != STDOUT_FILENO)
 	{
+		dup2(STDOUT_FILENO, use_data()->old_stdout);
 		dup2((*cmd)->outfile, STDOUT_FILENO);
 		close((*cmd)->outfile);
 	}
+}
+
+/*Resets the STDIN_FILENO and STDOUT_FILENO to the original
+ones in case a dup2 was used.*/
+void	reset_files(void)
+{
+	dup2(use_data()->old_stdout, STDOUT_FILENO);
+	dup2(use_data()->old_stdin, STDIN_FILENO);
 }

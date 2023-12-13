@@ -70,6 +70,8 @@ typedef struct s_data
 	int					fd[2];
 	int					pid;
 	int					child;
+	int					old_stdin;
+	int					old_stdout;
 	char				**new_env;
 	char				*line;
 	char				*line_cpy;
@@ -151,6 +153,7 @@ int			export_builtin(char **cmd);
 int			count_commands(t_command *cmd);
 void		dup_infile(t_command **cmd);
 void		dup_outfile(t_command **cmd);
+void		reset_files(void);
 
 //exec
 void		exec(t_command *cmd);
