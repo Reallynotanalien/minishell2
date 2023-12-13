@@ -1,7 +1,6 @@
-DOING : Issue with unset (makes part of the env disapear)
+DOING : exit (cmd[2])
 
 Problems :
-- exit (cmd[2])
 - leaks
 - here_doc
 - signals
