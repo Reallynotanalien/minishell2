@@ -86,7 +86,7 @@ char	*get_varvalue(char *variable)
 		i++;
 	if (!variable[i])
 		return (NULL);
-	value = ft_calloc(ft_strlen((variable)) - i, sizeof(char));
+	value = ft_calloc((ft_strlen((variable)) - i) + 1, sizeof(char));
 	i ++;
 	ft_memcpy(value, &variable[i], ft_strlen(variable) - i);
 	return (value);

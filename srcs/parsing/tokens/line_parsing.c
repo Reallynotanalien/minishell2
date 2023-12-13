@@ -40,7 +40,7 @@ int	find_lenght(char *str, int end)
 		}
 		if (i < end)
 			len++;
-		while (ft_iswhitespace(str[i]))
+		while (str[i] && ft_iswhitespace(str[i]))
 			i++;
 	}
 	return (len);
