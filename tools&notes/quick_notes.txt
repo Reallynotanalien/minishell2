@@ -1,7 +1,6 @@
-DOING : exit (cmd[2])
+DOING : leaks
 
 Problems :
-- leaks
 - here_doc
 - signals
 - clean debug printfs

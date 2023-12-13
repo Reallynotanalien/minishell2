@@ -15,4 +15,6 @@ void	init_data(t_data *data)
 	data->new_env = NULL;
 	data->line = NULL;
 	data->line_cpy = NULL;
+	data->old_stdin = 0;
+	data->old_stdout = 0;
 }
