@@ -16,13 +16,12 @@ t_command	*add_command(char *command, int infile, int outfile)
 	t_command	*new;
 	t_command	*next;
 
-	// if (command == NULL)
-	// 	return (NULL);
 	new = create_command();
 	if (!new)
 		return (NULL);
 	new->cmd = (char **)ft_split_quotes(command, ' ');
-	get_path(new);
+	if (!confirm_builtin(new->cmd))
+		get_path(new);
 	new->infile = infile;
 	new->outfile = outfile;
 	if (use_data()->cmd == NULL)
