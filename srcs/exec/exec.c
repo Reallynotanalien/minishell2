@@ -89,7 +89,7 @@ void	pipex(t_command **cmd)
 		close(use_data()->fd[0]);
 		dup2(use_data()->fd[1], STDOUT_FILENO);
 		check_builtin((*cmd)->cmd);
-		reset_files();
+		//reset_files();
 		close(use_data()->fd[1]);
 	}
 }
