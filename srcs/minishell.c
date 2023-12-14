@@ -13,6 +13,7 @@ int	main(int argc, char **argv, char **env)
 			line_parsing();
 			if (use_data()->error_flag != ERROR)
 				exec(use_data()->cmd);
+			use_data()->error_flag = 0;
 			add_history(use_data()->line);
 		}
 		if (use_data()->line == NULL)
