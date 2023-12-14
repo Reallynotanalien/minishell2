@@ -1,4 +1,4 @@
-DOING : leaks
+DOING : leaks -> need to fix invalid cmd given to execve
 
 Problems :
 - here_doc

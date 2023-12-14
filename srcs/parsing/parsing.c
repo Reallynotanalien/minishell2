@@ -46,16 +46,24 @@ easy execution.*/
 void	line_parsing(void)
 {
 	if (parse_quotes(use_data()->line) == ERROR)
+	{
+		use_data()->error_flag = ERROR;
 		return ;
+	}
 	if (remove_spaces(use_data()->line) == ERROR)
+	{
+		use_data()->error_flag = ERROR;
 		return ;
+	}
 	do_substitutions(use_data()->line_cpy);
 	if (split_tokens() == ERROR)
+	{
+		use_data()->error_flag = ERROR;
 		return (free_tokens_if_not_empty());
+	}
 	view_list();
 	//check whitespaces function because now the éèà characters won't print 
 	//if they are at the beginning of a sentence
 	build_commands();
-	view_commands();
 	free_tokens_if_not_empty();
 }

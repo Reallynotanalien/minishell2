@@ -23,7 +23,7 @@ void	child_two(t_command **cmd)
 		{
 			dup_infile(cmd);
 			dup_outfile(cmd);
-			execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env);
+			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
 			exit(0);
 		}
 		else
