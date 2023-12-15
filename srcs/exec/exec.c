@@ -28,6 +28,7 @@ void	child_two(t_command **cmd)
 		}
 		else
 		{
+			//reset_files();
 			status = ft_calloc(1, sizeof(int));
 			waitpid(use_data()->pid, status, 0);
 			set_exstat(status);
@@ -36,7 +37,7 @@ void	child_two(t_command **cmd)
 	}
 	else
 	{
-			dup_infile(cmd);
+			//dup_infile(cmd);
 			dup_outfile(cmd);
 			check_builtin((*cmd)->cmd);
 			reset_files();

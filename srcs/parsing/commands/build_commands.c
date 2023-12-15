@@ -33,7 +33,6 @@ t_token	*command_loop(t_token *tokens)
 {
 	char	*command;
 
-	printf("I got inside the command loop\n");
 	command = NULL;
 	while (tokens)
 	{
@@ -53,7 +52,6 @@ t_token	*command_loop(t_token *tokens)
 			tokens = tokens->next;
 		else
 			break ;
-		printf("I got to the end of the command loop\n");
 	}
 	if (command)
 		add_command(command, use_data()->infile, use_data()->outfile);
