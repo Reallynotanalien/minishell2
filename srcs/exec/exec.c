@@ -105,6 +105,8 @@ void	exec(t_command *cmd)
 {
 	int	nb_cmds;
 
+	if (!cmd)
+		return ;
 	if (cmd->cmd != NULL)
 	{
 		nb_cmds = count_commands(cmd);

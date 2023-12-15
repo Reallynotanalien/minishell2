@@ -39,7 +39,11 @@ t_token	*command_loop(t_token *tokens)
 		if (tokens->type == T_PIPE)
 			break ;
 		else if (tokens->type == T_HEREDOC)
+		{
+			//signal(SIGINT, heredoc_handler);
 			use_data()->infile = open_heredoc(tokens);
+			//signal(SIGINT, interruption_handler);
+		}
 		else if (tokens->type == T_INFILE)
 			token_redirin(tokens);
 		else if (tokens->type == T_OUTFILE)

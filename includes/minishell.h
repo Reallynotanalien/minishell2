@@ -120,6 +120,7 @@ int			env_builtin(void);
 int			unset_var(char *variable);
 int			is_envvar(char	*varname);
 void		child_handler(int signum);
+void		heredoc_handler(int signum);
 
 //redirections
 int			token_redirin(t_token *token);
