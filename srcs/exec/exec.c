@@ -86,11 +86,12 @@ void	pipex(t_command **cmd)
 	else
 	{
 		dup_infile(cmd);
-		close(use_data()->fd[0]);
 		dup2(use_data()->fd[1], STDOUT_FILENO);
-		check_builtin((*cmd)->cmd);
-		//reset_files();
 		close(use_data()->fd[1]);
+		check_builtin((*cmd)->cmd);
+		reset_files();
+		(*cmd)->next->infile = use_data()->fd[0];
+		//close(use_data()->fd[0]);
 	}
 }
 
