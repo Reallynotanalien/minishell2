@@ -25,7 +25,7 @@ int	main_parsing(int argc, char **argv, char **env)
 	(void)argv;
 	// if (argc != 1)
 	// 	return (print_error(ARGC_ERROR));
-	use_data()->new_env = NULL;
+	use_data()->new_env = copy_env(env);
 	// if (!use_data()->new_env)
 		// return (print_error(ENV_ERROR));
 	// if (!argv)
