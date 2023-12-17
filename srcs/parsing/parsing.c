@@ -21,13 +21,13 @@ char	**copy_env(char **env)
 of the env variable to be used later.*/
 int	main_parsing(int argc, char **argv, char **env)
 {
-	if (argc != 1)
-		return (print_error(ARGC_ERROR));
+	// if (argc != 1)
+	// 	return (print_error(ARGC_ERROR));
 	use_data()->new_env = copy_env(env);
 	if (!use_data()->new_env)
-		return (print_error(ENV_ERROR));
-	if (!argv)
-		return (print_error(ARGV_ERROR));
+		return (set_exstat(1), print_error(ENV_ERROR));
+	// if (!argv)
+	// 	return (print_error(ARGV_ERROR));
 	return (0);
 }
 
@@ -45,12 +45,14 @@ command will be associated with the right input and output file for
 easy execution.*/
 void	line_parsing(void)
 {
-	if (parse_quotes(use_data()->line) == ERROR)
-	{
-		use_data()->error_flag = ERROR;
-		return ;
-	}
-	if (remove_spaces(use_data()->line) == ERROR)
+	int	i;
+
+	i = 0;
+	while (use_data()->line[i] && ft_iswhitespace(use_data()->line[i]))
+		i++;
+	if (i == (int)ft_strlen(use_data()->line)
+		|| parse_quotes(use_data()->line) == ERROR
+		|| remove_spaces(use_data()->line) == ERROR)
 	{
 		use_data()->error_flag = ERROR;
 		return ;
@@ -61,9 +63,7 @@ void	line_parsing(void)
 		use_data()->error_flag = ERROR;
 		return (free_tokens_if_not_empty());
 	}
-	view_list();
-	//check whitespaces function because now the éèà characters won't print 
-	//if they are at the beginning of a sentence
+	// view_list();
 	build_commands();
 	free_tokens_if_not_empty();
 }

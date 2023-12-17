@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:03:42 by kafortin          #+#    #+#             */
-/*   Updated: 2023/12/13 14:18:51 by edufour          ###   ########.fr       */
+/*   Updated: 2023/12/17 14:20:58 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	**ft_split_quotes(char const *s, char c)
 	if (!temp)
 		return (NULL);
 	len = ft_count_words_quotes(temp, c);
-	printf("%zu\n", len);
+	// printf("%zu\n", len);
 	tab = (void **)ft_calloc(sizeof(char *), (len + 1));
 	while (a < len)
 	{
