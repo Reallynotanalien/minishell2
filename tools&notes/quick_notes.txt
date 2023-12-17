@@ -1,7 +1,7 @@
 DOING :
 
-correct errror messages and return values in the parsing/exec
 Must return 2 when syntax error
+correct errror messages and return values in the parsing/exec
 weird behavior with /, //, /,
 Doesn't return an error when a file exists even if it isn't an executable
 echo -n Hola should print holaminishell$> but prints hola minishell $>
