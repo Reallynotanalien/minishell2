@@ -81,7 +81,7 @@ int	remove_spaces(char *str)
 	if (end != i)
 		end++;
 	if (end == i)
-		{}
+		return (1);
 	else
 		use_data()->line_cpy = skip_consecutives(i, end, str);
 	return (0);
