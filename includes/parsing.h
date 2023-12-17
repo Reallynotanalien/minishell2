@@ -12,7 +12,7 @@
 /*FUNCTIONS*/
 
 //build_commands.c
-void		build_commands(void);
+int			build_commands(void);
 
 //errors.c
 int			parsing_error(char *error);

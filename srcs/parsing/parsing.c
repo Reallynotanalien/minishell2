@@ -66,6 +66,7 @@ void	line_parsing(void)
 		return (free_tokens_if_not_empty());
 	}
 	// view_list();
-	build_commands();
+	if (build_commands())
+		use_data()->error_flag = ERROR;
 	free_tokens_if_not_empty();
 }
