@@ -1,6 +1,6 @@
-DOING : Fix check for file rights in redirections and pipes
+DOING :
 
-correct errror messages and return values in the parsing/exec - Rework print_error (needs to print command) - STDERR. Can print perror, and set use_data()->exstat
+correct errror messages and return values in the parsing/exec - Rework print_error (needs to print command) - STDERR. Can print perror, and set use_data()->exstat. Custom message + char *
 weird behavior with /, //, /,
 echo -n Hola should print holaminishell$> but prints hola minishell $>
 quoted options should be valid, but aren't right now
