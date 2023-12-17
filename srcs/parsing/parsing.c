@@ -21,11 +21,13 @@ char	**copy_env(char **env)
 of the env variable to be used later.*/
 int	main_parsing(int argc, char **argv, char **env)
 {
+	(void)argc;
+	(void)argv;
 	// if (argc != 1)
 	// 	return (print_error(ARGC_ERROR));
-	use_data()->new_env = copy_env(env);
-	if (!use_data()->new_env)
-		return (set_exstat(1), print_error(ENV_ERROR));
+	use_data()->new_env = NULL;
+	// if (!use_data()->new_env)
+		// return (print_error(ENV_ERROR));
 	// if (!argv)
 	// 	return (print_error(ARGV_ERROR));
 	return (0);

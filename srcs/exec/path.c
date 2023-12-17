@@ -29,6 +29,8 @@ char	*find_path(t_command **cmd, char **env)
 	int		i;
 	char	**path_env;
 
+	if (!use_data()->new_env || !use_data()->new_env[0])
+		return (NULL);
 	i = 0;
 	while (env[i])
 	{
