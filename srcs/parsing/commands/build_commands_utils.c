@@ -27,6 +27,8 @@ int	open_heredoc(t_token *tokens)
 			write(temp_file, str, ft_strlen(str));
 		free(str);
 	}
+	if (str == NULL)
+		printf("ctrl+d was pushed\n");
 	close(temp_file);
 	here_doc = open(".here_doc", O_RDONLY);
 	use_data()->heredoc_flag = YES;

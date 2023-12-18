@@ -66,6 +66,8 @@ void	line_parsing(void)
 		return (free_tokens_if_not_empty());
 	}
 	// view_list();
+	//check whitespaces function because now the éèà characters won't print 
+	//if they are at the beginning of a sentence
 	if (build_commands())
 		use_data()->error_flag = ERROR;
 	free_tokens_if_not_empty();

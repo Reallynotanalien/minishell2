@@ -28,6 +28,7 @@ void	child_two(t_command **cmd)
 		}
 		else
 		{
+			//reset_files();
 			status = ft_calloc(1, sizeof(int));
 			waitpid(use_data()->pid, status, 0);
 			set_exstat(status);
@@ -36,7 +37,7 @@ void	child_two(t_command **cmd)
 	}
 	else
 	{
-			dup_infile(cmd);
+			//dup_infile(cmd);
 			dup_outfile(cmd);
 			check_builtin((*cmd)->cmd);
 			reset_files();
@@ -86,11 +87,12 @@ void	pipex(t_command **cmd)
 	else
 	{
 		dup_infile(cmd);
-		close(use_data()->fd[0]);
 		dup2(use_data()->fd[1], STDOUT_FILENO);
+		close(use_data()->fd[1]);
 		check_builtin((*cmd)->cmd);
 		reset_files();
-		close(use_data()->fd[1]);
+		(*cmd)->next->infile = use_data()->fd[0];
+		//close(use_data()->fd[0]);
 	}
 }
 
@@ -103,6 +105,8 @@ void	exec(t_command *cmd)
 {
 	int	nb_cmds;
 
+	if (!cmd)
+		return ;
 	if (cmd->cmd != NULL)
 	{
 		nb_cmds = count_commands(cmd);
