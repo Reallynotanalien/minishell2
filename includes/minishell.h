@@ -1,3 +1,4 @@
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -96,7 +97,6 @@ void		print_array(void);
 void		safe_free(void **ptr);
 void		clean_data(void);
 void		set_exstat(int *status);
-void        print_error(char *src, char *cmd, char *error, int perror_flag, int exstat);
 
 //linked_list.c
 t_token		*add_token(char *token);
@@ -137,7 +137,7 @@ int			isvalid_varname(char *variable_name);
 //builtins
 int			echo_builtin(char **cmd);
 int			cd_builtin(char **cmd);
-int			pwd_builtin();
+int			pwd_builtin(void);
 int			unset_builtin(char **cmd);
 int			exit_builtin(char **cmd);
 

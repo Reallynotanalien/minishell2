@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 16:30:13 by kafortin          #+#    #+#             */
-/*   Updated: 2023/11/23 15:40:02 by kafortin         ###   ########.fr       */
+/*   Updated: 2023/12/18 17:32:13 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <string.h>
 # include <unistd.h>
 # include <limits.h>
+# include "printf/ft_printf.h"
 
 int				ft_isalpha(int a);
 int				ft_isdigit(char a);

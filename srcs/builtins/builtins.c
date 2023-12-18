@@ -151,16 +151,15 @@ int	exit_builtin(char **cmd)
 
 	i = -1;
 	if (cmd[1] && cmd[2])
-		return (print_error("minishell: exit: too many arguments", NULL, NULL, 0, 1), 1);
+		return (ft_printf(2, "minishell: exit: too many arguments"), 1);
 	if (cmd[1])
 	{
 		while (cmd[1][++i])
 		{
 			if (!ft_isdigit(cmd[1][i]))
 			{
-				printf("minishell: exit: %s: numeric argument required\n", 
+				printf("exit\n"); ft_printf(2, "minishell: exit: %s: numeric argument required\n", 
 					cmd[1]);
-				printf("exit\n");
 				return (exit_program(255), 0);
 			}
 		}

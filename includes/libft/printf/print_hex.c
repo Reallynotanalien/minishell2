@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   print_hex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 14:03:11 by kafortin          #+#    #+#             */
-/*   Updated: 2023/12/18 17:33:19 by edufour          ###   ########.fr       */
+/*   Created: 2023/01/11 07:44:39 by edufour           #+#    #+#             */
+/*   Updated: 2023/12/18 17:26:57 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-/*Writes int "n" on file descriptor passed as an argument.*/
-void	ft_putnbr_fd(int n, int fd)
+void	ui_to_hex(int fd, unsigned int nb, char *base, int *nb_char)
 {
-	if (n <= 9 && n >= 0)
-		ft_putchar_fd(n + '0', fd);
-	else if (n < 0)
-	{
-		if (n == -2147483648)
-		{
-			write (fd, "-2147483648", 11);
-			return ;
-		}
-		write (fd, "-", 1);
-		n *= -1;
-		ft_putnbr_fd(n, fd);
-	}
+	if (nb / 16 > 0)
+		ui_to_hex(fd, nb / 16, base, nb_char);
+	*nb_char += write(1, base + (nb % 16), 1);
+}
+
+int	print_hex(int fd, unsigned int nb, char identifier)
+{
+	int		nb_char;
+
+	nb_char = 0;
+	if (identifier == 'x')
+		ui_to_hex(fd, nb, HEX_MIN, &nb_char);
 	else
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
-	}
+		ui_to_hex(fd, nb, HEX_MAJ, &nb_char);
+	return (nb_char);
 }

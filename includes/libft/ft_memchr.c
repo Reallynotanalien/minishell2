@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 18:42:45 by kafortin          #+#    #+#             */
-/*   Updated: 2022/05/12 15:51:51 by kafortin         ###   ########.fr       */
+/*   Updated: 2023/12/18 17:33:06 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*ft_memchr(const void *str, int c, size_t n)
 	a = 0;
 	b = (unsigned char *)str;
 	while (n > a)
-	{		
+	{
 		if (*b == (unsigned char)c)
 			return (b);
 		b++;

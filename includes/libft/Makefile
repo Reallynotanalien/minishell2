@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+         #
+#    By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/05 20:32:19 by kafortin          #+#    #+#              #
-#    Updated: 2023/11/23 15:40:16 by kafortin         ###   ########.fr        #
+#    Updated: 2023/12/18 17:12:11 by edufour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,12 @@ FILES = ft_isalpha.c \
 		get_next_line_utils.c \
 		ft_free_tab.c \
 		ft_split_quotes.c \
+		printf/ft_printf.c \
+		printf/print_arg.c \
+		printf/print_hex.c \
+		printf/print_ptr.c \
+		printf/printf_utils.c \
+		printf/read_format.c \
 		
 OBJS = $(FILES:.c=.o)
 

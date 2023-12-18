@@ -53,7 +53,7 @@ t_command	*find_cmd(t_command **cmd)
 	if ((*cmd)->path == NULL
 		|| access((*cmd)->path, X_OK) == -1)
 	{
-		print_error("minishell: ", (*cmd)->cmd[0], "command not found", 0, 127);
+		ft_printf(2, "minishell: %s: command not found\n", (*cmd)->cmd[0]);
 		use_data()->error_flag = ERROR;
 		use_data()->exstat = 127;
 	}

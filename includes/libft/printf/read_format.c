@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   read_format.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 14:03:11 by kafortin          #+#    #+#             */
-/*   Updated: 2023/12/18 17:33:19 by edufour          ###   ########.fr       */
+/*   Created: 2023/01/10 13:08:57 by edufour           #+#    #+#             */
+/*   Updated: 2023/12/18 17:28:21 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-/*Writes int "n" on file descriptor passed as an argument.*/
-void	ft_putnbr_fd(int n, int fd)
+int	read_format(int fd, const char *format, va_list argptr)
 {
-	if (n <= 9 && n >= 0)
-		ft_putchar_fd(n + '0', fd);
-	else if (n < 0)
+	int	i;
+	int	nb_char;
+
+	i = 0;
+	nb_char = 0;
+	while (format)
 	{
-		if (n == -2147483648)
+		if (format[i] == '%' && format[i + 1])
 		{
-			write (fd, "-2147483648", 11);
-			return ;
+			if (ft_strchr("diucsphH%", format[i + 1]) != 0)
+			{
+				nb_char += print_arg(fd, argptr, format[i + 1]);
+				i++;
+			}
+			i++;
 		}
-		write (fd, "-", 1);
-		n *= -1;
-		ft_putnbr_fd(n, fd);
+		else
+		{
+			ft_putchar_fd(format[i], 1);
+			nb_char++;
+			i++;
+		}
 	}
-	else
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
-	}
+	return (nb_char);
 }

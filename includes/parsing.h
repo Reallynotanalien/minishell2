@@ -1,3 +1,4 @@
+
 #ifndef PARSING_H
 # define PARSING_H
 
@@ -6,10 +7,6 @@
 /*ERROR MESSAGES*/
 # define STRDUP_ERROR "Could not duplicate string.\n"
 # define QUOTES_ERROR "found unclosed quotation marks\n"
-
-/*STRUCTS*/
-
-/*FUNCTIONS*/
 
 //build_commands.c
 int			build_commands(void);
