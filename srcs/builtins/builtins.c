@@ -24,7 +24,8 @@ int	echo_builtin(char	**cmd)
 				ft_putchar_fd(cmd[i_cmd][i_line], STDOUT_FILENO);
 		}
 		i_cmd++;
-		ft_putchar_fd(' ', STDOUT_FILENO);
+		if (cmd[i_cmd])
+			ft_putchar_fd(' ', STDOUT_FILENO);
 	}
 	if (cmd[1] && ft_strcmp(cmd[1], "-n"))
 		ft_putchar_fd('\n', STDOUT_FILENO);
@@ -150,7 +151,7 @@ int	exit_builtin(char **cmd)
 
 	i = -1;
 	if (cmd[1] && cmd[2])
-		return (print_error("minishell: exit: too many arguments"), 1);
+		return (print_error("minishell: exit: too many arguments", NULL, NULL, 0, 1), 1);
 	if (cmd[1])
 	{
 		while (cmd[1][++i])

@@ -18,7 +18,6 @@ int			build_commands(void);
 int			parsing_error(char *error);
 void		cleanup(void);
 void		exit_program(int code);
-int			print_error(char *message);
 
 //line_parsing.c
 int			parse_quotes(char *str);

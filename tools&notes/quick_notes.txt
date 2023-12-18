@@ -1,8 +1,7 @@
-DOING :
+DOING : correct errror messages and return values in the parsing/exec -> use new print_error() function
 
-correct errror messages and return values in the parsing/exec - Rework print_error (needs to print command) - STDERR. Can print perror, and set use_data()->exstat. Custom message + char *
-weird behavior with /, //, /,
-echo -n Hola should print holaminishell$> but prints hola minishell $>
+echo hi | cat -e : makes minishell crash 
+weird behavior with /, //, /, -> use opendir to know if a file is a directory. If it is, return an error if used as a command. 
 quoted options should be valid, but aren't right now
 echo "           " | cat -e : this doesn't work
 

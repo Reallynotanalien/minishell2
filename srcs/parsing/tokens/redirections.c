@@ -20,7 +20,7 @@ int	token_redirout(t_token *token)
 			|| access ((token_lower), W_OK) == 0)
 			fd = open(token_copy, O_TRUNC | O_WRONLY);
 		else
-			return (free(token_lower), free(token_copy), print_error("Error in redirout"), -1);
+			return (free(token_lower), free(token_copy), print_error("minishell: ", token_copy, NULL, 1, 1), -1);
 	}
 	else
 		fd = open(token_copy, O_CREAT | O_TRUNC | O_WRONLY, 0644);
@@ -46,7 +46,7 @@ int	token_redirappend(t_token *token)
 			fd = open(token_copy, O_APPEND | O_WRONLY);
 		else
 			return (free(token_lower), free(token_copy), 
-				print_error("Error in redirappend"), -1);
+				print_error("minishell: ", token_copy, NULL, 1, 1), -1);
 	}
 	else
 		fd = open(token_copy, O_CREAT | O_APPEND | O_WRONLY, 0644);
@@ -70,14 +70,14 @@ int	token_redirin(t_token *token)
 	if (access(token_copy, F_OK | R_OK) == -1
 		|| access(token_lower, F_OK | R_OK) == -1)
 		return (free(token_lower), free(token_copy),
-			print_error("Error in redirin"), -1);
+			print_error("minishell: ", token_copy, NULL, 1, 1), -1);
 	fd = open(token_copy, O_RDONLY);
 	if (fd < 0)
 	{
 		fd = open(token_lower, O_RDONLY);
 		if (fd < 0)
 			return (free(token_lower), free(token_copy),
-				print_error("Error in redirappend"), -1);
+				print_error("minishell: ", token_copy, NULL, 1, 1), -1);
 	}
 	if (use_data()->infile != STDIN_FILENO)
 		close(use_data()->infile);

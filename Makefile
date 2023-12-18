@@ -29,6 +29,7 @@ SRCS =	./srcs/init.c \
 		./srcs/builtins/export_builtin.c \
 		./srcs/builtins/builtins.c \
 		./srcs/cleaning.c \
+		./srcs/errors/error_handling.c \
 				
 
 #colours ------------------------------------------
@@ -59,13 +60,13 @@ $(NAME): $(OBJS)
 all: $(NAME)
 
 clean:
-	@$(MAKE) clean -C ./includes/Libft
+	@$(MAKE) clean -C ./includes/libft
 	@$(RM) $(OBJS)
 	@$(RM) $(ODIR)
 	@echo "🧹"
 
 fclean: clean
-	@$(MAKE) fclean -C ./includes/Libft
+	@$(MAKE) fclean -C ./includes/libft
 	@$(RM) $(NAME)
 	@echo "$(RED)$(NAME) has been deleted 🗑️$(COLOUR_END)"
 
