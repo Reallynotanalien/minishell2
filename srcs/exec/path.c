@@ -29,6 +29,8 @@ char	*find_path(t_command **cmd, char **env)
 	int		i;
 	char	**path_env;
 
+	if (!use_data()->new_env || !use_data()->new_env[0])
+		return (NULL);
 	i = 0;
 	while (env[i])
 	{
@@ -36,7 +38,7 @@ char	*find_path(t_command **cmd, char **env)
 			break ;
 		i++;
 		if (env[i] == NULL || env[i + 1] == NULL)
-			return (FIND_PATH_ERROR);
+			return (NULL);
 	}
 	path_env = (char **)ft_split(env[i] + 5, ':');
 	i = 0;
@@ -49,9 +51,9 @@ t_command	*find_cmd(t_command **cmd)
 {
 	(*cmd)->path = find_path(cmd, use_data()->new_env);
 	if ((*cmd)->path == NULL
-		|| ft_strncmp(FIND_PATH_ERROR, (*cmd)->path, 43) == 0)
+		|| access((*cmd)->path, X_OK) == -1)
 	{
-		printf("COULD NOT FIND PATH\n");
+		print_error("minishell: ", (*cmd)->cmd[0], "command not found", 0, 127);
 		use_data()->error_flag = ERROR;
 		use_data()->exstat = 127;
 	}
@@ -63,7 +65,7 @@ return it as is. If not, we find the path and as well as changing
 it directly in the struct, we return it.*/
 char	*get_path(t_command *cmd)
 {
-	if (access(cmd->cmd[0], F_OK) == 0)
+	if (access(cmd->cmd[0], F_OK | X_OK) == 0)
 		cmd->path = cmd->cmd[0];
 	else
 		find_cmd(&cmd);

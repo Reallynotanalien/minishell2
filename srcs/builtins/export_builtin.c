@@ -125,6 +125,8 @@ int	export_builtin(char **cmd)
 	int		i_line;
 	char	*var_name;
 
+	if (!use_data()->new_env || !use_data()->new_env[0])
+		return (0);
 	if (!cmd[1])
 		print_export();
 	i_cmd = 1;

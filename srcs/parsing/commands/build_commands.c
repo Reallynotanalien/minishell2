@@ -29,40 +29,38 @@ char	*join_command(char *str, char *add)
 }
 
 //needs to return the str containing everything but redirections and pipes
-t_token	*command_loop(t_token *tokens)
+int	command_loop(t_token **tokens)
 {
 	char	*command;
 
+	// printf("I got inside the command loop\n");
 	command = NULL;
-	while (tokens)
+	while (*tokens)
 	{
-		if (tokens->type == T_PIPE)
+		if ((*tokens)->type == T_PIPE)
 			break ;
-		else if (tokens->type == T_HEREDOC)
-		{
-			//signal(SIGINT, heredoc_handler);
-			use_data()->infile = open_heredoc(tokens);
-			//signal(SIGINT, interruption_handler);
-		}
-		else if (tokens->type == T_INFILE)
-			token_redirin(tokens);
-		else if (tokens->type == T_OUTFILE)
-			token_redirout(tokens);
-		else if (tokens->type == T_APPEND)
-			token_redirappend(tokens);
-		else if (tokens->type == T_STR)
-			command = join_command(command, tokens->token);
-		if (tokens->next)
-			tokens = tokens->next;
+		else if ((*tokens)->type == T_HEREDOC)
+			use_data()->infile = open_heredoc(*tokens);
+		else if ((*tokens)->type == T_INFILE && token_redirin(*tokens) == -1)
+			return (1);
+		else if ((*tokens)->type == T_OUTFILE && token_redirout(*tokens) == -1)
+			return (1);
+		else if ((*tokens)->type == T_APPEND && token_redirappend(*tokens) == -1)
+			return (1);
+		else if ((*tokens)->type == T_STR)
+			command = join_command(command, (*tokens)->token);
+		if ((*tokens)->next)
+			*tokens = (*tokens)->next;
 		else
 			break ;
+		// printf("I got to the end of the command loop\n");
 	}
 	if (command)
 		add_command(command, use_data()->infile, use_data()->outfile);
-	return (tokens);
+	return (0);
 }
 
-void	build_commands(void)
+int	build_commands(void)
 {
 	t_token	*tokens;
 
@@ -71,10 +69,12 @@ void	build_commands(void)
 	{
 		use_data()->infile = STDIN_FILENO;
 		use_data()->outfile = STDOUT_FILENO;
-		tokens = command_loop(tokens);
+		if (command_loop(&tokens))
+			return (1);
 		if (tokens->next)
 			tokens = tokens->next;
 		else
 			break ;
 	}
+	return (0);
 }

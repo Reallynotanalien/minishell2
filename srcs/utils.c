@@ -63,6 +63,8 @@ char	*ft_getenv(char *var_name)
 	int		i;
 
 	i = -1;
+	if (!use_data()->new_env || !use_data()->new_env[0])
+		return (NULL);
 	tmp = get_varname(use_data()->new_env[0]);
 	while (use_data()->new_env[++i] && ft_strcmp(var_name, tmp))
 	{

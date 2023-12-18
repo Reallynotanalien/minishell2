@@ -1,9 +1,13 @@
-DOING : leaks -> need to fix invalid cmd given to execve
+DOING : correct errror messages and return values in the parsing/exec -> use new print_error() function
 
-Problems :
+echo hi | cat -e : makes minishell crash 
+weird behavior with /, //, /, -> use opendir to know if a file is a directory. If it is, return an error if used as a command. 
+quoted options should be valid, but aren't right now
+echo "           " | cat -e : this doesn't work
+
+- leaks : fix overwritten malloced variable in exec.c (child_two)(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0])()
 - here_doc
 - signals
-- clean debug printfs
 
 
 cat | ls : minishell does not behave correctly; it should wait for input for cat. Now it sorta crashes. Need to stop with a signal ?

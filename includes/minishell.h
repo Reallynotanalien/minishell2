@@ -34,7 +34,6 @@
 # define ARGC_ERROR "No argument should be sent appart from the program's name\n"
 # define ENV_ERROR "The environment could not be copied\n"
 # define ARGV_ERROR "There is no argv\n"
-# define FIND_PATH_ERROR "Path was not found\n"
 
 /*STRUCTS*/
 
@@ -61,7 +60,6 @@ typedef struct s_data
 {
 	struct s_token		*token;
 	struct s_command	*cmd;
-	char				*error_source;
 	int					error_flag;
 	int					heredoc_flag;
 	int					exstat;
@@ -98,6 +96,7 @@ void		print_array(void);
 void		safe_free(void **ptr);
 void		clean_data(void);
 void		set_exstat(int *status);
+void        print_error(char *src, char *cmd, char *error, int perror_flag, int exstat);
 
 //linked_list.c
 t_token		*add_token(char *token);

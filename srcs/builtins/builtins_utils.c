@@ -89,6 +89,8 @@ int	is_envvar(char	*varname)
 	char	*tmp;
 
 	i = -1;
+	if (!use_data()->new_env || !use_data()->new_env[0])
+		return (0);
 	while (use_data()->new_env[++i])
 	{
 		tmp = get_varname(use_data()->new_env[i]);

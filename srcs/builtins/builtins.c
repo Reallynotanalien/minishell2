@@ -24,7 +24,8 @@ int	echo_builtin(char	**cmd)
 				ft_putchar_fd(cmd[i_cmd][i_line], STDOUT_FILENO);
 		}
 		i_cmd++;
-		ft_putchar_fd(' ', STDOUT_FILENO);
+		if (cmd[i_cmd])
+			ft_putchar_fd(' ', STDOUT_FILENO);
 	}
 	if (cmd[1] && ft_strcmp(cmd[1], "-n"))
 		ft_putchar_fd('\n', STDOUT_FILENO);
@@ -36,6 +37,8 @@ int	cd_builtin(char **cmd)
 {
 	char	*tmp;
 
+	if (!use_data()->new_env || !use_data()->new_env[0])
+		return (0);
 	if (!cmd[1])
 	{
 		tmp = ft_getenv("HOME");
@@ -112,6 +115,8 @@ int	unset_builtin(char **cmd)
 {
 	int		i;
 
+	if (!use_data()->new_env || !use_data()->new_env[0])
+		return (0);
 	i = 0;
 	while (cmd[++i])
 		unset_var(cmd[i]);
@@ -126,17 +131,14 @@ int	env_builtin(void)
 
 	i = 0;
 	if (!use_data()->new_env || !use_data()->new_env[0])
-	{
-		printf("\n");
 		return (0);
-	}
 	tmp = get_varvalue(use_data()->new_env[0]);
-	while (use_data()->new_env[i])
+	while (use_data()->new_env[++i])
 	{
 		if (tmp)
 			printf("%s\n", use_data()->new_env[i]);
 		free (tmp);
-		tmp = get_varvalue(use_data()->new_env[++i]);
+		tmp = get_varvalue(use_data()->new_env[i]);
 	}
 	free(tmp);
 	return (0);
@@ -149,7 +151,7 @@ int	exit_builtin(char **cmd)
 
 	i = -1;
 	if (cmd[1] && cmd[2])
-		return (print_error("minishell: exit: too many arguments"), 1);
+		return (print_error("minishell: exit: too many arguments", NULL, NULL, 0, 1), 1);
 	if (cmd[1])
 	{
 		while (cmd[1][++i])
