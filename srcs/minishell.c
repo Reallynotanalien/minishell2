@@ -2,7 +2,6 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	ft_printf(1, "hello this is from printf :) %s %d", "hi", 10);
 	if (main_parsing(argc, argv, env) == ERROR)
 		exit(1);
 	signals(); 
