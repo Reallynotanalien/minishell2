@@ -84,7 +84,10 @@ int	remove_spaces(char *str)
 	if (end != i)
 		end++;
 	if (end == i)
-		return (1);
+	{
+		use_data()->line_cpy = ft_strdup(str);
+		return (0);
+	}
 	else
 		use_data()->line_cpy = skip_consecutives(i, end, str);
 	if (use_data()->line_cpy == NULL)
