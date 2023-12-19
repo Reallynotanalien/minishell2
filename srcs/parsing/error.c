@@ -17,8 +17,6 @@ attributes and exiting.*/
 void	exit_program(int code)
 {
 	cleanup();
-	//printf to be deleted later on
-	// printf("Cleanup done!\n");
-	// restore_attributes();
+	restore_attributes();
 	exit(code);
 }
