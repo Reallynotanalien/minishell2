@@ -33,7 +33,6 @@ int	command_loop(t_token **tokens)
 {
 	char	*command;
 
-	// printf("I got inside the command loop\n");
 	command = NULL;
 	while (*tokens)
 	{
@@ -45,7 +44,8 @@ int	command_loop(t_token **tokens)
 			return (1);
 		else if ((*tokens)->type == T_OUTFILE && token_redirout(*tokens) == -1)
 			return (1);
-		else if ((*tokens)->type == T_APPEND && token_redirappend(*tokens) == -1)
+		else if ((*tokens)->type == T_APPEND
+			&& token_redirappend(*tokens) == -1)
 			return (1);
 		else if ((*tokens)->type == T_STR)
 			command = join_command(command, (*tokens)->token);
@@ -53,7 +53,6 @@ int	command_loop(t_token **tokens)
 			*tokens = (*tokens)->next;
 		else
 			break ;
-		// printf("I got to the end of the command loop\n");
 	}
 	if (command)
 		add_command(command, use_data()->infile, use_data()->outfile);

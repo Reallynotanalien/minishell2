@@ -17,7 +17,8 @@ int	parse_quotes(char *str)
 		if (str[i] == '\"')
 			double_quotes ++;
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
-		return (parsing_error(QUOTES_ERROR));
+		return (ft_printf(2, "minishell: quotations are not closed"),
+			set_exstat(NULL, 1), ERROR);
 	return (0);
 }
 
@@ -46,18 +47,20 @@ int	find_lenght(char *str, int end)
 	return (len);
 }
 
-
 char	*skip_consecutives(int i, int end, char *str)
 {
 	int		i_new;
 	char	*new_str;
 
 	new_str = ft_calloc(find_lenght(str, end) + 1, sizeof(char));
+	if (!new_str)
+		return (ft_printf(2, "minishell: fatal error\n"),
+			set_exstat(NULL, 1), NULL);
 	i_new = 0;
 	while (i < end)
 	{
 		while (str[i] && (!ft_iswhitespace(str[i]) 
-			|| double_quoted(str, i) || single_quoted(str, i)))
+				|| double_quoted(str, i) || single_quoted(str, i)))
 			new_str[i_new++] = str[i++];
 		if (i < end)
 			new_str[i_new++] = ' ';
@@ -84,5 +87,7 @@ int	remove_spaces(char *str)
 		return (1);
 	else
 		use_data()->line_cpy = skip_consecutives(i, end, str);
+	if (use_data()->line_cpy == NULL)
+		return (ERROR);
 	return (0);
 }

@@ -86,9 +86,11 @@ void	print_array(void)
 		printf("%s\n", use_data()->new_env[i]);
 }
 
-void	set_exstat(int *status)
+void	set_exstat(int *status, int exstat)
 {
-	if (WIFEXITED(*status))
+	if (!status)
+		use_data()->exstat = exstat;
+	else if (WIFEXITED(*status))
 		use_data()->exstat = WEXITSTATUS(*status);
 	else
 		if (WIFSIGNALED(*status))

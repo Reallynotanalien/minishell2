@@ -31,7 +31,7 @@ void	child_two(t_command **cmd)
 			//reset_files();
 			status = ft_calloc(1, sizeof(int));
 			waitpid(use_data()->pid, status, 0);
-			set_exstat(status);
+			set_exstat(status, 0);
 			free (status);
 		}	
 	}

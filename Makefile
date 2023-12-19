@@ -29,7 +29,6 @@ SRCS =	./srcs/init.c \
 		./srcs/builtins/export_builtin.c \
 		./srcs/builtins/builtins.c \
 		./srcs/cleaning.c \
-		./srcs/errors/error_handling.c \
 				
 
 #colours ------------------------------------------

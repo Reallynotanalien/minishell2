@@ -1,37 +1,37 @@
 # include "../../includes/minishell.h"
 
 //returns an allocated copy of the environment
-char	**copy_env(char **env)
-{
-	char	**new_env;
-	int		nb_lines;
-	int		i;
+// char	**copy_env(char **env)
+// {
+// 	char	**new_env;
+// 	int		nb_lines;
+// 	int		i;
 
-	nb_lines = 0;
-	while (env[nb_lines])
-		nb_lines++;
-	new_env = ft_calloc(nb_lines + 1, sizeof(char *));
-	i = -1;
-	while (env[++i])
-		new_env[i] = ft_strdup(env[i]);
-	return (new_env);
-}
+// 	nb_lines = 0;
+// 	while (env[nb_lines])
+// 		nb_lines++;
+// 	new_env = ft_calloc(nb_lines + 1, sizeof(char *));
+// 	i = -1;
+// 	while (env[++i])
+// 		new_env[i] = ft_strdup(env[i]);
+// 	return (new_env);
+// }
 
 /*Checks if the minishell args are valid and makes a copy
 of the env variable to be used later.*/
-int	main_parsing(int argc, char **argv, char **env)
-{
-	(void)argc;
-	(void)argv;
-	// if (argc != 1)
-	// 	return (print_error(ARGC_ERROR));
-	use_data()->new_env = copy_env(env);
-	// if (!use_data()->new_env)
-		// return (print_error(ENV_ERROR));
-	// if (!argv)
-	// 	return (print_error(ARGV_ERROR));
-	return (0);
-}
+// int	main_parsing(int argc, char **argv, char **env)
+// {
+// 	(void)argc;
+// 	(void)argv;
+// 	// if (argc != 1)
+// 	// 	return (print_error(ARGC_ERROR));
+// 	use_data()->new_env = copy_env(env);
+// 	// if (!use_data()->new_env)
+// 		// return (print_error(ENV_ERROR));
+// 	// if (!argv)
+// 	// 	return (print_error(ARGV_ERROR));
+// 	return (0);
+// }
 
 /*First checks if all the quotes are closed, if not, returns ERROR
 and sets the error flag to ERROR.
@@ -65,10 +65,7 @@ void	line_parsing(void)
 		use_data()->error_flag = ERROR;
 		return (free_tokens_if_not_empty());
 	}
-	// view_list();
-	//check whitespaces function because now the éèà characters won't print 
-	//if they are at the beginning of a sentence
-	if (build_commands())
+	if (build_commands() == ERROR)
 		use_data()->error_flag = ERROR;
 	free_tokens_if_not_empty();
 }
