@@ -26,6 +26,7 @@ void	child_handler(int signum)
 void	heredoc_handler(int signum)
 {
 	(void) signum;
+	free(use_data()->here_doc_str);
 	exit(1);
 }
 
