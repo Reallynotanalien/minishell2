@@ -26,7 +26,13 @@ void	child_handler(int signum)
 void	heredoc_handler(int signum)
 {
 	(void) signum;
-	printf("");
+	use_data()->error_flag = ERROR;
+	// close(use_data()->temp_file);
+	// use_data()->here_doc_str = use_data()->here_doc_token;
+	ft_putstr_fd(use_data()->here_doc_token, 0);
+	// rl_replace_line("", 0);
+	// rl_redisplay();
+	// exit(130);
 }
 
 /*Since we do not want the ^C characters to be echoed when we press Ctrl+C,

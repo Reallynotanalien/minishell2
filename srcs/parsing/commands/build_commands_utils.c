@@ -6,33 +6,32 @@ in RD_ONLY mode to use as input for the program. The output file is opened
 with O_APPEND to deal with << >>.*/
 int	open_heredoc(t_token *tokens)
 {
-	char	*str;
-	char	*token;
-	int		temp_file;
 	int		here_doc;
 
-	temp_file = open(".here_doc", O_TRUNC | O_CREAT | O_WRONLY, 0644);
-	token = ft_strtrim_whitespaces(ft_substr(tokens->token, 2, ft_strlen(tokens->token) - 2));
+	signal(SIGINT, heredoc_handler);
+	use_data()->temp_file = open(".here_doc", O_TRUNC | O_CREAT | O_WRONLY, 0644);
+	use_data()->here_doc_token = ft_strtrim_whitespaces(ft_substr(tokens->token, 2, ft_strlen(tokens->token) - 2));
 	if (tokens->next && tokens->next->type == T_STR)
 		printf("Heredoc should not work here because there is something else than a redirection after the EOF\n");
-	while (get_next_line(0, &str))
+	while (get_next_line(0, &use_data()->here_doc_str))
 	{
-		if ((ft_strlen(str) == ft_strlen(token) + 1)
-			&& (ft_strncmp(str, token, ft_strlen(token)) == 0))
+		if ((ft_strlen(use_data()->here_doc_str) == ft_strlen(use_data()->here_doc_token) + 1)
+			&& (ft_strncmp(use_data()->here_doc_str, use_data()->here_doc_token, ft_strlen(use_data()->here_doc_token)) == 0))
 		{
-			free(str);
+			free(use_data()->here_doc_str);
 			break ;
 		}
 		else
-			write(temp_file, str, ft_strlen(str));
-		free(str);
+			write(use_data()->temp_file, use_data()->here_doc_str, ft_strlen(use_data()->here_doc_str));
+		free(use_data()->here_doc_str);
 	}
-	if (str == NULL)
+	if (use_data()->here_doc_str == NULL)
 		printf("ctrl+d was pushed\n");
-	close(temp_file);
+	close(use_data()->temp_file);
 	here_doc = open(".here_doc", O_RDONLY);
 	use_data()->heredoc_flag = YES;
-	free(token);
+	free(use_data()->here_doc_token);
+	signal(SIGINT, interruption_handler);
 	return (here_doc);
 }
 
