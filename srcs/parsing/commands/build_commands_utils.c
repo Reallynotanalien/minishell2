@@ -37,10 +37,10 @@ int	open_heredoc(t_token *tokens)
 	}
 	status = ft_calloc(1, sizeof(int));
 	waitpid(use_data()->pid, status, 0);
-	if (*status == 1)
-		printf("ctrl+c\n");
-	// if (WIFEXITED(*status))
-	// 	use_data()->error_flag = ERROR;
+	if (*status == 0)
+		ft_printf(2, "exited normally\n");
+	else
+		ft_printf(2, "exited abnormally\n");
 	close(use_data()->temp_file);
 	here_doc = open(".here_doc", O_RDONLY);
 	use_data()->heredoc_flag = YES;
