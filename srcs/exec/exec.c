@@ -18,7 +18,10 @@ void	child_two(t_command **cmd)
 		use_data()->pid = fork();
 		signal(SIGINT, child_handler);
 		if (use_data()->pid == -1)
-			printf("FORK did not work\n");
+		{
+			set_exstat(NULL, 1);
+			perror("minishell: fork: ");
+		}
 		else if (use_data()->pid == 0)
 		{
 			dup_infile(cmd);
@@ -69,13 +72,19 @@ void	pipex(t_command **cmd)
 	//need to give the right error codes to the errors
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	if (pipe(use_data()->fd) < 0)
-		printf("PIPE did not work\n");
+	{
+		set_exstat(NULL, 1);
+		perror("minishell: pipe: ");
+	}
 	if (!confirm_builtin((*cmd)->cmd))
 	{
 		use_data()->pid = fork();
 		signal(SIGINT, child_handler);
 		if (use_data()->pid == -1)
-			printf("FORK did not work\n");
+		{
+			set_exstat(NULL, 1);
+			perror("minishell: fork: ");
+		}
 		else if (use_data()->pid == 0)
 			child_one(cmd);
 		else

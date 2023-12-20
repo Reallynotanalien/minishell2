@@ -2,7 +2,7 @@ DOING : rework error handling - create set_exstat function, replace with ft_prin
 
 redirections + pipes doesnt work (echo hi | wc > file2)
 weird behavior with /, //, /, -> use opendir to know if a file is a directory. If it is, return an error if used as a command. 
-quoted options should be valid, but aren't right now
+quoted cmds/options should be valid, but aren't right now
 
 - leaks : fix overwritten malloced variable in exec.c (child_two)(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0])()
 - here_doc
@@ -15,3 +15,5 @@ ctrl+c should bring the history back to the bottom
 
 valgrind :
  valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --track-origins=yes --track-fds=yes --trace-children=yes ./minishell
+
+dans exec.c, child_two, le child_handler devrait peut-être être seulement dans le child ?

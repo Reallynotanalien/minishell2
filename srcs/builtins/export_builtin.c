@@ -135,11 +135,9 @@ int	export_builtin(char **cmd)
 	{
 		var_name = get_varname(cmd[i_cmd]);
 		if (!isvalid_varname(var_name))
-		{
-			printf("minishell: export: '%s': is not a valid identifier\n",
-				cmd[i_cmd]);
-			return (1);
-		}
+			return (ft_printf(2,
+					"minishell: export: '%s': is not a valid identifier\n",
+					cmd[i_cmd]), set_exstat(NULL, 1), 1);
 		add_varenv(ft_strdup(cmd[i_cmd]));
 		i_cmd++;
 		free(var_name);

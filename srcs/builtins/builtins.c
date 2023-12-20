@@ -43,17 +43,12 @@ int	cd_builtin(char **cmd)
 	{
 		tmp = ft_getenv("HOME");
 		if (chdir("/Users/edufour"))
-		{
-			printf("minishell: cd: HOME not set\n");
-			return (free (tmp), 1);
-		}
+			return (ft_printf(2, "minishell: cd: HOME not set\n"),
+				set_exstat(NULL, 1), free(tmp), 1);
 		free (tmp);
 	}
 	else if (chdir(cmd[1]) == -1)
-	{
-		perror("minishell: cd: ");
-		return (1);
-	}
+		return (perror("minishell: cd: "), set_exstat(NULL, 1), 1);
 	return (0);
 }
 
@@ -77,10 +72,9 @@ int	unset_var(char *variable)
 
 	i = 0;
 	if (!isvalid_varname(variable))
-	{
-		printf("minishell: unset: \'%s\': not a valid identifier\n", variable);
-		return (1);
-	}
+		return (ft_printf(2, 
+				"minishell: unset: \'%s\': not a valid identifier\n", variable),
+			set_exstat(NULL, 1), 1);
 	i = -1;
 	while (use_data()->new_env[++i])
 	{
@@ -158,14 +152,12 @@ int	exit_builtin(char **cmd)
 		{
 			if (!ft_isdigit(cmd[1][i]))
 			{
-				printf("exit\n"); ft_printf(2, "minishell: exit: %s: numeric argument required\n", 
-					cmd[1]);
-				return (exit_program(255), 0);
+				return (ft_printf(2,
+						"minishell: exit: %s: numeric argument required\n",
+						cmd[1]), exit_program(255), 0);
 			}
 		}
-		printf("exit\n");
-		return (exit_program(ft_atoi(cmd[1])), 0);
+		return (ft_printf(1, "exit\n"), exit_program(ft_atoi(cmd[1])), 0);
 	}
-	printf("exit\n");
-	return (exit_program(0), 0);
+	return (ft_printf(1, "exit\n"), exit_program(0), 0);
 }

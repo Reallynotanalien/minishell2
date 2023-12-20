@@ -17,7 +17,7 @@ int	parse_quotes(char *str)
 		if (str[i] == '\"')
 			double_quotes ++;
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
-		return (ft_printf(2, "minishell: quotations are not closed"),
+		return (ft_printf(2, "minishell: quotations are not closed\n"),
 			set_exstat(NULL, 1), ERROR);
 	return (0);
 }
