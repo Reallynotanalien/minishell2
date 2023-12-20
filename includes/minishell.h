@@ -63,7 +63,6 @@ typedef struct s_data
 	struct s_command	*cmd;
 	int					error_flag;
 	int					heredoc_flag;
-	int					temp_file;
 	int					exstat;
 	int					infile;
 	int					outfile;
@@ -76,7 +75,6 @@ typedef struct s_data
 	char				*line;
 	char				*line_cpy;
 	char				*here_doc_str;
-	char				*here_doc_token;
 	struct termios		old_attributes;
 	struct termios		new_attributes;
 }				t_data;
