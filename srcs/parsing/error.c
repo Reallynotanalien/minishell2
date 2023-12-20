@@ -21,6 +21,13 @@ void	exit_program(int code)
 	exit(code);
 }
 
+void	heredoc_error(char *error, int status)
+{
+	ft_printf(2, error);
+	use_data()->error_flag = ERROR;
+	set_exstat(NULL, status);
+}
+
 int	*get_pid_status(void)
 {
 	int	*status;

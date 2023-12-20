@@ -1,5 +1,8 @@
 # include "../../../includes/minishell.h"
 
+/*Uses get_next_line to take input from the terminal and put it in the
+temporary file. If CTRL+C is pressed, the child is closed so that 
+get_next_line will not be waiting for input.*/
 void	heredoc_input(int temp_file, char *token)
 {
 	signal(SIGINT, heredoc_handler);
@@ -23,7 +26,7 @@ void	heredoc_input(int temp_file, char *token)
 /*Opens a temporary file called .here_doc and uses get_next_line to take input
 from the terminal and put it in that file. It is then closed, then reopened
 in RD_ONLY mode to use as input for the program. The output file is opened
-with O_APPEND to deal with << >>.*/
+with O_APPEND to deal with <<.*/
 int	open_heredoc(t_token *tokens)
 {
 	int		here_doc;
@@ -34,12 +37,12 @@ int	open_heredoc(t_token *tokens)
 	signal(SIGINT, child_handler);
 	temp_file = open(".here_doc", O_TRUNC | O_CREAT | O_WRONLY, 0644);
 	if (!temp_file)
-		ft_printf(2, HD_OPEN_ERROR);
+		heredoc_error(HD_OPEN_ERROR, 1);
 	token = ft_strtrim_whitespaces(ft_substr(tokens->token, 2,
 				ft_strlen(tokens->token) - 2));
 	use_data()->pid = fork();
 	if (use_data()->pid == -1)
-		ft_printf(2, HD_FORK_ERROR);
+		heredoc_error(HD_FORK_ERROR, 1);
 	else if (use_data()->pid == 0)
 		heredoc_input(temp_file, token);
 	status = get_pid_status();
