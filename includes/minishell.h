@@ -35,6 +35,8 @@
 # define ARGC_ERROR "No argument should be sent appart from the program's name\n"
 # define ENV_ERROR "The environment could not be copied\n"
 # define ARGV_ERROR "There is no argv\n"
+# define HD_FORK_ERROR "minishell: heredoc: could not fork\n"
+# define HD_OPEN_ERROR "minishell: heredoc: could not open heredoc\n"
 
 /*STRUCTS*/
 
@@ -63,7 +65,6 @@ typedef struct s_data
 	struct s_command	*cmd;
 	int					error_flag;
 	int					heredoc_flag;
-	int					temp_file;
 	int					exstat;
 	int					infile;
 	int					outfile;
@@ -76,7 +77,6 @@ typedef struct s_data
 	char				*line;
 	char				*line_cpy;
 	char				*here_doc_str;
-	char				*here_doc_token;
 	struct termios		old_attributes;
 	struct termios		new_attributes;
 }				t_data;
@@ -161,4 +161,6 @@ void		reset_files(void);
 //exec
 void		exec(t_command *cmd);
 
+int			*get_pid_status(void);
+void		heredoc_error(char *error, int status);
 #endif
