@@ -35,6 +35,8 @@
 # define ARGC_ERROR "No argument should be sent appart from the program's name\n"
 # define ENV_ERROR "The environment could not be copied\n"
 # define ARGV_ERROR "There is no argv\n"
+# define HD_FORK_ERROR "minishell: heredoc: could not fork\n"
+# define HD_OPEN_ERROR "minishell: heredoc: could not open heredoc\n"
 
 /*STRUCTS*/
 
@@ -159,4 +161,5 @@ void		reset_files(void);
 //exec
 void		exec(t_command *cmd);
 
+int			*get_pid_status(void);
 #endif

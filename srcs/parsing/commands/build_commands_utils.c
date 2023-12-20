@@ -33,15 +33,16 @@ int	open_heredoc(t_token *tokens)
 
 	signal(SIGINT, child_handler);
 	temp_file = open(".here_doc", O_TRUNC | O_CREAT | O_WRONLY, 0644);
+	if (!temp_file)
+		ft_printf(2, HD_OPEN_ERROR);
 	token = ft_strtrim_whitespaces(ft_substr(tokens->token, 2,
 				ft_strlen(tokens->token) - 2));
 	use_data()->pid = fork();
 	if (use_data()->pid == -1)
-		printf("FORK DID NOT WORK\n");
+		ft_printf(2, HD_FORK_ERROR);
 	else if (use_data()->pid == 0)
 		heredoc_input(temp_file, token);
-	status = ft_calloc(1, sizeof(int));
-	waitpid(use_data()->pid, status, 0);
+	status = get_pid_status();
 	if (*status != 0)
 		use_data()->error_flag = ERROR;
 	close(temp_file);
