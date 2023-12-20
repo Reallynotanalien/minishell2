@@ -1,5 +1,5 @@
 
-DOING : progressed on quoted cmds -> now it works, but the next arguments takes the previous's last char
+DOING : progressed on quoted cmds -> now it works, printing env vars segfaults
 
 redirections + pipes doesnt work (echo hi | wc > file2)
 

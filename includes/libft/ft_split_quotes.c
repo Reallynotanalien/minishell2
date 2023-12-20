@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:03:42 by kafortin          #+#    #+#             */
-/*   Updated: 2023/12/20 15:29:11 by edufour          ###   ########.fr       */
+/*   Updated: 2023/12/20 15:53:03 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,15 +134,14 @@ void	**ft_split_quotes(char const *s, char c)
 	if (!temp)
 		return (NULL);
 	len = ft_count_words_quotes(temp, c);
-	printf("\nDEGUB: %zu\n", len);
 	new_tab = (void **)ft_calloc(sizeof(char *), (len + 1));
 	while (a < len)
 	{
 		new_tab[a] = ft_str_malloc_copy((temp + b), c);
-		new_tab[a] = remove_quotes(new_tab[a]);
 		while (temp[b] != '\0' && temp[b] == c)
 			b++;
-		b += ft_strlen(new_tab[a]);
+		b += ft_strlen(new_tab[a]);		//-> this is incorect, as it does not take into consideration the removed quotes.
+		new_tab[a] = remove_quotes(new_tab[a]);
 		a++;
 	}
 	free(temp);
