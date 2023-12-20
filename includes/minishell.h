@@ -162,5 +162,4 @@ void		reset_files(void);
 void		exec(t_command *cmd);
 
 int			*get_pid_status(void);
-void		heredoc_error(char *error, int status);
 #endif
