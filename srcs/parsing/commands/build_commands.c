@@ -1,5 +1,33 @@
 # include "../../../includes/minishell.h"
 
+char	*join_command(char *str, char *add)
+{
+	char	*new_str;
+	int		i;
+	int		i_add;
+
+	if (str == NULL)
+		new_str = ft_calloc(ft_strlen(add) + 1, sizeof(char));
+	else
+		new_str = ft_calloc(ft_strlen(str) + ft_strlen(add) + 2, sizeof(char));
+	i = 0;
+	if (str)
+	{
+		i = -1;
+		while (str[++i])
+			new_str[i] = str[i];
+		new_str[i] = ' ';
+	}
+	i_add = -1;
+	while (add[++i_add])
+		new_str[i + i_add] = add[i_add];
+	new_str[i + i_add] = '\0';
+	if (str)
+		free (str);
+	return (new_str);
+}
+
+
 t_token	*command_loop(t_token *tokens, char **command)
 {
 	while (tokens)
@@ -15,10 +43,7 @@ t_token	*command_loop(t_token *tokens, char **command)
 		else if (tokens->type == T_APPEND)
 			token_redirappend(tokens);
 		else if (tokens->type == T_STR)
-		{
-			*command = join_free(*command, " ");
-			*command = join_free(*command, tokens->token);
-		}
+			*command = join_command(*command, tokens->token);
 		if (tokens->next)
 			tokens = tokens->next;
 		else

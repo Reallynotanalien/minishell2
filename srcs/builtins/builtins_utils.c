@@ -20,7 +20,7 @@ int	confirm_builtin(char **cmd)
 
 	if (cmd[0] == NULL)
 		return (0);
-	lower_cmd = ft_calloc(7, sizeof(char));
+	lower_cmd = ft_strlower(cmd[0]);
 	if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "echo"))
 		return (1);
 	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "cd"))

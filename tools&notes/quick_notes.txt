@@ -1,8 +1,8 @@
-DOING : weird behavior with /, //, /, -> use opendir to know if a file is a directory. If it is, return an error if used as a command. 
+
+DOING : progressed on quoted cmds -> now it works, but the next arguments takes the previous's last char
 
 redirections + pipes doesnt work (echo hi | wc > file2)
-weird behavior with /, //, /, -> use opendir to know if a file is a directory. If it is, return an error if used as a command. 
-quoted cmds/options should be valid, but aren't right now
+
 
 - leaks : fix overwritten malloced variable in exec.c (child_two)(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0])()
 - here_doc

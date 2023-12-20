@@ -6,12 +6,13 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:03:42 by kafortin          #+#    #+#             */
-/*   Updated: 2023/12/17 14:20:58 by edufour          ###   ########.fr       */
+/*   Updated: 2023/12/20 15:29:11 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
+#include "../minishell.h"
 
 /*Returns yes if the character is a double quote.*/
 int	is_double_quotee(char c)
@@ -63,7 +64,31 @@ size_t	ft_count_words_quotes(char const *s, char sep)
 	return (words);
 }
 
-static char	*ft_str_malloc_copy(char const *s, char c)
+char	*remove_quotes(char *str)
+{
+	char	*new_str;
+	int		len;
+	int		i;
+
+	len = 0;
+	while (str[len] && (((str[len] != '\'' && str[len] != '\"'))
+			|| (double_quoted(str, len) || single_quoted(str, len))))
+		len++;
+	new_str = ft_calloc(len + 1, sizeof(char));
+	len = 0;
+	i = 0;
+	while (str[i])
+	{
+		if ((str[i] != '\'' && str[i] != '\"')
+			|| (double_quoted(str, i) || single_quoted(str, i)))
+			new_str[len++] = str[i];
+		i ++;
+	}
+	free (str);
+	return (new_str);
+}
+
+char	*ft_str_malloc_copy(char const *s, char c)
 {
 	size_t	a;
 	size_t	b;
@@ -95,7 +120,7 @@ obtained while separating "s" with char "c" acting as a delimiter
 (the table must end with NULL).*/
 void	**ft_split_quotes(char const *s, char c)
 {
-	void	**tab;
+	void	**new_tab;
 	char	*temp;
 	size_t	a;
 	size_t	b;
@@ -109,16 +134,17 @@ void	**ft_split_quotes(char const *s, char c)
 	if (!temp)
 		return (NULL);
 	len = ft_count_words_quotes(temp, c);
-	// printf("%zu\n", len);
-	tab = (void **)ft_calloc(sizeof(char *), (len + 1));
+	printf("\nDEGUB: %zu\n", len);
+	new_tab = (void **)ft_calloc(sizeof(char *), (len + 1));
 	while (a < len)
 	{
-		tab[a] = ft_str_malloc_copy((temp + b), c);
+		new_tab[a] = ft_str_malloc_copy((temp + b), c);
+		new_tab[a] = remove_quotes(new_tab[a]);
 		while (temp[b] != '\0' && temp[b] == c)
 			b++;
-		b += ft_strlen(tab[a]);
+		b += ft_strlen(new_tab[a]);
 		a++;
 	}
 	free(temp);
-	return (tab);
+	return (new_tab);
 }
