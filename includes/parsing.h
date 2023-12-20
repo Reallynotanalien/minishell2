@@ -9,7 +9,7 @@
 # define QUOTES_ERROR "found unclosed quotation marks\n"
 
 //build_commands.c
-int			build_commands(void);
+void   		build_commands(void);
 
 //errors.c
 int			parsing_error(char *error);

@@ -1,4 +1,4 @@
-DOING : rework error handling - create set_exstat function, replace with ft_printf.
+DOING : weird behavior with /, //, /, -> use opendir to know if a file is a directory. If it is, return an error if used as a command. 
 
 redirections + pipes doesnt work (echo hi | wc > file2)
 weird behavior with /, //, /, -> use opendir to know if a file is a directory. If it is, return an error if used as a command. 

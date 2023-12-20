@@ -65,7 +65,6 @@ void	line_parsing(void)
 		use_data()->error_flag = ERROR;
 		return (free_tokens_if_not_empty());
 	}
-	if (build_commands() == ERROR)
-		use_data()->error_flag = ERROR;
+	build_commands();
 	free_tokens_if_not_empty();
 }
