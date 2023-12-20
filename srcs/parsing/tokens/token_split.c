@@ -82,10 +82,7 @@ int	split_tokens(void)
 		else
 		{
 			if (parsing_redirection(use_data()->line_cpy, start) == ERROR)
-			{
-				use_data()->exstat = 2;
 				return (ERROR);
-			}
 			end++;
 			if (use_data()->line_cpy[start] == '<'
 				|| use_data()->line_cpy[start] == '>')
