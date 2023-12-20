@@ -1,5 +1,23 @@
 # include "../../../includes/minishell.h"
 
+void	heredoc_input()
+{
+	signal(SIGINT, heredoc_handler);
+	while (get_next_line(0, &use_data()->here_doc_str))
+	{
+		if ((ft_strlen(use_data()->here_doc_str) == ft_strlen(use_data()->here_doc_token) + 1)
+			&& (ft_strncmp(use_data()->here_doc_str, use_data()->here_doc_token, ft_strlen(use_data()->here_doc_token)) == 0))
+		{
+			free(use_data()->here_doc_str);
+			break ;
+		}
+		else
+			write(use_data()->temp_file, use_data()->here_doc_str, ft_strlen(use_data()->here_doc_str));
+		free(use_data()->here_doc_str);
+	}
+	exit (0);
+}
+
 /*Opens a temporary file called .here_doc and uses get_next_line to take input
 from the terminal and put it in that file. It is then closed, then reopened
 in RD_ONLY mode to use as input for the program. The output file is opened
@@ -12,28 +30,11 @@ int	open_heredoc(t_token *tokens)
 	signal(SIGINT, child_handler);
 	use_data()->temp_file = open(".here_doc", O_TRUNC | O_CREAT | O_WRONLY, 0644);
 	use_data()->here_doc_token = ft_strtrim_whitespaces(ft_substr(tokens->token, 2, ft_strlen(tokens->token) - 2));
-	if (tokens->next && tokens->next->type == T_STR)
-		printf("Heredoc should not work here because there is something else than a redirection after the EOF\n");
 	use_data()->pid = fork();
 	if (use_data()->pid == -1)
 		printf("FORK DID NOT WORK\n");
 	else if (use_data()->pid == 0)
-	{
-		signal(SIGINT, heredoc_handler);
-		while (get_next_line(0, &use_data()->here_doc_str))
-		{
-			if ((ft_strlen(use_data()->here_doc_str) == ft_strlen(use_data()->here_doc_token) + 1)
-				&& (ft_strncmp(use_data()->here_doc_str, use_data()->here_doc_token, ft_strlen(use_data()->here_doc_token)) == 0))
-			{
-				free(use_data()->here_doc_str);
-				break ;
-			}
-			else
-				write(use_data()->temp_file, use_data()->here_doc_str, ft_strlen(use_data()->here_doc_str));
-			free(use_data()->here_doc_str);
-		}
-		exit (0);
-	}
+		heredoc_input();
 	status = ft_calloc(1, sizeof(int));
 	waitpid(use_data()->pid, status, 0);
 	if (*status == 0)
