@@ -142,7 +142,7 @@ void	pipex(t_command **cmd)
 		{
 			close(use_data()->fd[1]);
 			dup2(use_data()->fd[0], STDIN_FILENO);
-			close(use_data()->fd[0]);
+			//close(use_data()->fd[0]);
 		}
 	}
 	else
@@ -152,8 +152,13 @@ void	pipex(t_command **cmd)
 		close(use_data()->fd[1]);
 		check_builtin((*cmd));
 		reset_files();
-		(*cmd)->next->infile = use_data()->fd[0];
-		//close(use_data()->fd[0]);
+		if (confirm_builtin((*cmd)->next))
+			(*cmd)->next->infile = use_data()->fd[0];
+		else
+		{
+			dup2(use_data()->fd[0], STDIN_FILENO);
+			//close(use_data()->fd[0]);
+		}
 	}
 }
 
