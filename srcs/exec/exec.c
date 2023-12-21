@@ -52,6 +52,11 @@ void	child_two(t_command **cmd)
 
 	//need to give the right error codes to the errors.
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
+	//if (pipe(use_data()->fd) < 0)
+	//{
+	//	set_exstat(NULL, 1);
+	//	perror("minishell: pipe: ");
+	//}
 	if (!confirm_builtin((*cmd)))
 	{
 		use_data()->pid = fork();
@@ -63,14 +68,21 @@ void	child_two(t_command **cmd)
 		}
 		else if (use_data()->pid == 0)
 		{
-			dup_infile(cmd);
-			dup_outfile(cmd);
+			//dup_infile(cmd);
+			//close(use_data()->fd[0]);
+			//close(use_data()->fd[1]);
+			//dup_outfile(cmd);
+			if ((*cmd)->outfile != STDOUT_FILENO)
+			{
+				dup2((*cmd)->outfile, STDOUT_FILENO);
+				close((*cmd)->outfile);
+			}
 			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
 			exit(0);
 		}
 		else
 		{
-			//reset_files();
+			reset_files();
 			status = get_pid_status();
 			set_exstat(status, 0);
 			free (status);
@@ -91,8 +103,9 @@ the command is a builtin, the associated function executes; else,
 execve takes charge of it with the path.*/
 void	child_one(t_command **cmd)
 {
-	dup_infile(cmd);
+	//dup_infile(cmd);
 	close(use_data()->fd[0]);
+	close((*cmd)->outfile);
 	dup2(use_data()->fd[1], STDOUT_FILENO);
 	close(use_data()->fd[1]);
 	execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env);
@@ -128,7 +141,8 @@ void	pipex(t_command **cmd)
 		else
 		{
 			close(use_data()->fd[1]);
-			(*cmd)->next->infile = use_data()->fd[0];
+			dup2(use_data()->fd[0], STDIN_FILENO);
+			close(use_data()->fd[0]);
 		}
 	}
 	else
@@ -161,6 +175,7 @@ void	exec(t_command *cmd)
 			one_command(&cmd);
 		else
 		{
+			dup_infile(&cmd);
 			while (cmd && nb_cmds > 1)
 			{
 				pipex(&cmd);
