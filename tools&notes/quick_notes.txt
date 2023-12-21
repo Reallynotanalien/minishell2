@@ -1,5 +1,5 @@
 
-DOING : fixing invalid cmds accepted (ex : 
+DOING : export a='|' doesnt work
 
 redirections + pipes doesnt work (echo hi | wc > file2)
 

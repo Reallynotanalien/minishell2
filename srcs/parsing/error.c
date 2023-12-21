@@ -16,8 +16,8 @@ before printing an exit message, restoring the terminal's original
 attributes and exiting.*/
 void	exit_program(int code)
 {
-	cleanup();
 	restore_attributes();
+	cleanup();
 	exit(code);
 }
 

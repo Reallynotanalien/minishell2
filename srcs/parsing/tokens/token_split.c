@@ -73,8 +73,8 @@ int	split_tokens(void)
 	int		end;
 
 	start = 0;
-	while (use_data()->line_cpy[start]
-		&& start <= ft_strlen(use_data()->line_cpy))
+	while (start <= ft_strlen(use_data()->line_cpy)
+		&& use_data()->line_cpy[start])
 	{
 		end = start;
 		if (!is_redirection(use_data()->line_cpy[start]))
