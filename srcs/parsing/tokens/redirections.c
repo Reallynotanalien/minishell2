@@ -24,6 +24,10 @@ int	token_redirout(t_token *token)
 	}
 	else
 		fd = open(t_copy, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	if (fd < 0)
+		return (free(t_lower), free(t_copy),
+			ft_printf(2, "minishell: %s: ", t_copy), perror(NULL),
+			set_exstat(NULL, 1), -1);
 	if (use_data()->outfile != STDOUT_FILENO)
 		close(use_data()->outfile);
 	use_data()->outfile = fd;

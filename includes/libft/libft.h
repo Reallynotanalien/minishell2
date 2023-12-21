@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: katherinefortin <katherinefortin@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 16:30:13 by kafortin          #+#    #+#             */
-/*   Updated: 2023/12/18 17:32:13 by edufour          ###   ########.fr       */
+/*   Updated: 2023/12/20 20:20:34 by katherinefo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

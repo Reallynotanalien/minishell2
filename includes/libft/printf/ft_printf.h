@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: katherinefortin <katherinefortin@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 10:46:56 by edufour           #+#    #+#             */
-/*   Updated: 2023/12/18 18:25:03 by edufour          ###   ########.fr       */
+/*   Updated: 2023/12/20 20:20:46 by katherinefo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
