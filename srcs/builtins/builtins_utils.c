@@ -1,71 +1,54 @@
 
 #include "../../includes/minishell.h"
 
-//returns buff, which will contain str in lowercase.
-char	*ft_lowerbuiltin(char *str, char *buff)
-{
-	int		i;
-
-	i = 0;
-	ft_bzero(buff, ft_strlen(str) + 1);
-	i = -1;
-	while (str[++i])
-		buff[i] = ft_tolower(str[i]);
-	return (buff);
-}
-
-int	confirm_builtin(char **cmd)
+int	confirm_builtin(t_command *cmd)
 {
 	char	*lower_cmd;
 
-	if (cmd[0] == NULL)
+	if (cmd->lower_cmd == NULL || cmd->lower_cmd == NULL)
 		return (0);
-	lower_cmd = ft_strlower(cmd[0]);
-	if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "echo"))
+	lower_cmd = ft_strlower(cmd->cmd[0]);
+	if (!ft_strcmp(cmd->lower_cmd, "echo"))
 		return (1);
-	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "cd"))
+	else if (!ft_strcmp(cmd->lower_cmd, "cd"))
 		return (1);
-	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "pwd"))
+	else if (!ft_strcmp(cmd->lower_cmd, "pwd"))
 		return (1);
-	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "export"))
+	else if (!ft_strcmp(cmd->lower_cmd, "export"))
 		return (1);
-	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "unset"))
+	else if (!ft_strcmp(cmd->lower_cmd, "unset"))
 		return (1);
-	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "env"))
+	else if (!ft_strcmp(cmd->lower_cmd, "env"))
 		return (1);
-	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "exit"))
+	else if (!ft_strcmp(cmd->lower_cmd, "exit"))
 		return (1);
 	else
-		return (free(lower_cmd), 0);
-	free(lower_cmd);
+		return (0);
 	return (1);
 }
 
 
 /* calls the relevant function from builtin name, 
 or returns 0 if it isn't a builtin.*/
-int	check_builtin(char **cmd)
+int	check_builtin(t_command *cmd)
 {
-	char	*lower_cmd;
-
-	lower_cmd = ft_calloc(7, sizeof(char));
-	if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "echo"))
-		use_data()->exstat = echo_builtin(cmd);
-	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "cd"))
-		use_data()->exstat = cd_builtin(cmd);
-	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "pwd"))
+	if (!ft_strcmp(cmd->lower_cmd, "echo"))
+		use_data()->exstat = echo_builtin(cmd->cmd);
+	else if (!ft_strcmp(cmd->lower_cmd, "cd"))
+		use_data()->exstat = cd_builtin(cmd->cmd);
+	else if (!ft_strcmp(cmd->lower_cmd, "pwd"))
 		use_data()->exstat = pwd_builtin();
-	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "export"))
-		use_data()->exstat = export_builtin(cmd);
-	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "unset"))
-		use_data()->exstat = unset_builtin(cmd);
-	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "env"))
+	else if (!ft_strcmp(cmd->lower_cmd, "export"))
+		use_data()->exstat = export_builtin(cmd->cmd);
+	else if (!ft_strcmp(cmd->lower_cmd, "unset"))
+		use_data()->exstat = unset_builtin(cmd->cmd);
+	else if (!ft_strcmp(cmd->lower_cmd, "env"))
 		use_data()->exstat = env_builtin();
-	else if (!ft_strcmp(ft_lowerbuiltin(cmd[0], lower_cmd), "exit"))
-		use_data()->exstat = exit_builtin(cmd);
+	else if (!ft_strcmp(cmd->lower_cmd, "exit"))
+		use_data()->exstat = exit_builtin(cmd->cmd);
 	else
-		return (free(lower_cmd), 0);
-	return (free(lower_cmd), 1);
+		return (0);
+	return (1);
 }
 
 int	isvalid_varname(char *variable_name)

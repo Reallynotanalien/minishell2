@@ -1,5 +1,5 @@
 
-DOING :  fix overwritten malloced variable in exec.c (child_two)(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0])()
+DOING : fixing invalid cmds accepted (ex : echonope), creating lower_cmd in struct and replacing useless functions - WTF whyyyy????&
 
 redirections + pipes doesnt work (echo hi | wc > file2)
 
