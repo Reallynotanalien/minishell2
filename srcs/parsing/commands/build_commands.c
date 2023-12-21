@@ -1,5 +1,6 @@
 # include "../../../includes/minishell.h"
 
+//join add to str, adding a space between.
 char	*join_command(char *str, char *add)
 {
 	char	*new_str;
@@ -27,49 +28,52 @@ char	*join_command(char *str, char *add)
 	return (new_str);
 }
 
-
-t_token	*command_loop(t_token *tokens, char **command)
+//needs to return the str containing everything but redirections and pipes
+int	command_loop(t_token **tokens)
 {
-	while (tokens)
+	char	*command;
+
+	command = NULL;
+	while (*tokens)
 	{
-		if (tokens->type == T_PIPE)
+		if ((*tokens)->type == T_PIPE)
 			break ;
-		else if (tokens->type == T_HEREDOC)
-			use_data()->infile = open_heredoc(tokens);
-		else if (tokens->type == T_INFILE)
-			token_redirin(tokens);
-		else if (tokens->type == T_OUTFILE)
-			token_redirout(tokens);
-		else if (tokens->type == T_APPEND)
-			token_redirappend(tokens);
-		else if (tokens->type == T_STR)
-			*command = join_command(*command, tokens->token);
-		if (tokens->next)
-			tokens = tokens->next;
+		else if ((*tokens)->type == T_HEREDOC)
+			use_data()->infile = open_heredoc(*tokens);
+		else if ((*tokens)->type == T_INFILE && token_redirin(*tokens) == -1)
+			return (1);
+		else if ((*tokens)->type == T_OUTFILE && token_redirout(*tokens) == -1)
+			return (1);
+		else if ((*tokens)->type == T_APPEND
+			&& token_redirappend(*tokens) == -1)
+			return (1);
+		else if ((*tokens)->type == T_STR)
+			command = join_command(command, (*tokens)->token);
+		if ((*tokens)->next)
+			*tokens = (*tokens)->next;
 		else
 			break ;
 	}
-	return (tokens);
+	if (command)
+		add_command(command, use_data()->infile, use_data()->outfile);
+	return (0);
 }
 
-void	build_commands(void)
+int	build_commands(void)
 {
 	t_token	*tokens;
-	char	*command;
-	int		i;
 
-	i = 1;
 	tokens = use_data()->token;
 	while (tokens)
 	{
-		command = NULL;
 		use_data()->infile = STDIN_FILENO;
 		use_data()->outfile = STDOUT_FILENO;
-		tokens = command_loop(tokens, &command);
-		add_command(command, use_data()->infile, use_data()->outfile);
+		if (command_loop(&tokens))
+			return (1);
 		if (tokens->next)
 			tokens = tokens->next;
 		else
 			break ;
 	}
+	return (0);
 }

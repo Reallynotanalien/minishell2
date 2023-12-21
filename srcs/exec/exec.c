@@ -1,5 +1,44 @@
 # include "../../includes/minishell.h"
 
+void	one_command(t_command **cmd)
+{
+	int	*status;
+
+	//need to give the right error codes to the errors.
+	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
+	if (!confirm_builtin((*cmd)->cmd))
+	{
+		use_data()->pid = fork();
+		signal(SIGINT, child_handler);
+		if (use_data()->pid == -1)
+		{
+			set_exstat(NULL, 1);
+			perror("minishell: fork: ");
+		}
+		else if (use_data()->pid == 0)
+		{
+			dup_infile(cmd);
+			dup_outfile(cmd);
+			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
+			exit(0);
+		}
+		else
+		{
+			//reset_files();
+			status = get_pid_status();
+			set_exstat(status, 0);
+			free (status);
+		}	
+	}
+	else
+	{
+			//dup_infile(cmd);
+			dup_outfile(cmd);
+			check_builtin((*cmd)->cmd);
+			reset_files();
+	}
+}
+
 /*Changes the command to lowercase to make sure it's useable, then
 opens a pipe and creates a child. The signal is changed to make sure 
 ctrl+c closes the child properly when a command is hanged. 
@@ -118,14 +157,19 @@ void	exec(t_command *cmd)
 	if (cmd->cmd != NULL)
 	{
 		nb_cmds = count_commands(cmd);
-		while (cmd && nb_cmds > 1)
+		if (nb_cmds == 1)
+			one_command(&cmd);
+		else
 		{
-			pipex(&cmd);
-			nb_cmds--;
-			if (cmd->next)
-				cmd = cmd->next;
+			while (cmd && nb_cmds > 1)
+			{
+				pipex(&cmd);
+				nb_cmds--;
+				if (cmd->next)
+					cmd = cmd->next;
+			}
+			child_two(&cmd);
 		}
-		child_two(&cmd);
 		signal(SIGINT, interruption_handler);
 	}
 }
