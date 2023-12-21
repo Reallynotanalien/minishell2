@@ -1,5 +1,5 @@
 
-DOING : progressed on quoted cmds -> now it works, printing env vars segfaults
+DOING :  fix overwritten malloced variable in exec.c (child_two)(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0])()
 
 redirections + pipes doesnt work (echo hi | wc > file2)
 

@@ -72,6 +72,8 @@ char	*get_varname(char *variable)
 	while (variable[i] && variable[i] != '=')
 		i++;
 	var_name = ft_calloc(i + 1, sizeof(char));
+	if (!var_name)
+		return (NULL);
 	ft_memcpy(var_name, variable, i);
 	return (var_name);
 }
@@ -81,6 +83,8 @@ char	*get_varvalue(char *variable)
 	int		i;
 	char	*value;
 
+	if (!variable)
+		return (NULL);
 	i = 0;
 	while (variable[i] && variable[i] != '=')
 		i++;

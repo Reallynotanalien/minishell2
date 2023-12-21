@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:33:20 by kafortin          #+#    #+#             */
-/*   Updated: 2022/05/12 15:18:52 by kafortin         ###   ########.fr       */
+/*   Updated: 2023/12/20 19:04:02 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 		((char *)dest)[a] = ((char *)src)[a];
 		a++;
 	}
+	((char *)dest)[a] = '\0';
 	return (dest);
 }
