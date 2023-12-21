@@ -9,7 +9,7 @@ int	echo_builtin(char	**cmd)
 	if (!cmd[1])
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	i_cmd = 1;
-	if (cmd[1] && !ft_strcmp(cmd[1], "-n"))
+	if (cmd[1] && !ft_strncmp(cmd[1], "-n", 2))
 		i_cmd++;
 	while (cmd[i_cmd])
 	{
@@ -27,7 +27,7 @@ int	echo_builtin(char	**cmd)
 		if (cmd[i_cmd])
 			ft_putchar_fd(' ', STDOUT_FILENO);
 	}
-	if (cmd[1] && ft_strcmp(cmd[1], "-n"))
+	if (cmd[1] && ft_strncmp(cmd[1], "-n", 2))
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }

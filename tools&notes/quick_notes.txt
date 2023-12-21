@@ -1,5 +1,5 @@
 
-DOING : fixing invalid cmds accepted (ex : echonope), creating lower_cmd in struct and replacing useless functions - WTF whyyyy????&
+DOING : fixing invalid cmds accepted (ex : 
 
 redirections + pipes doesnt work (echo hi | wc > file2)
 

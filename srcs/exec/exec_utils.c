@@ -21,7 +21,7 @@ void	dup_infile(t_command **cmd)
 {
 	if ((*cmd)->infile != STDIN_FILENO)
 	{
-		ft_putstr_fd("I'm in dupinfile", 1);
+		// ft_putstr_fd("I'm in dupinfile", 1);
 		dup2(STDIN_FILENO, use_data()->old_stdin);
 		dup2((*cmd)->infile, STDIN_FILENO);
 		close((*cmd)->infile);
