@@ -46,6 +46,7 @@ typedef struct s_command
 	int					outfile;
 	char				*path;
 	char				**cmd;
+	char				*lower_cmd;
 	struct s_command	*next;
 }					t_command;
 
@@ -134,8 +135,8 @@ void		interruption_handler(int signum);
 /*BUILTINS*/
 //builtins_utils
 char		*ft_lowerbuiltin(char *str, char *buff);
-int			confirm_builtin(char **cmd);
-int			check_builtin(char **cmd);
+int			confirm_builtin(t_command *cmd);
+int			check_builtin(t_command *cmd);
 int			isvalid_varname(char *variable_name);
 
 //builtins

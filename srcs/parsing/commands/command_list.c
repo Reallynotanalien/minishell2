@@ -20,7 +20,8 @@ t_command	*add_command(char *command, int infile, int outfile)
 	if (!new)
 		return (NULL);
 	new->cmd = (char **)ft_split_quotes(command, ' ');
-	if (!confirm_builtin(new->cmd))
+	new->lower_cmd = ft_strlower(new->cmd[0]);
+	if (!confirm_builtin(new))
 		get_path(new);
 	new->infile = infile;
 	new->outfile = outfile;

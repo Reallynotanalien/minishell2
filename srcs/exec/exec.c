@@ -13,7 +13,7 @@ void	child_two(t_command **cmd)
 
 	//need to give the right error codes to the errors.
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
-	if (!confirm_builtin((*cmd)->cmd))
+	if (!confirm_builtin((*cmd)))
 	{
 		use_data()->pid = fork();
 		signal(SIGINT, child_handler);
@@ -41,7 +41,7 @@ void	child_two(t_command **cmd)
 	{
 			//dup_infile(cmd);
 			dup_outfile(cmd);
-			check_builtin((*cmd)->cmd);
+			check_builtin((*cmd));
 			reset_files();
 	}
 }
@@ -75,7 +75,7 @@ void	pipex(t_command **cmd)
 		set_exstat(NULL, 1);
 		perror("minishell: pipe: ");
 	}
-	if (!confirm_builtin((*cmd)->cmd))
+	if (!confirm_builtin((*cmd)))
 	{
 		use_data()->pid = fork();
 		signal(SIGINT, child_handler);
@@ -97,7 +97,7 @@ void	pipex(t_command **cmd)
 		dup_infile(cmd);
 		dup2(use_data()->fd[1], STDOUT_FILENO);
 		close(use_data()->fd[1]);
-		check_builtin((*cmd)->cmd);
+		check_builtin((*cmd));
 		reset_files();
 		(*cmd)->next->infile = use_data()->fd[0];
 		//close(use_data()->fd[0]);
