@@ -115,35 +115,75 @@ char	*ft_str_malloc_copy(char const *s, char c)
 	return (str);
 }
 
+int	is_quote(char check)
+{
+	if (check == '\'' ||  check == '\"')
+		return (1);
+	return (0);
+}
+
+int	count_words(char *str)
+{
+	int	i;
+	int	nb_spaces;
+	int	nb_quotes;
+
+	nb_spaces = 0;
+	nb_quotes = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ' && !is_quote(str[i + 1])
+			&& (i == 0 || !is_quote(str[i - 1]))
+			&& !double_quoted(str, i) && ! single_quoted(str, i))
+			nb_spaces ++;
+		if (is_quote(str[i] && !double_quoted(str, i) && !single_quoted(str, i)))
+			nb_quotes++;
+	}
+	return (nb_spaces + (nb_quotes / 2));
+}
 /*Allocates (with malloc) and returns a table of char strings
 obtained while separating "s" with char "c" acting as a delimiter
 (the table must end with NULL).*/
 void	**ft_split_quotes(char const *s, char c)
 {
-	void	**new_tab;
-	char	*temp;
-	size_t	a;
-	size_t	b;
-	size_t	len;
+	char	**new_array;
+	char	*tmp;
+	int 	nb_words;
+	int		*i;
 
-	a = 0;
-	b = 0;
-	if (!s)
-		return (NULL);
-	temp = ft_strdup((char *)s);
-	if (!temp)
-		return (NULL);
-	len = ft_count_words_quotes(temp, c);
-	new_tab = (void **)ft_calloc(sizeof(char *), (len + 1));
-	while (a < len)
-	{
-		new_tab[a] = ft_str_malloc_copy((temp + b), c);
-		while (temp[b] != '\0' && temp[b] == c)
-			b++;
-		b += ft_strlen(new_tab[a]);		//-> this is incorect, as it does not take into consideration the removed quotes.
-		new_tab[a] = remove_quotes(new_tab[a]);
-		a++;
-	}
-	free(temp);
-	return (new_tab);
+	nb_words = count_words(s);
+	if (nb_words == 0)
+		return (ft_calloc(1, sizeof(char *)));
+	new_array = ft_calloc(nb_words + 1, sizeof(char *));
+	i = ft_calloc(1, sizeof(int));
+	nb_words = 0;
+	while (s[*i])
+		new_array[nb_words++] = split_next_word(s, i);
+	return (new_array);
+	// void	**new_tab;
+	// char	*temp;
+	// size_t	a;
+	// size_t	b;
+	// size_t	len;
+
+	// a = 0;
+	// b = 0;
+	// if (!s)
+	// 	return (NULL);
+	// temp = ft_strdup((char *)s);
+	// if (!temp)
+	// 	return (NULL);
+	// len = ft_count_words_quotes(temp, c);
+	// new_tab = (void **)ft_calloc(sizeof(char *), (len + 1));
+	// while (a < len)
+	// {
+	// 	new_tab[a] = ft_str_malloc_copy((temp + b), c);
+	// 	while (temp[b] != '\0' && temp[b] == c)
+	// 		b++;
+	// 	b += ft_strlen(new_tab[a]);
+	// 	new_tab[a] = remove_quotes(new_tab[a]);
+	// 	a++;
+	// }
+	// free(temp);
+	// return (new_tab);
 }

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdint.h>
 
 /*Allocates a specified amount of memory and initialize it to zero.*/
 void	*ft_calloc(size_t count, size_t size)
