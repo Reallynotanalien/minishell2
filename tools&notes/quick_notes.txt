@@ -1,5 +1,8 @@
 
-DOING : export a='|' doesnt work
+DOING : will need to adapt ft_printf (just change it for the time I'll be working from home)
+then leaks
+
+export a='|' doesnt work
 
 redirections + pipes doesnt work (echo hi | wc > file2)
 
