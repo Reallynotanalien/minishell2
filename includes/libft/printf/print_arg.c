@@ -44,7 +44,7 @@ int	print_arg(int fd, va_list argptr, char identifier)
 	else if (identifier == 'u')
 		return (ft_putnbr_ft_printf(va_arg(argptr, unsigned int), fd));
 	else if (identifier == 'p')
-		return (print_ptr(fd, va_arg(argptr, uintptr_t)));
+		return (print_ptr(fd, va_arg(argptr, intptr_t)));
 	else if (identifier == 'x' || identifier == 'X')
 		return (print_hex(fd, va_arg(argptr, unsigned int), identifier));
 	else

@@ -12,14 +12,14 @@
 
 #include "ft_printf.h"
 
-void	ptr_to_hex(int fd, uintptr_t ptr, char *base, int *nb_char)
+void	ptr_to_hex(int fd, intptr_t ptr, char *base, int *nb_char)
 {
 	if (ptr / ft_strlen(base))
 		ptr_to_hex(fd, ptr / ft_strlen(base), base, nb_char);
 	*nb_char += write(1, base + (ptr % ft_strlen(base)), 1);
 }
 
-int	print_ptr(int fd, uintptr_t ptr)
+int	print_ptr(int fd, intptr_t ptr)
 {
 	int		nb_char;
 

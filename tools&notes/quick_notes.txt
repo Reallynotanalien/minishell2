@@ -1,12 +1,13 @@
 
-DOING : will need to adapt ft_printf (just change it for the time I'll be working from home)
+DOING : 
 then leaks
 
 export a='|' doesnt work
 
 redirections + pipes doesnt work (echo hi | wc > file2)
 
-
+- In echo, if (!cmd[i_cmd][0]), i_cmd++; (ex : echo "" hi), also change condition for printing spaces
+- get back to school's printf version (uintptr instead of intptr)
 - leaks : fix overwritten malloced variable in exec.c (child_two)(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0])()
 - here_doc
 - signals

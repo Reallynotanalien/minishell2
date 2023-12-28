@@ -23,7 +23,7 @@
 void	ft_printf(int fd, const char *format, ...);
 int		print_arg(int fd, va_list argptr, char identifier);
 int		print_hex(int fd, unsigned int argument, char identifier);
-int		print_ptr(int fd, uintptr_t ptr);
+int		print_ptr(int fd, intptr_t ptr);
 
 //Utils
 int		ft_putstr_ft_printf(char *s, int fd);
