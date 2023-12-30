@@ -3,22 +3,14 @@
 int	parse_quotes(char *str)
 {
 	int	i;
-	int	single_quotes;
-	int	double_quotes;
 
-	single_quotes = 0;
 	i = -1;
 	while (str[++i])
-		if (str[i] == '\'' && !double_quoted(str, i))
-			single_quotes++;
-	double_quotes = 0;
-	i = -1;
-	while (str[++i] && !single_quoted(str, i))
-		if (str[i] == '\"')
-			double_quotes ++;
-	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
-		return (ft_printf(2, "minishell: quotations are not closed\n"),
+	{
+		if (double_quoted(str, i) == -1 || single_quoted(str, i) == -1)
+			return (ft_printf(2, "minishell: quotations are not closed\n"),
 			set_exstat(NULL, 1), ERROR);
+	}
 	return (0);
 }
 

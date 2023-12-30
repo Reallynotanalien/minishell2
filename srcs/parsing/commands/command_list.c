@@ -37,9 +37,7 @@ int	count_words(char *str)
 			nb_quotes++;
 		i++;
 	}
-	if (nb_spaces == 1)
-		nb_spaces = 2;
-	return (nb_spaces + (nb_quotes / 2));
+	return (nb_spaces + (nb_quotes / 2) + 1);
 }
 
 //returns the next command's argument as a char *. Splits on spaces
@@ -52,20 +50,19 @@ char *split_next_word(char *str, int *index)
 	len = 0;
 	while (str[*index + len] && !(str[*index + len] == ' '
 		&& !double_quoted(str, *index + len) && !single_quoted(str, *index + len)))
-		if (!is_quote(str[*index + len]) 
-			|| double_quoted(str, *index + len) || single_quoted(str, *index + len))
 		len++;
 	if (len == 0)
 		return (ft_calloc(1, 1));
 	new_word = ft_calloc(len + 1, sizeof(char));
 	len = 0;
-	while (str[*index] /*&& !(str[*index] == ' ' && !double_quoted(str, *index) && !single_quoted(str, *index))*/)
+	while (str[*index] && !(str[*index] == ' ' && !double_quoted(str, *index) && !single_quoted(str, *index)))
 	{
 		if (!is_quote(str[*index]))
-			new_word[len] = str[*index];
-		len++;
+			new_word[len++] = str[*index];
 		(*index)++;
 	}
+	if (str[*index])
+		(*index)++;
 	return (new_word);
 	//need to make sure *index is ok
 }
@@ -86,6 +83,7 @@ void	**ft_split_quotes(char const *s, char c)
 	*i = 0;
 	while (s[*i])
 		new_array[nb_words++] = split_next_word(s, i);
+	new_array[nb_words] = NULL;
 	return (new_array);
 }
 

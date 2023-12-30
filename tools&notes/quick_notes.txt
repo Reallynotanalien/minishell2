@@ -1,11 +1,12 @@
 
-DOING : 
-then leaks
+DOING :  leaks !!!!
 
-export a='|' doesnt work
+export a='|' doesnt work (is empty)
+Quotation error with wrong conditions
 
 redirections + pipes doesnt work (echo hi | wc > file2)
 
+- replace all instances of ft_strlower by cmd->lower_cmd
 - In echo, if (!cmd[i_cmd][0]), i_cmd++; (ex : echo "" hi), also change condition for printing spaces
 - get back to school's printf version (uintptr instead of intptr)
 - leaks : fix overwritten malloced variable in exec.c (child_two)(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0])()

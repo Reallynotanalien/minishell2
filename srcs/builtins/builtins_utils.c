@@ -7,7 +7,6 @@ int	confirm_builtin(t_command *cmd)
 
 	if (cmd->lower_cmd == NULL || cmd->lower_cmd == NULL)
 		return (0);
-	lower_cmd = ft_strlower(cmd->cmd[0]);
 	if (!ft_strcmp(cmd->lower_cmd, "echo"))
 		return (1);
 	else if (!ft_strcmp(cmd->lower_cmd, "cd"))
