@@ -1,5 +1,7 @@
 
-DOING :  leaks !!!!
+DOING : quoted quotes arent printed
+
+leaks !!!!
 
 export a='|' doesnt work (is empty)
 Quotation error with wrong conditions

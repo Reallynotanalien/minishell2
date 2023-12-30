@@ -10,23 +10,34 @@ int	single_quoted(char *str, int index)
 	int quoted;
 	int	i;
 
+	// printf("\nDEBUG : \' %c", str[index]);
 	i = 0;
 	quoted = -1;
 	if (!str[index])
 		return (0);
 	while (i < index)
 	{
+		if (str[i] == '\"')
+		{
+			i++;
+			while (str[i] && str[i] != '\"')
+				i++;
+		}
 		if (str[i] == '\'')
 		{
 			quoted *= -1;
-			while (str[i] && str[i] != '\'')
-				i++;
-			if (!str[i])
+			i++;
+			if (quoted == 1)
+				while (str[i] && str[i] != '\'')
+					i++;
+			if (str[index] != '\'' && !str[i])
 				return (-1);
 		}
 		else	
 			i++;
 	}
+	if (str[index] == '\'' && quoted == 1)
+		quoted *= -1;
 	if (quoted == -1)
 		return (0);
 	return (quoted);
@@ -38,23 +49,34 @@ int	double_quoted(char *str, int index)
 	int quoted;
 	int	i;
 
+	// printf("\nDEBUG : \" %c", str[index]);
 	i = 0;
 	quoted = -1;
 	if (!str[index])
 		return (0);
 	while (i < index)
 	{
+		if (str[i] == '\'')
+		{
+			i++;
+			while (str[i] && str[i] != '\'')
+				i++;
+		}
 		if (str[i] == '\"')
 		{
 			quoted *= -1;
-			while (str[i] && str[i] != '\"')
-				i++;
-			if (!str[i])
+			i++;
+			if (quoted == 1)
+				while (str[i] && str[i] != '\"')
+					i++;
+			if (str[index] != '\"' && !str[i])
 				return (-1);
 		}
 		else	
 			i++;
 	}
+	if (str[index] == '\"' && quoted == 1)
+		quoted = -1;
 	if (quoted == -1)
 		return (0);
 	return (quoted);

@@ -9,11 +9,13 @@ int	echo_builtin(char	**cmd)
 	if (!cmd[1])
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	i_cmd = 1;
-	if (cmd[1] && !ft_strncmp(cmd[1], "-n", 2))
+	if (cmd[1] && cmd[1][0] && !ft_strncmp(cmd[1], "-n", 2))
+		i_cmd++;
+	while (cmd[i_cmd] && !cmd[i_cmd][0])
 		i_cmd++;
 	while (cmd[i_cmd])
 	{
-		if (!cmd[i_cmd][0])
+		while (cmd[i_cmd] && !cmd[i_cmd][0])
 			i_cmd++;
 		i_line = -1;
 		while (cmd[i_cmd][++i_line])

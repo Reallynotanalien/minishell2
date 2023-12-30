@@ -13,7 +13,7 @@ t_command	*create_command(void)
 
 int	is_quote(char check)
 {
-	if (check == '\'' ||  check == '\"')
+	if (check == '\'' || check == '\"')
 		return (1);
 	return (0);
 }
@@ -33,7 +33,7 @@ int	count_words(char *str)
 			&& (i == 0 || !is_quote(str[i - 1]))
 			&& !double_quoted(str, i) && ! single_quoted(str, i))
 			nb_spaces ++;
-		if (is_quote(str[i] && !double_quoted(str, i) && !single_quoted(str, i)))
+		if (is_quote(str[i]) && !double_quoted(str, i) && !single_quoted(str, i))
 			nb_quotes++;
 		i++;
 	}
