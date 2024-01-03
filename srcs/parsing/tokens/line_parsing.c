@@ -11,6 +11,9 @@ int	parse_quotes(char *str)
 			return (ft_printf(2, "minishell: quotations are not closed\n"),
 			set_exstat(NULL, 1), ERROR);
 	}
+	if (double_quoted(str, i) == -1 || single_quoted(str, i) == -1)
+			return (ft_printf(2, "minishell: quotations are not closed\n"),
+			set_exstat(NULL, 1), ERROR);
 	return (0);
 }
 

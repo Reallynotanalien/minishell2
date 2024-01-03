@@ -1,5 +1,8 @@
 
-DOING : quoted quotes arent printed
+DOING : Ah bah oui c con hein. Faudra itérer jusqu'à ce que les quotes soient fermées, mais ça dépends de laquelle t'as rencontrée en premier.
+pendant que != '\"', if == '\'', iterate until quotes are closed. if that returns 1, return -1. else if i > index, return (0).
+
+'echo "'hi" doesnt warn for unquoted quotes while it should.
 
 leaks !!!!
 

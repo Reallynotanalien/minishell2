@@ -18,16 +18,13 @@ int	echo_builtin(char	**cmd)
 		while (cmd[i_cmd] && !cmd[i_cmd][0])
 			i_cmd++;
 		i_line = -1;
-		while (cmd[i_cmd][++i_line])
-		{
-			if (double_quoted(cmd[i_cmd], i_line) 
-				|| single_quoted(cmd[i_cmd], i_line)
-				|| (cmd[i_cmd][i_line] != '\"' && cmd[i_cmd][i_line] != '\''))
-				ft_putchar_fd(cmd[i_cmd][i_line], STDOUT_FILENO);
-		}
-		i_cmd++;
+		while (cmd[i_cmd] && cmd[i_cmd][++i_line])
+			ft_putchar_fd(cmd[i_cmd][i_line], STDOUT_FILENO);
 		if (cmd[i_cmd])
+		{
 			ft_putchar_fd(' ', STDOUT_FILENO);
+			i_cmd++;
+		}	
 	}
 	if (cmd[1] && ft_strncmp(cmd[1], "-n", 2))
 		ft_putchar_fd('\n', STDOUT_FILENO);

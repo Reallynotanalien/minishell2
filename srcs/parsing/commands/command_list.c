@@ -57,7 +57,8 @@ char *split_next_word(char *str, int *index)
 	len = 0;
 	while (str[*index] && !(str[*index] == ' ' && !double_quoted(str, *index) && !single_quoted(str, *index)))
 	{
-		if (!is_quote(str[*index]))
+		if (!is_quote(str[*index])
+			|| double_quoted(str, *index) || single_quoted(str, *index))
 			new_word[len++] = str[*index];
 		(*index)++;
 	}
