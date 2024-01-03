@@ -8,6 +8,7 @@ void	one_command(t_command **cmd)
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	if (!confirm_builtin((*cmd)))
 	{
+		dup_infile(cmd);
 		use_data()->pid = fork();
 		signal(SIGINT, child_handler);
 		if (use_data()->pid == -1)
@@ -17,17 +18,17 @@ void	one_command(t_command **cmd)
 		}
 		else if (use_data()->pid == 0)
 		{
-			dup_infile(cmd);
 			dup_outfile(cmd);
 			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
 			exit(0);
 		}
 		else
 		{
-			reset_files();
+			//reset_files();
 			status = get_pid_status();
 			set_exstat(status, 0);
 			free (status);
+			reset_files();
 		}	
 	}
 	else
