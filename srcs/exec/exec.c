@@ -24,7 +24,7 @@ void	one_command(t_command **cmd)
 		}
 		else
 		{
-			//reset_files();
+			reset_files();
 			status = get_pid_status();
 			set_exstat(status, 0);
 			free (status);
