@@ -3,8 +3,6 @@
 
 int	confirm_builtin(t_command *cmd)
 {
-	char	*lower_cmd;
-
 	if (cmd->lower_cmd == NULL || cmd->lower_cmd == NULL)
 		return (0);
 	if (!ft_strcmp(cmd->lower_cmd, "echo"))
