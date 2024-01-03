@@ -36,7 +36,7 @@ void	dup_outfile(t_command **cmd)
 	{
 		dup2(STDOUT_FILENO, use_data()->old_stdout);
 		dup2((*cmd)->outfile, STDOUT_FILENO);
-		//close((*cmd)->outfile);
+		close((*cmd)->outfile);
 	}
 }
 
