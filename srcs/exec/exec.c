@@ -1,18 +1,13 @@
 # include "../../includes/minishell.h"
 
-/*Iterates through the command struct to find out how many there
-are, and returns it.*/
-int	count_commands(t_command *cmd)
+void	exec_builtin(t_command **cmd, int pipe)
 {
-	int	i;
-
-	i = 1;
-	while (cmd->next)
-	{
-		cmd = cmd->next;
-		i++;
-	}
-	return (i);
+	if (pipe == YES)
+		setup_pipe_outfile();
+	else
+		dup_outfile(cmd, YES);
+	check_builtin((*cmd));
+	reset_files();
 }
 
 /*Changes the command to lowercase to make sure it's useable, then
@@ -48,11 +43,7 @@ void	child_two(t_command **cmd)
 		}
 	}
 	else
-	{
-		dup_outfile(cmd, YES);
-		check_builtin((*cmd));
-		reset_files();
-	}
+		exec_builtin(cmd, NO);
 }
 
 /*We duplicate the infile of the command as STDIN_FILENO and then we
@@ -95,10 +86,7 @@ void	pipex(t_command **cmd)
 	}
 	else
 	{
-		dup2(use_data()->fd[1], STDOUT_FILENO);
-		close(use_data()->fd[1]);
-		check_builtin((*cmd));
-		reset_files();
+		exec_builtin(cmd, YES);
 		setup_pipe_infile(cmd);
 	}
 }

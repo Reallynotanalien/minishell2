@@ -154,6 +154,7 @@ int			export_builtin(char **cmd);
 /*EXEC*/
 
 //exec_utils
+int			count_commands(t_command *cmd);
 void		dup_infile(t_command **cmd, int copy);
 void		dup_outfile(t_command **cmd, int copy);
 void		reset_files(void);
