@@ -4,11 +4,9 @@ void	one_command(t_command **cmd)
 {
 	int	*status;
 
-	//need to give the right error codes to the errors.
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	if (!confirm_builtin((*cmd)))
 	{
-		dup_infile(cmd);
 		use_data()->pid = fork();
 		signal(SIGINT, child_handler);
 		if (use_data()->pid == -1)
@@ -18,6 +16,7 @@ void	one_command(t_command **cmd)
 		}
 		else if (use_data()->pid == 0)
 		{
+			dup_infile(cmd);
 			dup_outfile(cmd);
 			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
 			exit(0);
@@ -28,7 +27,6 @@ void	one_command(t_command **cmd)
 			status = get_pid_status();
 			set_exstat(status, 0);
 			free (status);
-			reset_files();
 		}	
 	}
 	else
@@ -64,14 +62,8 @@ void	child_two(t_command **cmd)
 		}
 		else if (use_data()->pid == 0)
 		{
-			//
-			if ((*cmd)->outfile != STDOUT_FILENO)
-			{
-				dup2((*cmd)->outfile, STDOUT_FILENO);
-				close((*cmd)->outfile);
-			}
-			//dup_infile(cmd);
-			//dup_outfile(cmd);
+			dup_infile(cmd);
+			dup_outfile(cmd);
 			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
 			exit(0);
 		}
@@ -98,12 +90,8 @@ the command is a builtin, the associated function executes; else,
 execve takes charge of it with the path.*/
 void	child_one(t_command **cmd)
 {
-
-	//
-	//dup_infile(cmd);
+	dup_infile(cmd);
 	close(use_data()->fd[0]);
-	//
-	close ((*cmd)->outfile);
 	dup2(use_data()->fd[1], STDOUT_FILENO);
 	close(use_data()->fd[1]);
 	execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env);
@@ -139,9 +127,7 @@ void	pipex(t_command **cmd)
 		else
 		{
 			close(use_data()->fd[1]);
-			dup2(use_data()->fd[0], STDIN_FILENO);
-			//
-			//(*cmd)->next->infile = use_data()->fd[0];
+			(*cmd)->next->infile = use_data()->fd[0];
 		}
 	}
 	else
@@ -151,9 +137,7 @@ void	pipex(t_command **cmd)
 		close(use_data()->fd[1]);
 		check_builtin((*cmd));
 		reset_files();
-		//
-		dup2(use_data()->fd[0], STDIN_FILENO);
-		//(*cmd)->next->infile = use_data()->fd[0];
+		(*cmd)->next->infile = use_data()->fd[0];
 		//close(use_data()->fd[0]);
 	}
 }
