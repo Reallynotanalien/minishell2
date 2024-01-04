@@ -16,8 +16,10 @@ void	one_command(t_command **cmd)
 		}
 		else if (use_data()->pid == 0)
 		{
-			dup_infile(cmd);
-			dup_outfile(cmd);
+			dup2((*cmd)->infile, STDIN_FILENO);
+			close((*cmd)->infile);
+			dup2((*cmd)->outfile, STDOUT_FILENO);
+			close((*cmd)->outfile);
 			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
 			exit(0);
 		}
@@ -27,6 +29,7 @@ void	one_command(t_command **cmd)
 			status = get_pid_status();
 			set_exstat(status, 0);
 			free (status);
+			reset_files();
 		}	
 	}
 	else
