@@ -154,13 +154,15 @@ int			export_builtin(char **cmd);
 /*EXEC*/
 
 //exec_utils
-int			count_commands(t_command *cmd);
-void		dup_infile(t_command **cmd);
-void		dup_outfile(t_command **cmd);
+void		dup_infile(t_command **cmd, int copy);
+void		dup_outfile(t_command **cmd, int copy);
 void		reset_files(void);
+void		setup_pipe_outfile(void);
+void		setup_pipe_infile(t_command **cmd);
 
 //exec
 void		exec(t_command *cmd);
 
 int			*get_pid_status(void);
+void		pipex_error(char *error, int code);
 #endif

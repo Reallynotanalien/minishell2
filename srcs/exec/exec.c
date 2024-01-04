@@ -1,44 +1,18 @@
 # include "../../includes/minishell.h"
 
-void	one_command(t_command **cmd)
+/*Iterates through the command struct to find out how many there
+are, and returns it.*/
+int	count_commands(t_command *cmd)
 {
-	int	*status;
+	int	i;
 
-	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
-	if (!confirm_builtin((*cmd)))
+	i = 1;
+	while (cmd->next)
 	{
-		use_data()->pid = fork();
-		signal(SIGINT, child_handler);
-		if (use_data()->pid == -1)
-		{
-			set_exstat(NULL, 1);
-			perror("minishell: fork: ");
-		}
-		else if (use_data()->pid == 0)
-		{
-			dup2((*cmd)->infile, STDIN_FILENO);
-			close((*cmd)->infile);
-			dup2((*cmd)->outfile, STDOUT_FILENO);
-			close((*cmd)->outfile);
-			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
-			exit(0);
-		}
-		else
-		{
-			//reset_files();
-			status = get_pid_status();
-			set_exstat(status, 0);
-			free (status);
-			reset_files();
-		}	
+		cmd = cmd->next;
+		i++;
 	}
-	else
-	{
-			//dup_infile(cmd);
-			dup_outfile(cmd);
-			check_builtin((*cmd));
-			reset_files();
-	}
+	return (i);
 }
 
 /*Changes the command to lowercase to make sure it's useable, then
@@ -52,38 +26,32 @@ void	child_two(t_command **cmd)
 {
 	int	*status;
 
-	//need to give the right error codes to the errors.
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	if (!confirm_builtin((*cmd)))
 	{
 		use_data()->pid = fork();
 		signal(SIGINT, child_handler);
 		if (use_data()->pid == -1)
-		{
-			set_exstat(NULL, 1);
-			perror("minishell: fork: ");
-		}
+			pipex_error("minishell: fork: ", 1);
 		else if (use_data()->pid == 0)
 		{
-			dup_infile(cmd);
-			dup_outfile(cmd);
+			dup_infile(cmd, YES);
+			dup_outfile(cmd, YES);
 			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
 			exit(0);
 		}
 		else
 		{
-			//reset_files();
 			status = get_pid_status();
 			set_exstat(status, 0);
-			free (status);
-		}	
+			free(status);
+		}
 	}
 	else
 	{
-			//dup_infile(cmd);
-			dup_outfile(cmd);
-			check_builtin((*cmd));
-			reset_files();
+		dup_outfile(cmd, YES);
+		check_builtin((*cmd));
+		reset_files();
 	}
 }
 
@@ -93,10 +61,9 @@ the command is a builtin, the associated function executes; else,
 execve takes charge of it with the path.*/
 void	child_one(t_command **cmd)
 {
-	dup_infile(cmd);
+	dup_infile(cmd, YES);
 	close(use_data()->fd[0]);
-	dup2(use_data()->fd[1], STDOUT_FILENO);
-	close(use_data()->fd[1]);
+	setup_pipe_outfile();
 	execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env);
 	exit(0);
 }
@@ -109,40 +76,29 @@ If not, we close the end of the pipe we will not be using and store
 the other end into the next command's infile fd.*/
 void	pipex(t_command **cmd)
 {
-	//need to give the right error codes to the errors
 	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	if (pipe(use_data()->fd) < 0)
-	{
-		set_exstat(NULL, 1);
-		perror("minishell: pipe: ");
-	}
+		pipex_error("minishell: pipe: ", 1);
 	if (!confirm_builtin((*cmd)))
 	{
 		use_data()->pid = fork();
 		signal(SIGINT, child_handler);
 		if (use_data()->pid == -1)
-		{
-			set_exstat(NULL, 1);
-			perror("minishell: fork: ");
-		}
+			pipex_error("minishell: fork: ", 1);
 		else if (use_data()->pid == 0)
 			child_one(cmd);
 		else
 		{
 			close(use_data()->fd[1]);
-			(*cmd)->next->infile = use_data()->fd[0];
+			setup_pipe_infile(cmd);
 		}
 	}
 	else
 	{
-		//dup_infile(cmd);
-		dup2(use_data()->fd[1], STDOUT_FILENO);
-		close(use_data()->fd[1]);
+		setup_pipe_outfile();
 		check_builtin((*cmd));
 		reset_files();
-		if (confirm_builtin((*cmd)->next))
-			(*cmd)->next->infile = use_data()->fd[0];
-		//close(use_data()->fd[0]);
+		setup_pipe_infile(cmd);
 	}
 }
 
@@ -160,19 +116,14 @@ void	exec(t_command *cmd)
 	if (cmd->cmd != NULL)
 	{
 		nb_cmds = count_commands(cmd);
-		if (nb_cmds == 1)
-			one_command(&cmd);
-		else
+		while (cmd && nb_cmds > 1)
 		{
-			while (cmd && nb_cmds > 1)
-			{
-				pipex(&cmd);
-				nb_cmds--;
-				if (cmd->next)
-					cmd = cmd->next;
-			}
-			child_two(&cmd);
+			pipex(&cmd);
+			nb_cmds--;
+			if (cmd->next)
+				cmd = cmd->next;
 		}
+		child_two(&cmd);
 		signal(SIGINT, interruption_handler);
 	}
 }

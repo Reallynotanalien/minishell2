@@ -21,6 +21,12 @@ void	exit_program(int code)
 	exit(code);
 }
 
+void	pipex_error(char *error, int code)
+{
+	set_exstat(NULL, code);
+	perror(error);
+}
+
 int	*get_pid_status(void)
 {
 	int	*status;
