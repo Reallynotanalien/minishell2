@@ -90,7 +90,7 @@ void	pipex(t_command **cmd)
 		else
 		{
 			close(use_data()->fd[1]);
-			(*cmd)->next->infile = use_data()->fd[0];
+			setup_pipe_infile(cmd);
 		}
 	}
 	else
@@ -99,8 +99,7 @@ void	pipex(t_command **cmd)
 		close(use_data()->fd[1]);
 		check_builtin((*cmd));
 		reset_files();
-		if (!confirm_builtin((*cmd)->next))
-			(*cmd)->next->infile = use_data()->fd[0];
+		setup_pipe_infile(cmd);
 	}
 }
 

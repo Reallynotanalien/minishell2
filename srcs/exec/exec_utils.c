@@ -1,7 +1,5 @@
 # include "../../includes/minishell.h"
 
-
-
 /*If the infile is different than the STDIN_FILENO, the 
 STDIN_FILENO gets replaced by the infile.*/
 void	dup_infile(t_command **cmd, int copy)
