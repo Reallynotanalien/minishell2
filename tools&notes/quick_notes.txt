@@ -1,22 +1,17 @@
 
-DOING : Ah bah oui c con hein. Faudra itérer jusqu'à ce que les quotes soient fermées, mais ça dépends de laquelle t'as rencontrée en premier.
-pendant que != '\"', if == '\'', iterate until quotes are closed. if that returns 1, return -1. else if i > index, return (0).
+DOING : 
 
-'echo "'hi" doesnt warn for unquoted quotes while it should.
+ leaks !!!!
 
-leaks !!!!
-
-export a='|' doesnt work (is empty)
+export a='|' doesnt work (is empty). Also fucks shit up
+$a doesn't substitute it ("$a: command not found, while it should behave as if there were only whitespaces on line")
 Quotation error with wrong conditions
 
 redirections + pipes doesnt work (echo hi | wc > file2)
 
 - replace all instances of ft_strlower by cmd->lower_cmd
-- In echo, if (!cmd[i_cmd][0]), i_cmd++; (ex : echo "" hi), also change condition for printing spaces
 - get back to school's printf version (uintptr instead of intptr)
 - leaks : fix overwritten malloced variable in exec.c (child_two)(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0])()
-- here_doc
-- signals
 
 
 cat | ls : minishell does not behave correctly; it should wait for input for cat. Now it sorta crashes. Need to stop with a signal ?
