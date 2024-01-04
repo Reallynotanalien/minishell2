@@ -24,7 +24,7 @@ int	echo_builtin(char	**cmd)
 		{
 			ft_putchar_fd(' ', STDOUT_FILENO);
 			i_cmd++;
-		}	
+		}
 	}
 	if (cmd[1] && ft_strncmp(cmd[1], "-n", 2))
 		ft_putchar_fd('\n', STDOUT_FILENO);

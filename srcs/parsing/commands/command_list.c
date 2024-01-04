@@ -68,11 +68,10 @@ char *split_next_word(char *str, int *index)
 	//need to make sure *index is ok
 }
 
-void	**ft_split_quotes(char const *s, char c)
+char	**ft_split_quotes(char *s)
 {
 	char	**new_array;
-	char	*tmp;
-	int 	nb_words;
+	int		nb_words;
 	int		*i;
 
 	nb_words = count_words(s);
@@ -84,7 +83,6 @@ void	**ft_split_quotes(char const *s, char c)
 	*i = 0;
 	while (s[*i])
 		new_array[nb_words++] = split_next_word(s, i);
-	new_array[nb_words] = NULL;
 	return (new_array);
 }
 
@@ -96,7 +94,7 @@ t_command	*add_command(char *command, int infile, int outfile)
 	new = create_command();
 	if (!new)
 		return (NULL);
-	new->cmd = (char **)ft_split_quotes(command, ' ');
+	new->cmd = (char **)ft_split_quotes(command);
 	new->lower_cmd = ft_strlower(new->cmd[0]);
 	if (!confirm_builtin(new))
 		get_path(new);
@@ -110,6 +108,11 @@ t_command	*add_command(char *command, int infile, int outfile)
 		while (next->next != NULL)
 			next = next->next;
 		next->next = new;
+	}
+	if (!new->cmd[0][0])
+	{
+		use_data()->error_flag = 1;
+		ft_printf(2, "minishell: : command not found\n");
 	}
 	return (use_data()->cmd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katherinefortin <katherinefortin@studen    +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 16:30:13 by kafortin          #+#    #+#             */
-/*   Updated: 2023/12/20 20:20:34 by katherinefo      ###   ########.fr       */
+/*   Updated: 2024/01/04 16:00:12 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,5 @@ char			*copy_from_src(char *dest, const char *src, unsigned int len);
 unsigned int	find_len_until(const char *str, const char to_find);
 void			free_tab(char **tab);
 char			*join_free(char *text, const char *buffer);
-void			**ft_split_quotes(char const *s, char c);
 
 #endif
