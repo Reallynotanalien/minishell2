@@ -68,10 +68,9 @@ char *split_next_word(char *str, int *index)
 	//need to make sure *index is ok
 }
 
-void	**ft_split_quotes(char const *s, char c)
+char	**ft_split_quotes(char *s)
 {
 	char	**new_array;
-	char	*tmp;
 	int		nb_words;
 	int		*i;
 
@@ -96,7 +95,7 @@ t_command	*add_command(char *command, int infile, int outfile)
 	new = create_command();
 	if (!new)
 		return (NULL);
-	new->cmd = (char **)ft_split_quotes(command, ' ');
+	new->cmd = (char **)ft_split_quotes(command);
 	if (!new->cmd[0][0])
 	{
 		use_data()->error_flag = 1;
