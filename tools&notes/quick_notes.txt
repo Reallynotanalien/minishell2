@@ -1,13 +1,10 @@
 
-DOING : Ah bah oui c con hein. Faudra itérer jusqu'à ce que les quotes soient fermées, mais ça dépends de laquelle t'as rencontrée en premier.
-pendant que != '\"', if == '\'', iterate until quotes are closed. if that returns 1, return -1. else if i > index, return (0).
-
-'echo "'hi" doesnt warn for unquoted quotes while it should.
+DOING : leaks when '' (alone on prompt). If after removing quotes nothing is left in any command, just skip execution.
 
 leaks !!!!
 
 export a='|' doesnt work (is empty)
-Quotation error with wrong conditions
+
 
 redirections + pipes doesnt work (echo hi | wc > file2)
 
