@@ -35,8 +35,8 @@ void	child_two(t_command **cmd)
 			pipex_error("minishell: fork: ", 1);
 		else if (use_data()->pid == 0)
 		{
-			dup_infile(cmd, YES);
-			dup_outfile(cmd, YES);
+			dup_infile(cmd, NO);
+			dup_outfile(cmd, NO);
 			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
 			exit(0);
 		}
@@ -90,15 +90,17 @@ void	pipex(t_command **cmd)
 		else
 		{
 			close(use_data()->fd[1]);
-			setup_pipe_infile(cmd);
+			(*cmd)->next->infile = use_data()->fd[0];
 		}
 	}
 	else
 	{
-		setup_pipe_outfile();
+		dup2(use_data()->fd[1], STDOUT_FILENO);
+		close(use_data()->fd[1]);
 		check_builtin((*cmd));
 		reset_files();
-		setup_pipe_infile(cmd);
+		if (!confirm_builtin((*cmd)->next))
+			(*cmd)->next->infile = use_data()->fd[0];
 	}
 }
 

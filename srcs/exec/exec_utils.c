@@ -38,10 +38,8 @@ void	setup_pipe_outfile(void)
 ones in case a dup2 was used.*/
 void	reset_files(void)
 {
-	if (use_data()->old_stdout)
-		dup2(use_data()->old_stdout, STDOUT_FILENO);
-	if (use_data()->old_stdin)
-		dup2(use_data()->old_stdin, STDIN_FILENO);
+	dup2(use_data()->old_stdout, STDOUT_FILENO);
+	dup2(use_data()->old_stdin, STDIN_FILENO);
 }
 
 void	setup_pipe_infile(t_command **cmd)
