@@ -1,6 +1,5 @@
 
 #include "../../../includes/minishell.h"
-#include "../../../includes/parsing.h"
 
 //Checks and handles potential errors, or redirects input/output.
 int	token_redirout(t_token *token)

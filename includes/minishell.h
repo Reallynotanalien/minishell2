@@ -7,7 +7,6 @@
 # include "libft/libft.h"
 # include "./readline/history.h"
 # include "./readline/readline.h"
-# include "parsing.h"
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/signal.h>
@@ -37,6 +36,8 @@
 # define ARGV_ERROR "There is no argv\n"
 # define HD_FORK_ERROR "minishell: heredoc: could not fork\n"
 # define HD_OPEN_ERROR "minishell: heredoc: could not open heredoc\n"
+# define STRDUP_ERROR "Could not duplicate string.\n"
+# define QUOTES_ERROR "found unclosed quotation marks\n"
 
 /*STRUCTS*/
 
@@ -144,20 +145,8 @@ void		reset_files(void);
 void		setup_pipe_outfile(void);
 void		setup_pipe_infile(t_command **cmd);
 
-//exec
+//exec.c
 void		exec(t_command *cmd);
-
-//linked_list.c
-t_token		*add_token(char *token);
-void		free_tokens_if_not_empty(void);
-t_token		*lstget_prev(t_token *lst, t_token *reference);
-void		view_list(void);
-
-//command_list.c
-t_command	*create_command(void);
-t_command	*add_command(char *command, int infile, int outfile);
-void		free_commands_if_not_empty(void);
-void		view_commands(void);
 
 //path.c
 char		*access_path(t_command *cmd, char **path_env);
@@ -165,20 +154,67 @@ char		*find_path(t_command **cmd, char **env);
 t_command	*find_cmd(t_command **cmd);
 char		*get_path(t_command *cmd);
 
+/*PARSING*/
+
+//parsing.c
+void		line_parsing(void);
+
+//signals.c
+void		interruption_handler(int signum);
 void		child_handler(int signum);
 void		heredoc_handler(int signum);
+void		signals(void);
 
-//redirections
+//term_attributes.c
+void		disable_ctrlc(void);
+void		restore_attributes(void);
+
+/*Commands*/
+
+//build_commands_utils.c
+int			open_heredoc(t_token *tokens);
+int			contains_whitespace(char *str);
+
+//build_commands.c
+int			build_commands(void);
+
+//command_list.c
+t_command	*create_command(void);
+t_command	*add_command(char *command, int infile, int outfile);
+void		free_commands_if_not_empty(void);
+void		view_commands(void);
+
+/*Tokens*/
+
+//line_parsing.c
+int			parse_quotes(char *str);
+int			remove_spaces(char *str);
+
+//linked_list.c
+t_token		*add_token(char *token);
+void		free_tokens_if_not_empty(void);
+void		view_list(void);
+
+//redirections.c
 int			token_redirin(t_token *token);
 int			token_redirout(t_token *token);
 int			token_redirappend(t_token *token);
 
-void		interruption_handler(int signum);
+//substitutions.c
+void		do_substitutions(char *line);
 
-/*PARSING*/
+//token_parsing_utils.c
+int			double_quoted(char *str, int index);
+int			single_quoted(char *str, int index);
 
-//build_commands_utils
-int			open_heredoc(t_token *tokens);
-int			contains_whitespace(char *str);
+//token_parsing.c
+int			parsing_redirection(char *line, int index);
+
+//token_split_utils.c
+int			is_redirection(char c);
+int			is_double_quote(char c);
+
+//token_split.c
+int			split_tokens(void);
 
 #endif

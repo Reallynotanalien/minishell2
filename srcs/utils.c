@@ -1,5 +1,4 @@
 #include "../includes/minishell.h"
-#include "../includes/parsing.h"
 
 t_data	*use_data(void)
 {
