@@ -44,7 +44,11 @@ void	reset_files(void)
 void	setup_pipe_infile(t_command **cmd)
 {
 	if (!confirm_builtin((*cmd)->next))
+	{
+		if ((*cmd)->next->infile != 0)
+			close((*cmd)->next->infile);
 		(*cmd)->next->infile = use_data()->fd[0];
+	}
 	else
 		close(use_data()->fd[0]);
 }
