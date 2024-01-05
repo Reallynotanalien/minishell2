@@ -100,7 +100,6 @@ char		*ft_getenv(char *var_name);
 void		print_array(void);
 void		safe_free(void **ptr);
 void		clean_data(void);
-void		set_exstat(int *status, int exstat);
 
 //linked_list.c
 t_token		*add_token(char *token);
@@ -155,6 +154,7 @@ int			export_builtin(char **cmd);
 
 //exit_status
 int			*get_pid_status(void);
+void		set_exstat(int *status, int exstat);
 
 /*EXEC*/
 
