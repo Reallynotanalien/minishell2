@@ -36,3 +36,19 @@ char	*ft_getenv(char *var_name)
 		return (NULL);
 	return (NULL);
 }
+
+char	**copy_env(char **env)
+{
+	char	**new_env;
+	int		nb_lines;
+	int		i;
+
+	nb_lines = 0;
+	while (env[nb_lines])
+		nb_lines++;
+	new_env = ft_calloc(nb_lines + 1, sizeof(char *));
+	i = -1;
+	while (env[++i])
+		new_env[i] = ft_strdup(env[i]);
+	return (new_env);
+}

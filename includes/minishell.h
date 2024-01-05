@@ -98,6 +98,7 @@ void		init_data(t_data *data);
 //utils.c
 t_data		*use_data(void);
 char		*ft_getenv(char *var_name);
+char		**copy_env(char **env);
 
 
 //linked_list.c
