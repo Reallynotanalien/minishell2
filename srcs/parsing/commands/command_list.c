@@ -22,7 +22,6 @@ int	count_words(char *str)
 {
 	int	i;
 	int	nb_words;
-	int	nb_words;
 
 	nb_words = 1;
 	i = 0;
