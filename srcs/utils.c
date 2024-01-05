@@ -31,20 +31,6 @@ void	view_list(void)
 	}
 }
 
-//returns the index of the first occurence of 'target' in 'str'.
-int	find_index(char *str, char target)
-{
-	int	index;
-
-	index = 0;
-	while (str[index] && str[index] != target)
-		index ++;
-	if (str[index] == target)
-		return (index);
-	else
-		return (-1);
-}
-
 char	*ft_getenv(char *var_name)
 {
 	char	*tmp;

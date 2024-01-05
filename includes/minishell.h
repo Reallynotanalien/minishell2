@@ -94,7 +94,6 @@ void		init_data(t_data *data);
 //utils.c
 t_data		*use_data(void);
 void		view_list(void);
-int			find_index(char *str, char target);
 char		*ft_strlower(char *str);
 char		*ft_getenv(char *var_name);
 void		print_array(void);
