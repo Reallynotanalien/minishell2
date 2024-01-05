@@ -26,12 +26,3 @@ void	pipex_error(char *error, int code)
 	set_exstat(NULL, code);
 	perror(error);
 }
-
-int	*get_pid_status(void)
-{
-	int	*status;
-
-	status = ft_calloc(1, sizeof(int));
-	waitpid(use_data()->pid, status, 0);
-	return (status);
-}

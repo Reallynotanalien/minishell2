@@ -7,6 +7,7 @@ SRCS =	./srcs/init.c \
 		./srcs/minishell.c \
 		./srcs/pending.c \
 		./srcs/utils.c \
+		./srcs/errors/exit_status.c \
 		./srcs/parsing/commands/build_commands_utils.c \
 		./srcs/parsing/tokens/token_split_utils.c \
 		./srcs/parsing/tokens/token_parsing_utils.c \

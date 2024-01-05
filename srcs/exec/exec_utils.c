@@ -1,6 +1,19 @@
 # include "../../includes/minishell.h"
 
+/*Iterates through the command struct to find out how many there
+are, and returns it.*/
+int	count_commands(t_command *cmd)
+{
+	int	i;
 
+	i = 1;
+	while (cmd->next)
+	{
+		cmd = cmd->next;
+		i++;
+	}
+	return (i);
+}
 
 /*If the infile is different than the STDIN_FILENO, the 
 STDIN_FILENO gets replaced by the infile.*/
@@ -39,7 +52,8 @@ ones in case a dup2 was used.*/
 void	reset_files(void)
 {
 	dup2(use_data()->old_stdout, STDOUT_FILENO);
-	dup2(use_data()->old_stdin, STDIN_FILENO);
+	if (STDIN_FILENO != 0)
+		dup2(use_data()->old_stdin, STDIN_FILENO);
 }
 
 void	setup_pipe_infile(t_command **cmd)
