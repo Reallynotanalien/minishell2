@@ -43,6 +43,7 @@ char	*find_path(t_command **cmd, char **env)
 	path_env = (char **)ft_split(env[i] + 5, ':');
 	i = 0;
 	(*cmd)->path = access_path(*cmd, path_env);
+	free_array(path_env);
 	return ((*cmd)->path);
 }
 

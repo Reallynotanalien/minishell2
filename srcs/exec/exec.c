@@ -21,7 +21,6 @@ void	child_two(t_command **cmd)
 {
 	int	*status;
 
-	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	if (!confirm_builtin((*cmd)))
 	{
 		use_data()->pid = fork();
@@ -67,7 +66,6 @@ If not, we close the end of the pipe we will not be using and store
 the other end into the next command's infile fd.*/
 void	pipex(t_command **cmd)
 {
-	(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0]);
 	if (pipe(use_data()->fd) < 0)
 		pipex_error("minishell: pipe: ", 1);
 	if (!confirm_builtin((*cmd)))

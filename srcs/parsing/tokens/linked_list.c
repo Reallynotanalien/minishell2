@@ -88,7 +88,8 @@ void	free_tokens_if_not_empty(void)
 	while (use_data()->token)
 	{
 		temp = use_data()->token->next;
-		free(use_data()->token);
+		free(use_data()->token->token);
+		free (use_data()->token);
 		use_data()->token = temp;
 	}
 }

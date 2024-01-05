@@ -25,7 +25,6 @@ int	count_words(char *str)
 
 	nb_words = 1;
 	i = 0;
-	nb_words = 0;
 	while (str[i])
 	{
 		if (str[i] == ' '
@@ -45,7 +44,8 @@ char *split_next_word(char *str, int *index)
 
 	len = 0;
 	while (str[*index + len] && !(str[*index + len] == ' '
-		&& !double_quoted(str, *index + len) && !single_quoted(str, *index + len)))
+			&& !double_quoted(str, *index + len)
+			&& !single_quoted(str, *index + len)))
 		len++;
 	if (len == 0)
 		return (ft_calloc(1, 1));
@@ -61,7 +61,6 @@ char *split_next_word(char *str, int *index)
 	if (str[*index])
 		(*index)++;
 	return (new_word);
-	//need to make sure *index is ok
 }
 
 char	**ft_split_quotes(char *s)
@@ -79,6 +78,8 @@ char	**ft_split_quotes(char *s)
 	*i = 0;
 	while (s[*i])
 		new_array[nb_words++] = split_next_word(s, i);
+	free(i);
+	free(s);
 	return (new_array);
 }
 
@@ -124,34 +125,5 @@ void	free_commands_if_not_empty(void)
 		temp = use_data()->cmd->next;
 		free(use_data()->cmd);
 		use_data()->cmd = temp;
-	}
-}
-
-void	view_commands(void)
-{
-	t_command	*cmd;
-	int			i;
-	int			j;
-
-	i = 1;
-	cmd = use_data()->cmd;
-	while (cmd)
-	{
-		j = 0;
-		printf("----------------\n");
-		printf("command%d\n", i++);
-		if (cmd->cmd == NULL)
-			printf("NULL\n");
-		else
-		{
-			while (cmd->cmd[j] != NULL)
-			{
-				printf("%d:[%s]\n", j, (char *)cmd->cmd[j]);
-				j++;
-			}
-		}
-		printf("infile no: %i\n", cmd->infile);
-		printf("outfile no: %i\n", cmd->outfile);
-		cmd = cmd->next;
 	}
 }

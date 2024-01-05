@@ -39,8 +39,8 @@ void	free_array(char **array)
 
 	i = -1;
 	while (array[++i])
-		safe_free ((void **)&(array[i]));
-	safe_free_ptr((void ***)&array);
+		free(array[i]);
+	free(array);
 }
 
 void	clean_cmds(void)
@@ -51,11 +51,10 @@ void	clean_cmds(void)
 	{
 		tmp = use_data()->cmd->next;
 		free_array(use_data()->cmd->cmd);
-		safe_free ((void **)&use_data()->cmd->path);
-		safe_free((void **)&use_data()->cmd->lower_cmd);
+		free (use_data()->cmd->path);
+		free(use_data()->cmd->lower_cmd);
+		free(use_data()->cmd);
 		use_data()->cmd = tmp;
-		if (use_data()->cmd)
-			safe_free ((void **)use_data()->cmd);
 	}
 }
 
