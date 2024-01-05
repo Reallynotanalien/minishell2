@@ -4,7 +4,7 @@
 //returns 1 if the character is an environment variable name delimiter.
 int	is_delimiter(char c)
 {
-	if (!c || ft_iswhitespace(c) || c == '\''
+	if (!c || c == ' ' || c == '\t' || c == '\''
 		|| c == '\"' || c == '$' || c == '<' || c == '>' || c == '|'
 		|| c == '?')
 		return (1);

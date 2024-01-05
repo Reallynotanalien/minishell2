@@ -11,7 +11,7 @@ have been caught earlier if a redirection symbol is present on left*/
 
 int	next_isredirection(char *line, int index)
 {
-	if (ft_iswhitespace(line[index + 1]))
+	if (line[index + 1] == ' ' || line[index + 1] == '\t')
 		index += 2;
 	else
 		index++;
@@ -36,7 +36,7 @@ int	parsing_redirection(char *line, int index)
 			set_exstat(NULL, 258), ERROR);
 	if (next_isredirection(line, index))
 	{
-		if (ft_iswhitespace(line[index + 1]))
+		if (line[index + 1] == ' ' || line[index + 1] == '\t')
 			index ++;
 		index++;
 		if (line[index + 1] && line[index] == line[index + 1])

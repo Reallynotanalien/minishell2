@@ -5,7 +5,7 @@ int	iterate_until_quotes_are_closed(char *line, int end)
 {
 	while (line[end + 1] && !is_double_quote(line[end + 1]))
 		end++;
-	if (!ft_iswhitespace(line[end + 1]))
+	if (line[end + 1] != ' ' && line[end + 1] != '\t')
 		return (end);
 	return (end + 1);
 }
@@ -34,7 +34,7 @@ int	iterate_until_redir(char *line, int end, int start)
 int	iterate_until_space(char *line, int end)
 {
 	while (line[end] && line[end + 1]
-		&& !ft_iswhitespace(line[end + 1]))
+		&& (line[end + 1] != ' ' && line[end + 1] != '\t'))
 	{
 		if (line[end + 1] == '"')
 			end = iterate_until_quotes_are_closed(line, end + 1);

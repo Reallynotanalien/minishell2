@@ -9,10 +9,10 @@ int	parse_quotes(char *str)
 	{
 		if (double_quoted(str, i) == -1 || single_quoted(str, i) == -1)
 			return (ft_printf(2, "minishell: quotations are not closed\n"),
-			set_exstat(NULL, 1), ERROR);
+				set_exstat(NULL, 1), ERROR);
 	}
 	if (double_quoted(str, i) == -1 || single_quoted(str, i) == -1)
-			return (ft_printf(2, "minishell: quotations are not closed\n"),
+		return (ft_printf(2, "minishell: quotations are not closed\n"),
 			set_exstat(NULL, 1), ERROR);
 	return (0);
 }
@@ -24,19 +24,19 @@ int	find_lenght(char *str, int end)
 
 	i = 0;
 	len = 0;
-	while (i < end && ft_iswhitespace(str[i]))
+	while (i < end && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	while (i < end)
 	{
-		while (i < end && (!ft_iswhitespace(str[i])
-				|| double_quoted(str, i) || single_quoted(str, i)))
+		while (i < end && ((str[i] != ' ' && str[i] != '\t')
+				|| (double_quoted(str, i) || single_quoted(str, i))))
 		{
 			i++;
 			len++;
 		}
 		if (i < end)
 			len++;
-		while (str[i] && ft_iswhitespace(str[i]))
+		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 			i++;
 	}
 	return (len);
@@ -54,12 +54,12 @@ char	*skip_consecutives(int i, int end, char *str)
 	i_new = 0;
 	while (i < end)
 	{
-		while (str[i] && (!ft_iswhitespace(str[i]) 
-				|| double_quoted(str, i) || single_quoted(str, i)))
+		while (str[i] && ((str[i] != ' ' && str[i] != '\t')
+				|| (double_quoted(str, i) || single_quoted(str, i))))
 			new_str[i_new++] = str[i++];
 		if (i < end)
 			new_str[i_new++] = ' ';
-		while (ft_iswhitespace(str[i]))
+		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 	}
 	return (new_str);
@@ -71,10 +71,10 @@ int	remove_spaces(char *str)
 	int		end;
 
 	i = 0;
-	while (str[i] && ft_iswhitespace(str[i]))
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	end = ft_strlen(str) - 1;
-	while (ft_iswhitespace(str[end]))
+	while (str[end] == ' ' || str[end] == '\t')
 		end--;
 	if (end != i)
 		end++;

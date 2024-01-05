@@ -50,7 +50,8 @@ void	line_parsing(void)
 	int	i;
 
 	i = 0;
-	while (use_data()->line[i] && ft_iswhitespace(use_data()->line[i]))
+	while (use_data()->line[i]
+		&& (use_data()->line[i] == ' ' || use_data()->line[i] == '\t'))
 		i++;
 	if (i == (int)ft_strlen(use_data()->line)
 		|| parse_quotes(use_data()->line) == ERROR

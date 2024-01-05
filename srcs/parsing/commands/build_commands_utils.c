@@ -60,7 +60,7 @@ int	contains_whitespace(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (ft_iswhitespace(str[i]))
+		if (str[i] == ' ' || str[i] == '\t')
 			return (YES);
 		i++;
 	}
