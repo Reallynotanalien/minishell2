@@ -1,5 +1,13 @@
 # include "../../includes/minishell.h"
 
+void	close_files(t_command **cmd)
+{
+	if ((*cmd)->infile != 0)
+		close((*cmd)->infile);
+	if ((*cmd)->outfile != 1)
+		close((*cmd)->outfile);
+}
+
 void	exec_builtin(t_command **cmd, int pipe)
 {
 	if (pipe == YES)
@@ -7,6 +15,7 @@ void	exec_builtin(t_command **cmd, int pipe)
 	else
 		dup_outfile(cmd, YES);
 	check_builtin((*cmd));
+	close_files(cmd);
 	reset_files();
 }
 
@@ -36,6 +45,7 @@ void	child_two(t_command **cmd)
 		}
 		else
 		{
+			close_files(cmd);
 			status = get_pid_status();
 			set_exstat(status, 0);
 			free(status);
@@ -54,6 +64,7 @@ void	child_one(t_command **cmd)
 	dup_infile(cmd, YES);
 	close(use_data()->fd[0]);
 	setup_pipe_outfile();
+	close_files(cmd);
 	execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env);
 	exit(0);
 }
