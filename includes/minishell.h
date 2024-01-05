@@ -96,7 +96,6 @@ t_data		*use_data(void);
 void		view_list(void);
 char		*ft_strlower(char *str);
 char		*ft_getenv(char *var_name);
-void		print_array(void);
 void		safe_free(void **ptr);
 void		clean_data(void);
 

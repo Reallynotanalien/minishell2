@@ -54,12 +54,3 @@ char	*ft_getenv(char *var_name)
 		return (NULL);
 	return (NULL);
 }
-
-void	print_array(void)
-{
-	int	i;
-
-	i = -1;
-	while (use_data()->new_env[++i])
-		printf("%s\n", use_data()->new_env[i]);
-}
