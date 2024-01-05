@@ -3,11 +3,18 @@
 NAME = minishell
 
 #source directories
-SRCS =	./srcs/init.c \
+SRCS =	./srcs/cleaning.c \
+		./srcs/init.c \
 		./srcs/minishell.c \
 		./srcs/pending.c \
 		./srcs/utils.c \
+		./srcs/builtins/builtins_utils.c \
+		./srcs/builtins/export_builtin.c \
+		./srcs/builtins/builtins.c \
 		./srcs/errors/exit_status.c \
+		./srcs/exec/exec_utils.c \
+		./srcs/exec/exec.c \
+		./srcs/exec/path.c \
 		./srcs/parsing/commands/build_commands_utils.c \
 		./srcs/parsing/tokens/token_split_utils.c \
 		./srcs/parsing/tokens/token_parsing_utils.c \
@@ -23,15 +30,7 @@ SRCS =	./srcs/init.c \
 		./srcs/parsing/signals.c \
 		./srcs/parsing/parsing.c \
 		./srcs/parsing/error.c \
-		./srcs/exec/exec_utils.c \
-		./srcs/exec/exec.c \
-		./srcs/exec/path.c \
-		./srcs/builtins/builtins_utils.c \
-		./srcs/builtins/export_builtin.c \
-		./srcs/builtins/builtins.c \
-		./srcs/cleaning.c \
 				
-
 #colours ------------------------------------------
 B_BLUE='\033[1;34m'
 RED=\033[0;31m
