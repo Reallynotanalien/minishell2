@@ -22,7 +22,8 @@ int	echo_builtin(char	**cmd)
 			ft_putchar_fd(cmd[i_cmd][i_line], STDOUT_FILENO);
 		if (cmd[i_cmd])
 		{
-			ft_putchar_fd(' ', STDOUT_FILENO);
+			if (cmd[i_cmd + 1])
+				ft_putchar_fd(' ', STDOUT_FILENO);
 			i_cmd++;
 		}
 	}
