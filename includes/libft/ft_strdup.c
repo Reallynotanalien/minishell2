@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/25 16:12:46 by kafortin          #+#    #+#             */
-/*   Updated: 2023/12/07 12:12:25 by edufour          ###   ########.fr       */
+/*   Created: 2024/01/04 19:38:55 by kafortin          #+#    #+#             */
+/*   Updated: 2024/01/04 19:38:58 by kafortin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,5 @@ char	*ft_strdup(char *src)
 	if (copy == NULL)
 		return (NULL);
 	ft_memcpy(copy, src, len);
-	// copy[ft_strlen(src)] = '\0';
 	return (copy);
 }
