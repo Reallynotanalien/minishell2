@@ -84,25 +84,27 @@ typedef struct s_data
 
 //FUNCTIONS
 
-//build_commands_utils.c
-int			open_heredoc(t_token *tokens);
-int			contains_whitespace(char *str);
+//cleaning.c
+void		clean_data(void);
+void		cleanup(void);
+
+//cleaning_utils.c
+void		safe_free(void **ptr);
+void		free_array(char **array);
 
 //init.c
 void		init_data(t_data *data);
 
 //utils.c
 t_data		*use_data(void);
-void		view_list(void);
-char		*ft_strlower(char *str);
 char		*ft_getenv(char *var_name);
-void		safe_free(void **ptr);
-void		clean_data(void);
+
 
 //linked_list.c
 t_token		*add_token(char *token);
 void		free_tokens_if_not_empty(void);
 t_token		*lstget_prev(t_token *lst, t_token *reference);
+void		view_list(void);
 
 //command_list.c
 t_command	*create_command(void);
@@ -168,4 +170,11 @@ void		setup_pipe_infile(t_command **cmd);
 void		exec(t_command *cmd);
 
 void		pipex_error(char *error, int code);
+
+/*PARSING*/
+
+//build_commands_utils
+int			open_heredoc(t_token *tokens);
+int			contains_whitespace(char *str);
+
 #endif

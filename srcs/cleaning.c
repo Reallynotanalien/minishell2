@@ -3,7 +3,8 @@
 
 //To clean :
 //When an error occurs : Nothing. It will be cleaned at the end of the loop.
-//When the program exits :use_data()->cmd(arrays, close files, etc...), everything in use_data(), history, 
+//When the program exits :use_data()->cmd(arrays, close files, etc...), 
+//everything in use_data(), history, 
 //When the loop finishes : use_data()->cmd(arrays, close files, etc...)
 
 //Allocated in use_data() :
@@ -14,34 +15,6 @@ use_data()->line(char *)
 use_data()->line_cpy(char *)
 use_data()(t_data *)
 */
-
-void	safe_free_ptr(void ***ptr)
-{
-	if (ptr && *ptr)
-	{
-		free (*ptr);
-		*ptr = NULL;
-	}
-}
-
-void	safe_free(void **ptr)
-{
-	if (ptr && *ptr)
-	{
-		free (*ptr);
-		*ptr = NULL;
-	}
-}
-
-void	free_array(char **array)
-{
-	int	i;
-
-	i = -1;
-	while (array[++i])
-		safe_free ((void **)&(array[i]));
-	safe_free_ptr((void ***)&array);
-}
 
 void	clean_cmds(void)
 {

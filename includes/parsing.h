@@ -13,7 +13,6 @@ int   		build_commands(void);
 
 //errors.c
 int			parsing_error(char *error);
-void		cleanup(void);
 void		exit_program(int code);
 
 //line_parsing.c

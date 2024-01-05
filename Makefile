@@ -4,6 +4,7 @@ NAME = minishell
 
 #source directories
 SRCS =	./srcs/cleaning.c \
+		./srcs/cleaning_utils.c \
 		./srcs/init.c \
 		./srcs/minishell.c \
 		./srcs/utils.c \
