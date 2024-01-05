@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strlower.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/10 14:03:11 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/04 19:38:18 by kafortin         ###   ########.fr       */
+/*   Created: 2024/01/04 19:49:15 by kafortin          #+#    #+#             */
+/*   Updated: 2024/01/04 19:49:34 by kafortin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*Writes int "n" on file descriptor passed as an argument.*/
-void	ft_putnbr_fd(int n, int fd)
+char	*ft_strlower(char *str)
 {
-	if (n <= 9 && n >= 0)
-		ft_putchar_fd(n + '0', fd);
-	else if (n < 0)
-	{
-		if (n == -2147483648)
-		{
-			write (fd, "-2147483648", 11);
-			return ;
-		}
-		write (fd, "-", 1);
-		n *= -1;
-		ft_putnbr_fd(n, fd);
-	}
-	else
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
-	}
+	int		i;
+	char	*new_str;
+
+	new_str = ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	i = -1;
+	if (!str[0])
+		return (new_str);
+	while (str[++i])
+		new_str[i] = ft_tolower(str[i]);
+	return (new_str);
 }

@@ -1,18 +1,6 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/04/05 20:32:19 by kafortin          #+#    #+#              #
-#    Updated: 2024/01/04 16:00:18 by edufour          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 CC = gcc
 
-CFLAGS = -Wall -Wextra #-Werror -g
+CFLAGS = -Wall -Wextra -Werror -g
 
 NAME = libft.a
 
@@ -60,6 +48,8 @@ FILES = ft_isalpha.c \
 		get_next_line.c \
 		get_next_line_utils.c \
 		ft_free_tab.c \
+		ft_strlower.c \
+		ft_strtrim_whitespaces.c \
 		./printf/ft_printf.c \
 		./printf/print_arg.c \
 		./printf/print_hex.c \

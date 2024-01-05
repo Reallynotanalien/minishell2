@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: katherinefortin <katherinefortin@studen    +#+  +:+       +#+        */
+/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 10:46:56 by edufour           #+#    #+#             */
-/*   Updated: 2023/12/20 20:20:46 by katherinefo      ###   ########.fr       */
+/*   Created: 2024/01/04 19:36:30 by kafortin          #+#    #+#             */
+/*   Updated: 2024/01/04 19:36:32 by kafortin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -93,3 +93,21 @@ void	free_tokens_if_not_empty(void)
 		use_data()->token = temp;
 	}
 }
+
+void	view_list(void)
+{
+	t_token	*tokens;
+	int		i;
+
+	i = 1;
+	tokens = use_data()->token;
+	while (tokens)
+	{
+		printf("----------------\n");
+		printf("token%d:[%s]\n", i++, (char *)tokens->token);
+		printf("type: %d\n", tokens->type);
+		if (!tokens->next)
+			return ;
+		tokens = tokens->next;
+	}
+}

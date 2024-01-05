@@ -7,7 +7,6 @@
 # include "libft/libft.h"
 # include "./readline/history.h"
 # include "./readline/readline.h"
-# include "parsing.h"
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/signal.h>
@@ -37,6 +36,8 @@
 # define ARGV_ERROR "There is no argv\n"
 # define HD_FORK_ERROR "minishell: heredoc: could not fork\n"
 # define HD_OPEN_ERROR "minishell: heredoc: could not open heredoc\n"
+# define STRDUP_ERROR "Could not duplicate string.\n"
+# define QUOTES_ERROR "found unclosed quotation marks\n"
 
 /*STRUCTS*/
 
@@ -84,19 +85,21 @@ typedef struct s_data
 
 //FUNCTIONS
 
-//build_commands_utils.c
-int			open_heredoc(t_token *tokens);
-int			contains_whitespace(char *str);
+//cleaning.c
+void		clean_data(void);
+void		cleanup(void);
+
+//cleaning_utils.c
+void		safe_free(void **ptr);
+void		free_array(char **array);
 
 //init.c
 void		init_data(t_data *data);
 
 //utils.c
 t_data		*use_data(void);
-void		view_list(void);
-int			find_index(char *str, char target);
-char		*ft_strlower(char *str);
 char		*ft_getenv(char *var_name);
+char		**copy_env(char **env);
 void		print_array(void);
 void		safe_free(void **ptr);
 void		clean_data(void);
@@ -136,41 +139,119 @@ int			token_redirappend(t_token *token);
 void		interruption_handler(int signum);
 
 /*BUILTINS*/
-//builtins_utils
-char		*ft_lowerbuiltin(char *str, char *buff);
+//builtins_utils.c
 int			confirm_builtin(t_command *cmd);
 int			check_builtin(t_command *cmd);
 int			isvalid_varname(char *variable_name);
+int			is_envvar(char	*varname);
 
-//builtins
+//builtins.c
 int			echo_builtin(char **cmd);
 int			cd_builtin(char **cmd);
 int			pwd_builtin(void);
+int			unset_var(char *variable);
 int			unset_builtin(char **cmd);
+int			env_builtin(void);
 int			exit_builtin(char **cmd);
 
-//export_builtin
+//export_builtin.c
 char		*get_varname(char *variable);
 char		*get_varvalue(char *variable);
 int			export_builtin(char **cmd);
 
-/*ERROR HANDLING*/
+/*ERROR*/
 
-//exit_status
+//errors.c
+int			parsing_error(char *error);
+void		exit_program(int code);
+void		pipex_error(char *error, int code);
+
+//exit_status.c
 int			*get_pid_status(void);
+void		set_exstat(int *status, int exstat);
 
 /*EXEC*/
 
-//exec_utils
+//exec_dup.c
 int			count_commands(t_command *cmd);
+
+//exec_utils.c 
 void		dup_infile(t_command **cmd, int copy);
 void		dup_outfile(t_command **cmd, int copy);
 void		reset_files(void);
 void		setup_pipe_outfile(void);
 void		setup_pipe_infile(t_command **cmd);
 
-//exec
+//exec.c
 void		exec(t_command *cmd);
 
-void		pipex_error(char *error, int code);
+//path.c
+char		*access_path(t_command *cmd, char **path_env);
+char		*find_path(t_command **cmd, char **env);
+t_command	*find_cmd(t_command **cmd);
+char		*get_path(t_command *cmd);
+
+/*PARSING*/
+
+//parsing.c
+void		line_parsing(void);
+
+//signals.c
+void		interruption_handler(int signum);
+void		child_handler(int signum);
+void		heredoc_handler(int signum);
+void		signals(void);
+
+//term_attributes.c
+void		disable_ctrlc(void);
+void		restore_attributes(void);
+
+/*Commands*/
+
+//build_commands_utils.c
+int			open_heredoc(t_token *tokens);
+int			contains_whitespace(char *str);
+
+//build_commands.c
+int			build_commands(void);
+
+//command_list.c
+t_command	*create_command(void);
+t_command	*add_command(char *command, int infile, int outfile);
+void		free_commands_if_not_empty(void);
+void		view_commands(void);
+
+/*Tokens*/
+
+//line_parsing.c
+int			parse_quotes(char *str);
+int			remove_spaces(char *str);
+
+//linked_list.c
+t_token		*add_token(char *token);
+void		free_tokens_if_not_empty(void);
+void		view_list(void);
+
+//redirections.c
+int			token_redirin(t_token *token);
+int			token_redirout(t_token *token);
+int			token_redirappend(t_token *token);
+
+//substitutions.c
+void		do_substitutions(char *line);
+
+//token_parsing_utils.c
+int			double_quoted(char *str, int index);
+int			single_quoted(char *str, int index);
+
+//token_parsing.c
+int			parsing_redirection(char *line, int index);
+
+//token_split_utils.c
+int			is_redirection(char c);
+int			is_double_quote(char c);
+
+//token_split.c
+int			split_tokens(void);
+
 #endif
