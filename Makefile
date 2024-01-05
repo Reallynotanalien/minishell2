@@ -6,7 +6,6 @@ NAME = minishell
 SRCS =	./srcs/cleaning.c \
 		./srcs/init.c \
 		./srcs/minishell.c \
-		./srcs/pending.c \
 		./srcs/utils.c \
 		./srcs/builtins/builtins_utils.c \
 		./srcs/builtins/export_builtin.c \
