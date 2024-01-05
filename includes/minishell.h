@@ -108,36 +108,6 @@ int			iterate_until_closed(char *str, int *index, char quote);
 void		clean_cmds(void);
 void		free_array(char **array);
 
-//linked_list.c
-t_token		*add_token(char *token);
-void		free_tokens_if_not_empty(void);
-t_token		*lstget_prev(t_token *lst, t_token *reference);
-
-//command_list.c
-t_command	*create_command(void);
-t_command	*add_command(char *command, int infile, int outfile);
-void		free_commands_if_not_empty(void);
-void		view_commands(void);
-
-//path.c
-char		*access_path(t_command *cmd, char **path_env);
-char		*find_path(t_command **cmd, char **env);
-t_command	*find_cmd(t_command **cmd);
-char		*get_path(t_command *cmd);
-
-int			env_builtin(void);
-int			unset_var(char *variable);
-int			is_envvar(char	*varname);
-void		child_handler(int signum);
-void		heredoc_handler(int signum);
-
-//redirections
-int			token_redirin(t_token *token);
-int			token_redirout(t_token *token);
-int			token_redirappend(t_token *token);
-
-void		interruption_handler(int signum);
-
 /*BUILTINS*/
 //builtins_utils.c
 int			confirm_builtin(t_command *cmd);
