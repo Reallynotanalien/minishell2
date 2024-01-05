@@ -48,6 +48,7 @@ FILES = ft_isalpha.c \
 		get_next_line.c \
 		get_next_line_utils.c \
 		ft_free_tab.c \
+		ft_strlower.c \
 		./printf/ft_printf.c \
 		./printf/print_arg.c \
 		./printf/print_hex.c \
