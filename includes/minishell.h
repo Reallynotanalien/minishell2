@@ -101,6 +101,7 @@ void		print_array(void);
 void		safe_free(void **ptr);
 void		clean_data(void);
 void		set_exstat(int *status, int exstat);
+int			iterate_until_closed(char *str, int *index, char quote);
 
 //linked_list.c
 t_token		*add_token(char *token);

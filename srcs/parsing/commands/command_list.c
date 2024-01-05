@@ -21,23 +21,18 @@ int	is_quote(char check)
 int	count_words(char *str)
 {
 	int	i;
-	int	nb_spaces;
-	int	nb_quotes;
+	int	nb_words;
 
-	nb_spaces = 0;
-	nb_quotes = 0;
+	nb_words = 1;
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == ' ' && !is_quote(str[i + 1])
-			&& (i == 0 || !is_quote(str[i - 1]))
-			&& !double_quoted(str, i) && ! single_quoted(str, i))
-			nb_spaces ++;
-		if (is_quote(str[i]) && !double_quoted(str, i) && !single_quoted(str, i))
-			nb_quotes++;
+		if (str[i] == ' '
+			&& !double_quoted(str, i) && !single_quoted(str, i))
+			nb_words++;
 		i++;
 	}
-	return (nb_spaces + (nb_quotes / 2) + 1);
+	return (nb_words);
 }
 
 //returns the next command's argument as a char *. Splits on spaces
