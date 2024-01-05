@@ -24,7 +24,6 @@ int	confirm_builtin(t_command *cmd)
 	return (1);
 }
 
-
 /* calls the relevant function from builtin name, 
 or returns 0 if it isn't a builtin.*/
 int	check_builtin(t_command *cmd)

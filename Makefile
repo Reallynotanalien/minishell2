@@ -11,7 +11,9 @@ SRCS =	./srcs/cleaning.c \
 		./srcs/builtins/builtins_utils.c \
 		./srcs/builtins/export_builtin.c \
 		./srcs/builtins/builtins.c \
+		./srcs/errors/error.c \
 		./srcs/errors/exit_status.c \
+		./srcs/exec/exec_dup.c \
 		./srcs/exec/exec_utils.c \
 		./srcs/exec/exec.c \
 		./srcs/exec/path.c \
@@ -29,7 +31,6 @@ SRCS =	./srcs/cleaning.c \
 		./srcs/parsing/term_attributes.c \
 		./srcs/parsing/signals.c \
 		./srcs/parsing/parsing.c \
-		./srcs/parsing/error.c \
 				
 #colours ------------------------------------------
 B_BLUE='\033[1;34m'

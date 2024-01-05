@@ -11,10 +11,6 @@
 //build_commands.c
 int   		build_commands(void);
 
-//errors.c
-int			parsing_error(char *error);
-void		exit_program(int code);
-
 //line_parsing.c
 int			parse_quotes(char *str);
 int			remove_spaces(char *str);

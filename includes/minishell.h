@@ -100,6 +100,52 @@ t_data		*use_data(void);
 char		*ft_getenv(char *var_name);
 char		**copy_env(char **env);
 
+/*BUILTINS*/
+//builtins_utils.c
+int			confirm_builtin(t_command *cmd);
+int			check_builtin(t_command *cmd);
+int			isvalid_varname(char *variable_name);
+int			is_envvar(char	*varname);
+
+//builtins.c
+int			echo_builtin(char **cmd);
+int			cd_builtin(char **cmd);
+int			pwd_builtin(void);
+int			unset_var(char *variable);
+int			unset_builtin(char **cmd);
+int			env_builtin(void);
+int			exit_builtin(char **cmd);
+
+//export_builtin.c
+char		*get_varname(char *variable);
+char		*get_varvalue(char *variable);
+int			export_builtin(char **cmd);
+
+/*ERROR*/
+
+//errors.c
+int			parsing_error(char *error);
+void		exit_program(int code);
+void		pipex_error(char *error, int code);
+
+//exit_status.c
+int			*get_pid_status(void);
+void		set_exstat(int *status, int exstat);
+
+/*EXEC*/
+
+//exec_dup.c
+int			count_commands(t_command *cmd);
+
+//exec_utils.c 
+void		dup_infile(t_command **cmd, int copy);
+void		dup_outfile(t_command **cmd, int copy);
+void		reset_files(void);
+void		setup_pipe_outfile(void);
+void		setup_pipe_infile(t_command **cmd);
+
+//exec
+void		exec(t_command *cmd);
 
 //linked_list.c
 t_token		*add_token(char *token);
@@ -119,9 +165,6 @@ char		*find_path(t_command **cmd, char **env);
 t_command	*find_cmd(t_command **cmd);
 char		*get_path(t_command *cmd);
 
-int			env_builtin(void);
-int			unset_var(char *variable);
-int			is_envvar(char	*varname);
 void		child_handler(int signum);
 void		heredoc_handler(int signum);
 
@@ -131,46 +174,6 @@ int			token_redirout(t_token *token);
 int			token_redirappend(t_token *token);
 
 void		interruption_handler(int signum);
-
-/*BUILTINS*/
-//builtins_utils
-char		*ft_lowerbuiltin(char *str, char *buff);
-int			confirm_builtin(t_command *cmd);
-int			check_builtin(t_command *cmd);
-int			isvalid_varname(char *variable_name);
-
-//builtins
-int			echo_builtin(char **cmd);
-int			cd_builtin(char **cmd);
-int			pwd_builtin(void);
-int			unset_builtin(char **cmd);
-int			exit_builtin(char **cmd);
-
-//export_builtin
-char		*get_varname(char *variable);
-char		*get_varvalue(char *variable);
-int			export_builtin(char **cmd);
-
-/*ERROR HANDLING*/
-
-//exit_status
-int			*get_pid_status(void);
-void		set_exstat(int *status, int exstat);
-
-/*EXEC*/
-
-//exec_utils
-int			count_commands(t_command *cmd);
-void		dup_infile(t_command **cmd, int copy);
-void		dup_outfile(t_command **cmd, int copy);
-void		reset_files(void);
-void		setup_pipe_outfile(void);
-void		setup_pipe_infile(t_command **cmd);
-
-//exec
-void		exec(t_command *cmd);
-
-void		pipex_error(char *error, int code);
 
 /*PARSING*/
 
