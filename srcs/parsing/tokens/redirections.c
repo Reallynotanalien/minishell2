@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirections.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/05 19:56:16 by kafortin          #+#    #+#             */
+/*   Updated: 2024/01/05 20:02:18 by kafortin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
@@ -11,11 +22,9 @@ int	token_redirout(t_token *token)
 	t_copy = ft_strtrim_whitespaces(ft_substr(token->token, 2,
 				ft_strlen(token->token)));
 	t_lower = ft_strlower(t_copy);
-	if (access(t_copy, F_OK) == 0 
-		|| access(t_lower, F_OK) == 0)
+	if (access(t_copy, F_OK) == 0 || access(t_lower, F_OK) == 0)
 	{
-		if (access (t_copy, W_OK) == 0
-			|| access ((t_lower), W_OK) == 0)
+		if (access (t_copy, W_OK) == 0 || access ((t_lower), W_OK) == 0)
 			fd = open(t_copy, O_TRUNC | O_WRONLY);
 		else
 			return (free(t_lower), ft_printf(2, "minishell: %s: ", t_copy),
@@ -24,9 +33,8 @@ int	token_redirout(t_token *token)
 	else
 		fd = open(t_copy, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (fd < 0)
-		return (free(t_lower), free(t_copy),
-			ft_printf(2, "minishell: %s: ", t_copy), perror(NULL),
-			set_exstat(NULL, 1), -1);
+		return (free(t_lower), free(t_copy), set_exstat(NULL, 1),
+			ft_printf(2, "minishell: %s: ", t_copy), perror(NULL), -1);
 	if (use_data()->outfile != STDOUT_FILENO)
 		close(use_data()->outfile);
 	use_data()->outfile = fd;

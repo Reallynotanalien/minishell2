@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   substitutions.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/05 20:05:44 by kafortin          #+#    #+#             */
+/*   Updated: 2024/01/05 20:05:57 by kafortin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
@@ -84,13 +95,11 @@ int	count_nbblocks(char *line)
 			flag_var = 1;
 			i++;
 		}
-		if (flag_var == 1 && is_delimiter(line[i]))
+		if ((flag_var == 1 && is_delimiter(line[i]))
+			&& (line[i] != '?' || (line[i + 1] && line[i + 1] != '$')))
 		{
-			if (line[i] != '?' || (line[i + 1] && line[i + 1] != '$'))
-			{
-				flag_var = 0;
-				nb_blocks++;
-			}
+			flag_var = 0;
+			nb_blocks++;
 		}
 	}
 	return (nb_blocks);
