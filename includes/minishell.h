@@ -223,6 +223,7 @@ int			parsing_redirection(char *line, int index);
 //token_split_utils.c
 int			is_redirection(char c);
 int			is_double_quote(char c);
+void		new_token(int start, int end);
 
 //token_split.c
 int			split_tokens(void);

@@ -1,4 +1,16 @@
-# include "../../../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_split.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/05 20:26:22 by kafortin          #+#    #+#             */
+/*   Updated: 2024/01/05 20:26:24 by kafortin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../../includes/minishell.h"
 
 /*Iterates until it finds another double quote character.*/
 int	iterate_until_quotes_are_closed(char *line, int end)
@@ -43,18 +55,33 @@ int	iterate_until_space(char *line, int end)
 	return (end);
 }
 
-/*Copies the part of the command line that we want as a token and
-deletes all of the superfluous whitespaces that would be before or
-after the string. 
-Then the token gets created and the string is freed.*/
-void	new_token(int start, int end)
+size_t	loop(size_t s)
 {
-	char	*token;
+	int	end;
 
-	token = ft_substr(use_data()->line_cpy, start, (end - start + 1));
-	token = ft_strtrim_whitespaces(token);
-	add_token(token);
-	free(token);
+	end = s;
+	if (!is_redirection(use_data()->line_cpy[s]))
+		end = iterate_until_redir(use_data()->line_cpy, end, s);
+	else
+	{
+		if (parsing_redirection(use_data()->line_cpy, s) == ERROR)
+			return (0);
+		end++;
+		if (use_data()->line_cpy[s] == '<'
+			|| use_data()->line_cpy[s] == '>')
+		{
+			if (use_data()->line_cpy[s + 1] == '>'
+				|| use_data()->line_cpy[s + 1] == '<')
+				end++;
+			if (use_data()->line_cpy[s + 1] == '<')
+				end = iterate_until_redir(use_data()->line_cpy, end, end);
+			else
+				end = iterate_until_space(use_data()->line_cpy, end);
+		}
+	}
+	new_token(s, end);
+	s = end + 1;
+	return (s);
 }
 
 /*Iterates through the line and splits it into a linked list of tokens.
@@ -69,37 +96,14 @@ This function works wether the strings and the redirections are separated by
 a space or not. (Ex: cat | cat OR cat|cat both work.).*/
 int	split_tokens(void)
 {
-	size_t	start;
-	int		end;
+	size_t	s;
 
-	start = 0;
-	while (start <= ft_strlen(use_data()->line_cpy)
-		&& use_data()->line_cpy[start])
+	s = 0;
+	while (s <= ft_strlen(use_data()->line_cpy) && use_data()->line_cpy[s])
 	{
-		end = start;
-		if (!is_redirection(use_data()->line_cpy[start]))
-			end = iterate_until_redir(use_data()->line_cpy, end, start);
-		else
-		{
-			if (parsing_redirection(use_data()->line_cpy, start) == ERROR)
-				return (ERROR);
-			end++;
-			if (use_data()->line_cpy[start] == '<'
-				|| use_data()->line_cpy[start] == '>')
-			{
-				if (use_data()->line_cpy[start + 1] == '>')
-					end++;
-				if (use_data()->line_cpy[start + 1] == '<')
-				{
-					end++;
-					end = iterate_until_redir(use_data()->line_cpy, end, end);
-				}
-				else
-					end = iterate_until_space(use_data()->line_cpy, end);
-			}
-		}
-		new_token(start, end);
-		start = end + 1;
+		s = loop(s);
+		if (s == 0)
+			return (ERROR);
 	}
 	return (0);
 }
