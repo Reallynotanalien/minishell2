@@ -1,4 +1,16 @@
-# include "../../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/05 19:33:52 by kafortin          #+#    #+#             */
+/*   Updated: 2024/01/05 19:33:53 by kafortin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/minishell.h"
 
 //returns an allocated copy of the environment
 // char	**copy_env(char **env)

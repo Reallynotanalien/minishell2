@@ -1,4 +1,16 @@
-# include "../../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/05 19:34:01 by kafortin          #+#    #+#             */
+/*   Updated: 2024/01/05 19:34:02 by kafortin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/minishell.h"
 
 /* 
 1- Suppression of the "unused variable" warning for signum parameter.
