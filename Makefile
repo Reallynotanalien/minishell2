@@ -11,6 +11,7 @@ SRCS =	./srcs/cleaning.c \
 		./srcs/builtins/builtins_utils.c \
 		./srcs/builtins/export_builtin.c \
 		./srcs/builtins/builtins.c \
+		./srcs/builtins/builtins_2.c \
 		./srcs/errors/error.c \
 		./srcs/errors/exit_status.c \
 		./srcs/exec/exec_dup.c \

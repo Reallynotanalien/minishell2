@@ -16,6 +16,16 @@ use_data()->line_cpy(char *)
 use_data()(t_data *)
 */
 
+void	clean_after_loop(void)
+{
+	free(use_data()->line);
+	clean_cmds();
+	free (use_data()->line_cpy);
+	use_data()->line_cpy = NULL;
+	if (use_data()->heredoc_flag == YES)
+		unlink(".here_doc");
+}
+
 void	clean_cmds(void)
 {
 	t_command	*tmp;

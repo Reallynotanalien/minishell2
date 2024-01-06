@@ -4,7 +4,6 @@ int	main(int argc, char **argv, char **env)
 {
 	(void)argc;
 	(void)argv;
-
 	use_data()->new_env = copy_env(env);
 	signals(); 
 	while (1)
@@ -20,12 +19,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (use_data()->line == NULL)
 			exit_program(1);
-		free(use_data()->line);
-		clean_cmds();
-		free (use_data()->line_cpy);
-		use_data()->line_cpy = NULL;
-		if (use_data()->heredoc_flag == YES)
-			unlink(".here_doc");
+		clean_after_loop();
 	}
 	return (0);
 }
