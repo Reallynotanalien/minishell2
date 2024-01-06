@@ -89,6 +89,7 @@ void	pipex(t_command **cmd)
 			child_one(cmd);
 		else
 		{
+			close_files(cmd);
 			close(use_data()->fd[1]);
 			setup_pipe_infile(cmd);
 		}
