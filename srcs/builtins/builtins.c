@@ -1,5 +1,18 @@
 #include "../../includes/minishell.h"
 
+void	update_env(int i)
+{
+	while (use_data()->new_env[i])
+	{
+		free (use_data()->new_env[i]);
+		while (use_data()->new_env[i])
+		{
+			use_data()->new_env[i] = use_data()->new_env[i + 1];
+			i++;
+		}
+	}
+}
+
 int	unset_var(char *variable)
 {
 	int		i;
@@ -23,15 +36,7 @@ int	unset_var(char *variable)
 	}
 	if (!use_data()->new_env[i])
 		return (0);
-	while (use_data()->new_env[i])
-	{
-		free (use_data()->new_env[i]);
-		while (use_data()->new_env[i])
-		{
-			use_data()->new_env[i] = use_data()->new_env[i + 1];
-			i++;
-		}
-	}
+	update_env(i);
 	return (0);
 }
 

@@ -108,6 +108,7 @@ int			iterate_until_closed(char *str, int *index, char quote);
 void		clean_cmds(void);
 void		free_array(char **array);
 void		clean_after_loop(void);
+int			is_quote(char check);
 
 /*BUILTINS*/
 //builtins_utils.c

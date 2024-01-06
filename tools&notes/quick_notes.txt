@@ -1,5 +1,5 @@
 
-DOING : whitespaces and other characters and norminette (what's left)
+DOING : norminette + Makefile
 
 export a='|' doesnt work (is empty). Also fucks shit up
 $a doesn't substitute it ("$a: command not found, while it should behave as if there were only whitespaces on line")

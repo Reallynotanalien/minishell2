@@ -1,23 +1,5 @@
 # include "../../../includes/minishell.h"
 
-t_command	*create_command(void)
-{
-	t_command	*new;
-
-	new = ft_calloc(sizeof(t_command), 1);
-	if (!new)
-		return (NULL);
-	new->next = NULL;
-	return (new);
-}
-
-int	is_quote(char check)
-{
-	if (check == '\'' || check == '\"')
-		return (1);
-	return (0);
-}
-
 int	count_words(char *str)
 {
 	int	i;
@@ -35,9 +17,7 @@ int	count_words(char *str)
 	return (nb_words);
 }
 
-//returns the next command's argument as a char *. Splits on spaces
-//except if quoted, and returns an allocated empty char * if there is nothing. Removes unquoted quotes.
-char *split_next_word(char *str, int *index)
+char	*split_next_word(char *str, int *index)
 {
 	char	*new_word;
 	int		len;
@@ -51,7 +31,8 @@ char *split_next_word(char *str, int *index)
 		return (ft_calloc(1, 1));
 	new_word = ft_calloc(len + 1, sizeof(char));
 	len = 0;
-	while (str[*index] && !(str[*index] == ' ' && !double_quoted(str, *index) && !single_quoted(str, *index)))
+	while (str[*index] && !(str[*index] == ' '
+			&& !double_quoted(str, *index) && !single_quoted(str, *index)))
 	{
 		if (!is_quote(str[*index])
 			|| double_quoted(str, *index) || single_quoted(str, *index))
@@ -83,6 +64,17 @@ char	**ft_split_quotes(char *s)
 	return (new_array);
 }
 
+t_command	*skip_commands(t_command *new)
+{
+	t_command	*next;
+
+	next = use_data()->cmd;
+	while (next->next != NULL)
+		next = next->next;
+	next->next = new;
+	return (next);
+}
+
 t_command	*add_command(char *command, int infile, int outfile)
 {
 	t_command	*new;
@@ -100,30 +92,11 @@ t_command	*add_command(char *command, int infile, int outfile)
 	if (use_data()->cmd == NULL)
 		use_data()->cmd = new;
 	else
-	{
-		next = use_data()->cmd;
-		while (next->next != NULL)
-			next = next->next;
-		next->next = new;
-	}
+		next = skip_commands(new); 
 	if (!new->cmd[0][0])
 	{
 		use_data()->error_flag = 1;
 		ft_printf(2, "minishell: : command not found\n");
 	}
 	return (use_data()->cmd);
-}
-
-void	free_commands_if_not_empty(void)
-{
-	t_command	*temp;
-
-	if (!use_data()->cmd)
-		return ;
-	while (use_data()->cmd)
-	{
-		temp = use_data()->cmd->next;
-		free(use_data()->cmd);
-		use_data()->cmd = temp;
-	}
 }

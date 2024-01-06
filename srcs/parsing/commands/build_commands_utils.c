@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_commands_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:29 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 19:29:31 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/05 20:04:24 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,25 @@ int	contains_whitespace(char *str)
 		i++;
 	}
 	return (NO);
+}
+
+void	free_commands_if_not_empty(void)
+{
+	t_command	*temp;
+
+	if (!use_data()->cmd)
+		return ;
+	while (use_data()->cmd)
+	{
+		temp = use_data()->cmd->next;
+		free(use_data()->cmd);
+		use_data()->cmd = temp;
+	}
+}
+
+int	is_quote(char check)
+{
+	if (check == '\'' || check == '\"')
+		return (1);
+	return (0);
 }

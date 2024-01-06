@@ -40,12 +40,10 @@ int	command_loop(t_token **tokens)
 			break ;
 		else if ((*tokens)->type == T_HEREDOC)
 			use_data()->infile = open_heredoc(*tokens);
-		else if ((*tokens)->type == T_INFILE && token_redirin(*tokens) == -1)
-			return (1);
-		else if ((*tokens)->type == T_OUTFILE && token_redirout(*tokens) == -1)
-			return (1);
-		else if ((*tokens)->type == T_APPEND
-			&& token_redirappend(*tokens) == -1)
+		else if (((*tokens)->type == T_INFILE && token_redirin(*tokens) == -1)
+			|| ((*tokens)->type == T_OUTFILE && token_redirout(*tokens) == -1)
+			|| ((*tokens)->type == T_APPEND
+				&& token_redirappend(*tokens) == -1))
 			return (1);
 		else if ((*tokens)->type == T_STR)
 			command = join_command(command, (*tokens)->token);
@@ -76,4 +74,15 @@ int	build_commands(void)
 			break ;
 	}
 	return (0);
+}
+
+t_command	*create_command(void)
+{
+	t_command	*new;
+
+	new = ft_calloc(sizeof(t_command), 1);
+	if (!new)
+		return (NULL);
+	new->next = NULL;
+	return (new);
 }

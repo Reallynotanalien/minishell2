@@ -16,7 +16,6 @@ char	**cpy_doublearray(char **array)
 	return (new_array);
 }
 
-//use "bubble sort" (swap two adjacent elements if they aren't in the right order). Check if char **env_cpy = env, env_cpy[i] = env_cpy[i] + 1 changes the order in env - YES IT DOES D:
 char	**sort_env(char **env)
 {
 	char	**sorted_env;
@@ -61,39 +60,6 @@ void	print_export(void)
 		free (var_value);
 	}
 	free (sorted_env);
-}
-
-char	*get_varname(char *variable)
-{
-	int		i;
-	char	*var_name;
-
-	i = 0;
-	while (variable[i] && variable[i] != '=')
-		i++;
-	var_name = ft_calloc(i + 1, sizeof(char));
-	if (!var_name)
-		return (NULL);
-	ft_memcpy(var_name, variable, i);
-	return (var_name);
-}
-
-char	*get_varvalue(char *variable)
-{
-	int		i;
-	char	*value;
-
-	if (!variable)
-		return (NULL);
-	i = 0;
-	while (variable[i] && variable[i] != '=')
-		i++;
-	if (!variable[i])
-		return (NULL);
-	value = ft_calloc((ft_strlen((variable)) - i) + 1, sizeof(char));
-	i ++;
-	ft_memcpy(value, &variable[i], ft_strlen(variable) - i);
-	return (value);
 }
 
 void	add_varenv(char *add_var)
