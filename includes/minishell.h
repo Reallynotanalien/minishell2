@@ -144,6 +144,7 @@ void		set_exstat(int *status, int exstat);
 
 //exec_dup.c
 int			count_commands(t_command *cmd);
+void		close_files(t_command **cmd);
 
 //exec_utils.c 
 void		dup_infile(t_command **cmd, int copy);

@@ -1,4 +1,16 @@
-# include "../../../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   linked_list.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/05 19:31:22 by kafortin          #+#    #+#             */
+/*   Updated: 2024/01/05 19:31:24 by kafortin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../../includes/minishell.h"
 
 /*Adds an index number representing the token's type to facilitate
 the transfer to the command struct later on. 

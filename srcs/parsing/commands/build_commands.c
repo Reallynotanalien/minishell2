@@ -1,4 +1,4 @@
-# include "../../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 //join add to str, adding a space between.
 char	*join_command(char *str, char *add)

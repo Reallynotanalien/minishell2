@@ -1,12 +1,16 @@
-# include "../../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
+/*   Updated: 2024/01/05 19:29:07 by kafortin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	close_files(t_command **cmd)
-{
-	if ((*cmd)->infile != 0)
-		close((*cmd)->infile);
-	if ((*cmd)->outfile != 1)
-		close((*cmd)->outfile);
-}
+#include "../../includes/minishell.h"
 
 void	exec_builtin(t_command **cmd, int pipe)
 {
