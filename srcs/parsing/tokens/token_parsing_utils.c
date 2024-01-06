@@ -36,12 +36,12 @@ int	single_quoted(char *str, int index)
 	while (*i < index)
 	{
 		if (str[*i] == '\'')
-			if(iterate_until_closed(str, i, '\''))
+			if (iterate_until_closed(str, i, '\''))
 				return (free(i), -1);
 		if (*i > index)
 			return (free(i), 1);
 		if (str[*i] == '\"')
-			if(iterate_until_closed(str, i, '\"'))
+			if (iterate_until_closed(str, i, '\"'))
 				return (free (i), -1);
 		(*i)++;
 	}
@@ -59,12 +59,12 @@ int	double_quoted(char *str, int index)
 	while (*i < index)
 	{
 		if (str[*i] == '\"')
-			if(iterate_until_closed(str, i, '\"'))
+			if (iterate_until_closed(str, i, '\"'))
 				return (free(i), -1);
 		if (*i > index)
 			return (free(i), 1);
 		if (str[*i] == '\'')
-			if(iterate_until_closed(str, i, '\''))
+			if (iterate_until_closed(str, i, '\''))
 				return (free (i), -1);
 		(*i)++;
 	}

@@ -42,7 +42,7 @@ int	find_lenght(char *str, int end)
 	return (len);
 }
 
-char	*skip_consecutives(int i, int end, char *str)
+char	*skip_consecutives(char *str, int i, int end)
 {
 	int		i_new;
 	char	*new_str;
@@ -69,6 +69,7 @@ int	remove_spaces(char *str)
 {
 	int		i;
 	int		end;
+	char	*tmp;
 
 	i = 0;
 	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
@@ -84,7 +85,10 @@ int	remove_spaces(char *str)
 		return (0);
 	}
 	else
-		use_data()->line_cpy = skip_consecutives(i, end, str);
+	{
+		tmp = skip_consecutives(str, i, end);
+		use_data()->line_cpy = tmp;
+	}
 	if (use_data()->line_cpy == NULL)
 		return (ERROR);
 	return (0);
