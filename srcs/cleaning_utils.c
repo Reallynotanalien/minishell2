@@ -12,15 +12,6 @@
 
 #include "../includes/minishell.h"
 
-void	safe_free_ptr(void ***ptr)
-{
-	if (ptr && *ptr)
-	{
-		free (*ptr);
-		*ptr = NULL;
-	}
-}
-
 void	safe_free(void **ptr)
 {
 	if (ptr && *ptr)
@@ -30,12 +21,17 @@ void	safe_free(void **ptr)
 	}
 }
 
-void	free_array(char **array)
+void	free_array(char ***array)
 {
 	int	i;
 
-	i = -1;
-	while (array[++i])
-		safe_free ((void **)&(array[i]));
-	safe_free_ptr((void ***)&array);
+	i = 0;
+	if (!array || !(*array))
+		return ;
+	while (*(array)[i])
+	{
+		safe_free((void **)&((*array)[i]));
+		i++;
+	}
+	free((void **)array);
 }
