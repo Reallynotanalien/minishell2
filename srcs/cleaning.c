@@ -1,5 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
+/* ************************************************************************** */ /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cleaning.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -12,31 +11,6 @@
 
 #include "../includes/minishell.h"
 
-//To clean :
-//When an error occurs : Nothing. It will be cleaned at the end of the loop.
-//When the program exits :use_data()->cmd(arrays, close files, etc...), 
-//everything in use_data(), history, 
-//When the loop finishes : use_data()->cmd(arrays, close files, etc...)
-
-//Allocated in use_data() :
-/*
-
-use_data()->new_env(char **)
-use_data()->line(char *)
-use_data()->line_cpy(char *)
-use_data()(t_data *)
-*/
-
-void	clean_after_loop(void)
-{
-	free(use_data()->line);
-	clean_cmds();
-	free (use_data()->line_cpy);
-	use_data()->line_cpy = NULL;
-	if (use_data()->heredoc_flag == YES)
-		unlink(".here_doc");
-}
-
 void	clean_cmds(void)
 {
 	t_command	*tmp;
@@ -45,9 +19,9 @@ void	clean_cmds(void)
 	{
 		tmp = use_data()->cmd->next;
 		free_array(use_data()->cmd->cmd);
-		free (use_data()->cmd->path);
-		free(use_data()->cmd->lower_cmd);
-		free(use_data()->cmd);
+		safe_free ((void **)&(use_data()->cmd->path));
+		safe_free((void **)&(use_data()->cmd->lower_cmd));
+		safe_free((void **)&(use_data()->cmd));
 		use_data()->cmd = tmp;
 	}
 }
@@ -65,24 +39,25 @@ void	clean_tokens(void)
 	}
 }
 
-//Used to clean the entirety of use_data()
-void	clean_data(void)
+void	clean_after_loop(void)
 {
-	if (use_data()->cmd)
-		clean_cmds();
-	if (use_data()->token)
-		clean_tokens();
-	if (use_data()->new_env)
-		free_array(use_data()->new_env);
-	safe_free ((void **)&use_data()->line);
-	safe_free ((void **)&use_data()->line_cpy);
-	if (use_data())
-		free (use_data());
+	safe_free((void **)&(use_data()->line));
+	safe_free((void **)&(use_data()->line_cpy));
+	clean_tokens();
+	clean_cmds();
+	if (use_data()->heredoc_flag == YES)
+		unlink(".here_doc");
 }
 
-/*Clears the readline history and frees the data struct.*/
-void	cleanup(void)
+void	exit_program(int code)
 {
+	t_data	*data;
+
+	clean_after_loop();
+	restore_attributes();
 	rl_clear_history();
-	clean_data();
+	free_array(use_data()->new_env);
+	data = use_data();
+	safe_free((void **)&data);
+	exit(code);
 }

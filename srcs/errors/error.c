@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:26:48 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 19:27:13 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/09 14:49:38 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@ int	parsing_error(char *error)
 	printf("minishell: %s", error);
 	use_data()->error_flag = ERROR;
 	return (ERROR);
-}
-
-/*Gracefully exits the program by cleaning up all necessary data
-before printing an exit message, restoring the terminal's original
-attributes and exiting.*/
-void	exit_program(int code)
-{
-	restore_attributes();
-	cleanup();
-	exit(code);
 }
 
 void	pipex_error(char *error, int code)

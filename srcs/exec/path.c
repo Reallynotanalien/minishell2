@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:17 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 19:29:18 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/09 17:39:16 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@ char	*access_path(t_command *cmd, char **path_env)
 	char	*path_join;
 
 	i = 0;
+	path_join = NULL;
 	while (path_env[i])
 	{
 		path_join = ft_strjoin(path_env[i], "/");
 		cmd->path = ft_strjoin (path_join, cmd->cmd[0]);
-		free(path_join);
+		safe_free((void **)&(path_join));
 		if (access(cmd->path, F_OK) == 0)
 			return (cmd->path);
-		free(cmd->path);
+		safe_free((void **)&(cmd->path));
 		cmd->path = NULL;
 		i++;
 	}
@@ -87,7 +88,7 @@ char	*get_path(t_command *cmd)
 		use_data()->exstat = 126;
 	}
 	else if (access(cmd->cmd[0], F_OK | X_OK) == 0)
-		cmd->path = cmd->cmd[0];
+		cmd->path = ft_strdup(cmd->cmd[0]);
 	else
 		find_cmd(&cmd);
 	return (cmd->path);

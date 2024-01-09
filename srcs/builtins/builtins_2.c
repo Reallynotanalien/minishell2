@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:29:35 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 20:29:43 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/09 17:44:20 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	cd_builtin(char **cmd)
 	if (!cmd[1])
 	{
 		tmp = ft_getenv("HOME");
-		if (chdir("/Users/edufour"))
+		if (chdir(tmp))
 			return (ft_printf(2, "minishell: cd: HOME not set\n"),
 				set_exstat(NULL, 1), free(tmp), 1);
 		free (tmp);

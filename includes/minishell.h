@@ -1,5 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
+/* ************************************************************************** */ /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -97,8 +96,6 @@ typedef struct s_data
 //FUNCTIONS
 
 //cleaning.c
-void		clean_data(void);
-void		cleanup(void);
 
 //cleaning_utils.c
 void		safe_free(void **ptr);
@@ -113,7 +110,6 @@ char		*ft_getenv(char *var_name);
 char		**copy_env(char **env);
 void		print_array(void);
 void		safe_free(void **ptr);
-void		clean_data(void);
 void		set_exstat(int *status, int exstat);
 int			iterate_until_closed(char *str, int *index, char quote);
 void		clean_cmds(void);

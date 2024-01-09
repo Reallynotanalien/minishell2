@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:34:01 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 19:34:02 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/09 15:44:33 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	heredoc_handler(int signum)
 {
 	(void) signum;
 	if (use_data()->here_doc_str)
-		free(use_data()->here_doc_str);
+		safe_free((void **)&(use_data()->here_doc_str));
 	exit(1);
 }
 

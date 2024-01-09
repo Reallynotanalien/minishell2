@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:29 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 20:04:24 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/09 17:40:50 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@ void	heredoc_input(int temp_file, char *token)
 			&& (ft_strncmp(use_data()->here_doc_str, token,
 					ft_strlen(token)) == 0))
 		{
-			free(use_data()->here_doc_str);
+			safe_free((void **)&(use_data()->here_doc_str));
 			break ;
 		}
 		else
 			write(temp_file, use_data()->here_doc_str,
 				ft_strlen(use_data()->here_doc_str));
-		free(use_data()->here_doc_str);
+		safe_free((void **)&(use_data()->here_doc_str));
 	}
-	exit (0);
+	safe_free((void **)&token);
+	exit_program (0);
 }
 
 /*Opens a temporary file called .here_doc and uses get_next_line to take input
@@ -54,13 +55,13 @@ int	open_heredoc(t_token *tokens)
 		ft_printf(2, HD_FORK_ERROR);
 	else if (use_data()->pid == 0)
 		heredoc_input(temp_file, token);
+	safe_free((void **)&token);
 	status = get_pid_status();
 	if (*status != 0)
 		use_data()->error_flag = ERROR;
 	close(temp_file);
 	here_doc = open(".here_doc", O_RDONLY);
 	use_data()->heredoc_flag = YES;
-	free(token);
 	signal(SIGINT, interruption_handler);
 	return (here_doc);
 }

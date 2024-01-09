@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:53:13 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 19:53:14 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/09 17:43:23 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	main(int argc, char **argv, char **env)
 {
 	(void)argc;
 	(void)argv;
+	if (!isatty(0))
+		return (1);
 	use_data()->new_env = copy_env(env);
 	signals(); 
 	while (1)
