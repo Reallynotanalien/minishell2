@@ -77,4 +77,7 @@ rclean:
 
 re: fclean all
 
+val : all
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --track-origins=yes --track-fds=yes --trace-children=yes ./minishell
+
 .PHONY: all clean fclean rclean re
