@@ -133,7 +133,7 @@ void	do_substitutions(char *line)
 		free (tmp);
 		i++;
 	}
-	free (blocks);
+	free_array(blocks);
 	free (line);
 	use_data()->line_cpy = new_line;
 }

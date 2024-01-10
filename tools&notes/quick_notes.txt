@@ -1,5 +1,10 @@
 
-DOING : norminette + Makefile
+DOING :
+
+Lines from pictures (on phone) don't work because of an error in parsing/build_commands
+Here_doc leaks
+echo $USER, ctrl+d leaves one fildes open ?
+
 
 export a='|' doesnt work (is empty). Also fucks shit up
 $a doesn't substitute it ("$a: command not found, while it should behave as if there were only whitespaces on line")

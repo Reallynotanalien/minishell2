@@ -103,7 +103,6 @@ void	add_varenv(char *add_var)
 int	export_builtin(char **cmd)
 {
 	int		i_cmd;
-	int		i_line;
 	char	*var_name;
 
 	if (!use_data()->new_env || !use_data()->new_env[0])
@@ -111,7 +110,6 @@ int	export_builtin(char **cmd)
 	if (!cmd[1])
 		print_export();
 	i_cmd = 1;
-	i_line = 0;
 	while (cmd[i_cmd])
 	{
 		var_name = get_varname(cmd[i_cmd]);
