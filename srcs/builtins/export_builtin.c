@@ -70,7 +70,7 @@ void	print_export(void)
 		free (var_name);
 		free (var_value);
 	}
-	free (sorted_env);
+	free_array(sorted_env);
 }
 
 void	add_varenv(char *add_var)
