@@ -3,85 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   token_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:26:22 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 20:26:24 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/10 18:27:13 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-/*Iterates until it finds another double quote character.*/
-int	iterate_until_quotes_are_closed(char *line, int end)
-{
-	while (line[end + 1] && !is_double_quote(line[end + 1]))
-		end++;
-	if (line[end + 1] != ' ' && line[end + 1] != '\t')
-		return (end);
-	return (end + 1);
-}
-
 /*Iterates until a redirection character is found. If it finds a double
 quote, iterates until it finds the closing quote so that we do not
 include any redirection character that is contained between those quotes
 into our count, since those will be part of the string.*/
-int	iterate_until_redir(char *line, int end, int start)
+int	iterate_until_redir(char *line, int *end, int start)
 {
-	if (start == 0 && is_double_quote(use_data()->line_cpy[start]))
+	if (start == 0 && is_quote(use_data()->line_cpy[start]))
 	{
-		end = iterate_until_quotes_are_closed(use_data()->line_cpy, end + 1);
-		end++;
+		iterate_until_closed(use_data()->line_cpy,
+			end, use_data()->line_cpy[start]);
+		(*end)++;
 	}
-	while (line[end] && line[end + 1]
-		&& !is_redirection(line[end + 1]))
+	while (line[*end] && line[(*end) + 1]
+		&& !is_redirection(line[(*end) + 1]))
 	{
-		if (line[end + 1] == '"')
-			end = iterate_until_quotes_are_closed(line, end + 1);
-		end++;
+		if (is_quote(line[(*end) + 1]))
+			iterate_until_closed(line, end, line[(*end) + 1]);
+		(*end)++;
 	}
-	return (end);
+	return (*end);
 }
 
-int	iterate_until_space(char *line, int end)
+int	iterate_until_space(char *line, int *end)
 {
-	while (line[end] && line[end + 1]
-		&& (line[end + 1] != ' ' && line[end + 1] != '\t'))
+	while (line[*end] && line[(*end) + 1]
+		&& (line[(*end) + 1] != ' ' && line[(*end) + 1] != '\t'))
 	{
-		if (line[end + 1] == '"')
-			end = iterate_until_quotes_are_closed(line, end + 1);
-		end++;
+		if (is_quote(line[(*end) + 1]))
+			iterate_until_closed(line, end, line[(*end) + 1]);
+		(*end)++;
 	}
-	return (end);
+	return (*end);
 }
 
 size_t	loop(size_t s)
 {
-	int	end;
+	int	*end;
 
-	end = s;
+	end = ft_calloc(1, sizeof(int));
+	*end = s;
 	if (!is_redirection(use_data()->line_cpy[s]))
-		end = iterate_until_redir(use_data()->line_cpy, end, s);
+		*end = iterate_until_redir(use_data()->line_cpy, end, s);
 	else
 	{
 		if (parsing_redirection(use_data()->line_cpy, s) == ERROR)
 			return (0);
-		end++;
+		(*end)++;
 		if (use_data()->line_cpy[s] == '<'
 			|| use_data()->line_cpy[s] == '>')
 		{
 			if (use_data()->line_cpy[s + 1] == '>'
 				|| use_data()->line_cpy[s + 1] == '<')
-				end++;
+				(*end)++;
 			if (use_data()->line_cpy[s + 1] == '<')
-				end = iterate_until_redir(use_data()->line_cpy, end, end);
+				*end = iterate_until_redir(use_data()->line_cpy, end, *end);
 			else
-				end = iterate_until_space(use_data()->line_cpy, end);
+				*end = iterate_until_space(use_data()->line_cpy, end);
 		}
 	}
-	new_token(s, end);
-	s = end + 1;
-	return (s);
+	new_token(s, *end);
+	s = *end + 1;
+	return (free(end), s);
 }
 
 /*Iterates through the line and splits it into a linked list of tokens.
