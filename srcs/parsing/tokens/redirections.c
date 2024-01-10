@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:56:16 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 20:02:18 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/10 13:23:52 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+char	*copy_token(char *token, int type)
+{
+	if (token[type] && ft_iswhitespace(token[type]))
+		return (ft_strtrim_whitespaces(ft_substr(token, type + 1,
+					ft_strlen(token))));
+	else
+		return (ft_strtrim_whitespaces(ft_substr(token, type,
+					ft_strlen(token))));
+}
 
 //Checks and handles potential errors, or redirects input/output.
 int	token_redirout(t_token *token)
@@ -19,8 +29,7 @@ int	token_redirout(t_token *token)
 	char	*t_lower;
 	char	*t_copy;
 
-	t_copy = ft_strtrim_whitespaces(ft_substr(token->token, 2,
-				ft_strlen(token->token)));
+	t_copy = copy_token(token->token, 1);
 	t_lower = ft_strlower(t_copy);
 	if (access(t_copy, F_OK) == 0 || access(t_lower, F_OK) == 0)
 	{
@@ -47,8 +56,7 @@ int	token_redirappend(t_token *token)
 	char	*t_lower;
 	char	*t_copy;
 
-	t_copy = ft_strtrim_whitespaces(ft_substr(token->token, 3,
-				ft_strlen(token->token)));
+	t_copy = copy_token(token->token, 2);
 	t_lower = ft_strlower(t_copy);
 	if (access(t_copy, F_OK) == 0 
 		|| access(t_lower, F_OK) == 0)
@@ -75,8 +83,7 @@ int	token_redirin(t_token *token)
 	char	*t_lower;
 	char	*t_copy;
 
-	t_copy = ft_strtrim_whitespaces(ft_substr(token->token, 2,
-				ft_strlen(token->token)));
+	t_copy = copy_token(token->token, 1);
 	t_lower = ft_strlower(t_copy);
 	if (access(t_copy, F_OK | R_OK) == -1
 		&& access(t_lower, F_OK | R_OK) == -1)

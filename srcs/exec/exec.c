@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 19:29:07 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:14:28 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,12 @@ void	child_two(t_command **cmd)
 		{
 			dup_infile(cmd, NO);
 			dup_outfile(cmd, NO);
-			execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env);
-			exit(0);
+			if (execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env))
+			{
+				ft_printf(2, "minishell: %s: command not found\n", (*cmd)->cmd[0]);
+				exit_program(127);
+			}
+			exit_program(0);
 		}
 		else
 		{
@@ -69,8 +73,12 @@ void	child_one(t_command **cmd)
 	close(use_data()->fd[0]);
 	setup_pipe_outfile();
 	close_files(cmd);
-	execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env);
-	exit(0);
+	if (execve(get_path(*cmd), (*cmd)->cmd, use_data()->new_env))
+	{
+		ft_printf(2, "minishell: %s: command not found\n", (*cmd)->cmd[0]);
+		exit_program(127);
+	}
+	exit_program(0);
 }
 
 /*Changes the command to lowercase to make sure it's useable, then

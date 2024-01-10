@@ -53,8 +53,8 @@ LIBS = ./includes/libft/libft.a ./includes/readline/libreadline.a ./includes/rea
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C ./includes/libft
-	--@cd ./includes/readline && ./configure
-	@$(MAKE) everything -C ./includes/readline
+	#--@cd ./includes/readline && ./configure
+	#@$(MAKE) everything -C ./includes/readline
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBS)
 	@echo "$(YELLOW)⚡️$(NAME) ⚡️$(B_GREEN)has been created $(COLOUR_END)!"
 
@@ -77,7 +77,7 @@ rclean:
 
 re: fclean all
 
-val : all
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --track-origins=yes --track-fds=yes --trace-children=yes ./minishell
+val: all
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --track-origins=yes --track-fds=yes --trace-children=yes ./minishell || TRUE
 
 .PHONY: all clean fclean rclean re

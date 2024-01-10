@@ -1,10 +1,10 @@
 
 DOING :
 
-| > : should not be considered a syntax error
 conditional jumps 
 Lines from pictures (on phone) don't work because of an error in parsing/build_commands
 Here_doc leaks
+invalid commands leak
 echo $USER, ctrl+d leaves one fildes open ?
 
 

@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:33:52 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/09 15:44:04 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/10 14:21:44 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	line_parsing(void)
 		use_data()->error_flag = ERROR;
 		return (free_tokens_if_not_empty());
 	}
-	build_commands();
+	if (build_commands())
+		use_data()->error_flag = ERROR;
 	free_tokens_if_not_empty();
 }

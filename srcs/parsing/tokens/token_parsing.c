@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:33:09 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 19:33:11 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/10 12:25:25 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	parsing_redirection(char *line, int index)
 		return (ft_printf(2,
 				"minishell: syntax error near unexpected token 'newline'\n"),
 			set_exstat(NULL, 258), ERROR);
-	if (next_isredirection(line, index))
+	if (next_isredirection(line, index) && line[index] != '|')
 	{
 		if (line[index + 1] == ' ' || line[index + 1] == '\t')
 			index ++;
