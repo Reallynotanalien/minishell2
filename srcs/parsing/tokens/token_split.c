@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:26:22 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/11 13:56:41 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/11 15:41:28 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	loop(int start, int *end)
 			skip_redirection(start, end);
 	}
 	new_token(start, (*end));
+	if (*end == 0)
+		(*end)++;
 	return (0);
 }
 
@@ -83,10 +85,11 @@ int	split_tokens(void)
 
 	end = ft_calloc(1, sizeof(int));
 	*end = 0;
-	while (use_data()->line_cpy[*end] && use_data()->line_cpy[(*end) + 1])
+	while (use_data()->line_cpy[*end]
+		&& (use_data()->line_cpy[(*end) + 1] || *end == 0))
 	{
 		if (loop(*end, end))
-			return (ERROR);
+			return (free(end), ERROR);
 	}
-	return (0);
+	return (free(end), 0);
 }
