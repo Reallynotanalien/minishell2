@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_split_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:33:20 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 20:24:59 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/11 12:48:13 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	new_token(int start, int end)
 {
 	char	*token;
 
-	token = ft_substr(use_data()->line_cpy, start, (end - start + 1));
+	token = ft_substr(use_data()->line_cpy, start, ((end - start) + 1));
 	token = ft_strtrim_whitespaces(token);
 	add_token(token);
 	free(token);
