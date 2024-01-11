@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:01 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 20:28:03 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/10 18:58:44 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*join_command(char *str, char *add)
 		while (str[++i])
 			new_str[i] = str[i];
 		new_str[i] = ' ';
+		i++;
 	}
 	i_add = -1;
 	while (add[++i_add])

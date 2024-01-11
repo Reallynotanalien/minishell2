@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:26:22 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/10 18:27:13 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/10 19:24:12 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ size_t	loop(size_t s)
 
 	end = ft_calloc(1, sizeof(int));
 	*end = s;
+	while (use_data()->line_cpy[s] == ' ')
+		s++;
 	if (!is_redirection(use_data()->line_cpy[s]))
 		*end = iterate_until_redir(use_data()->line_cpy, end, s);
 	else
@@ -72,7 +74,9 @@ size_t	loop(size_t s)
 		}
 	}
 	new_token(s, *end);
-	s = *end + 1;
+	s = *end;
+	// if (!use_data()->line_cpy[(*end) + 1] || is_redirection(use_data()->line_cpy[(*end) + 1] || use_data()->line_cpy[(*end) + 1] == ' ')) //issue here. Need to find the right condition to move into the next token by incrementing s. (When shouldn't we increment it ?)
+		s++;
 	return (free(end), s);
 }
 
