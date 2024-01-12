@@ -1,12 +1,20 @@
 {
-    "configurations": [
+  "configurations": [
     {
-        "type": "lldb",
-        "request": "launch",
-        "name": "Launch",
-        "program": "${workspaceFolder}/minishell",
-        "args": [],
-        "cwd": "${workspaceFolder}"
+      "type": "lldb",
+      "request": "launch",
+      "name": "Launch",
+      "program": "${workspaceFolder}/minishell",
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/edufour/Desktop/42_Projets/minishell/srcs/parsing/commands",
+      "program": "/Users/edufour/Desktop/42_Projets/minishell/srcs/parsing/commands/build/Debug/outDebug"
     }
-    ]
+  ]
 }
