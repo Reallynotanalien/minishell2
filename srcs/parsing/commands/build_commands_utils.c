@@ -6,23 +6,30 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:29 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/09 17:40:50 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/12 14:30:56 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
+int	add_str(void)
+{
+	use_data()->here_doc_str = readline("> ");
+	return (ft_strlen(use_data()->here_doc_str));
+}
+
 void	heredoc_input(int temp_file, char *token)
 {
 	signal(SIGINT, heredoc_handler);
-	while (get_next_line(0, &use_data()->here_doc_str))
+	while (add_str())
 	{
-		if ((ft_strlen(use_data()->here_doc_str) == ft_strlen(token) + 1)
+		if ((ft_strlen(use_data()->here_doc_str) == ft_strlen(token))
 			&& (ft_strncmp(use_data()->here_doc_str, token,
 					ft_strlen(token)) == 0))
 		{
+			ft_putchar_fd(EOF, temp_file);
 			safe_free((void **)&(use_data()->here_doc_str));
-			break ;
+			exit_program (0);
 		}
 		else
 			write(temp_file, use_data()->here_doc_str,
@@ -30,7 +37,6 @@ void	heredoc_input(int temp_file, char *token)
 		safe_free((void **)&(use_data()->here_doc_str));
 	}
 	safe_free((void **)&token);
-	exit_program (0);
 }
 
 /*Opens a temporary file called .here_doc and uses get_next_line to take input
