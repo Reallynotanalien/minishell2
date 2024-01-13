@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 13:04:40 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/13 15:52:44 by kafortin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,7 @@ void	child_two(t_command **cmd)
 		{
 			dup_infile(cmd, NO);
 			dup_outfile(cmd, NO);
-			if (execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env))
-			{
-				ft_printf(2, "minishell: %s: command not found\n", (*cmd)->cmd[0]);
-				exit_program(127);
-			}
+			execute(cmd);
 			exit_program(0);
 		}
 		else
@@ -73,11 +69,7 @@ void	child_one(t_command **cmd)
 	close(use_data()->fd[0]);
 	setup_pipe_outfile();
 	close_files(cmd);
-	if (execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env))
-	{
-		ft_printf(2, "minishell: %s: command not found\n", (*cmd)->cmd[0]);
-		exit_program(127);
-	}
+	execute(cmd);
 	exit_program(0);
 }
 
