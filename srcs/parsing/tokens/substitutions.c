@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitutions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:05:44 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 20:05:57 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/13 14:56:26 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	substitute_block(char *line, int index, char **blocks, int i_block)
 	if (line[i] == '?')
 		return (blocks[i_block] = ft_itoa(use_data()->exstat), 2);
 	if (is_delimiter(line[i]))
-		return (blocks[i_block] = ft_strdup("$"), 1);
+		return (blocks[i_block] = ft_strdup("$"), 2);
 	while (!is_delimiter(line[i]))
 		i++;
 	var_name = ft_substr(line, index + 1, i - index - 1);
