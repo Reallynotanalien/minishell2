@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:10 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 13:35:53 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/13 13:40:31 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,11 @@ int	export_builtin(char **cmd)
 		if (!isvalid_varname(var_name))
 			return (ft_printf(2,
 					"minishell: export: '%s': is not a valid identifier\n",
-					cmd[i_cmd]), set_exstat(NULL, 1), 1);
+					cmd[i_cmd]), set_exstat(NULL, 1),
+					safe_free((void **)&var_name), 1);
 		add_varenv(ft_strdup(cmd[i_cmd]));
 		i_cmd++;
-		free(var_name);
+		safe_free((void **)&var_name);
 	}
 	return (0);
 }
