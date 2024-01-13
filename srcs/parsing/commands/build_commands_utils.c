@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_commands_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:29 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 15:55:29 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/13 18:02:32 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int	add_str(void)
 {
-	use_data()->here_doc_str = readline("> ");
+	char	*tmp;	
+	tmp = readline("> ");
+	use_data()->here_doc_str = ft_strjoin(tmp, "\n");
+	safe_free((void **)&tmp);
 	return (ft_strlen(use_data()->here_doc_str));
 }
 
@@ -23,11 +26,10 @@ void	heredoc_input(int temp_file, char *token)
 	signal(SIGINT, heredoc_handler);
 	while (add_str())
 	{
-		if ((ft_strlen(use_data()->here_doc_str) == ft_strlen(token))
+		if ((ft_strlen(use_data()->here_doc_str) - 1 == (ft_strlen(token)))
 			&& (ft_strncmp(use_data()->here_doc_str, token,
-					ft_strlen(token)) == 0))
+					ft_strlen(use_data()->here_doc_str) - 1) == 0))
 		{
-			ft_putchar_fd(EOF, temp_file);
 			safe_free((void **)&(use_data()->here_doc_str));
 			exit_program (0);
 		}
