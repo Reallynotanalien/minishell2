@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:35:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 19:35:27 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/13 13:50:29 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,18 @@ char	*ft_getenv(char *var_name)
 	i = 0;
 	while (use_data()->new_env[i] && ft_strcmp(var_name, tmp))
 	{
-		free (tmp);
+		safe_free((void **)&tmp);
 		tmp = get_varname(use_data()->new_env[i]);
 		i++;
 	}
 	if (i == 0)
 		i = 1;
 	if (!ft_strcmp(var_name, tmp))
-		return (free (tmp), get_varvalue(use_data()->new_env[i - 1]));
+		return (safe_free((void **)&tmp),
+			get_varvalue(use_data()->new_env[i - 1]));
 	else
-		return (NULL);
-	return (NULL);
+		return (safe_free((void **)&tmp), NULL);
+	return (free((void **)&tmp), NULL);
 }
 
 char	**copy_env(char **env)
