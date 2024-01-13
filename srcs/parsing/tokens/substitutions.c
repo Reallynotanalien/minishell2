@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:05:44 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 15:45:29 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/13 16:25:14 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	substitute_block(char *line, int index, char **blocks, int i_block)
 
 	if (!line[index + 1])
 		return (blocks[i_block] = ft_strdup("$"), 1);
+	if (line[index + 1] == '$')
+		return (blocks[i_block] = ft_strdup("$"), 2);
 	i = index + 1;
 	if (line[i] == '?')
 		return (blocks[i_block] = ft_itoa(use_data()->exstat), 2);
@@ -95,11 +97,13 @@ int	count_nbblocks(char *line)
 	nb_blocks = 1;
 	while (line[++i])
 	{
-		if (line[i] == '$' && !single_quoted(line, i) && line[i + 1])
+		if (line[i] == '$' && !single_quoted(line, i))
 		{
 			if (i != 0)
 				nb_blocks++;
 			flag_var = 1;
+			if (line[i + 1] == '$')
+				i++;
 			i++;
 		}
 		if ((flag_var == 1 && is_delimiter(line[i]))
