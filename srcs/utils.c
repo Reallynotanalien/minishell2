@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:35:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 13:50:29 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/13 15:55:39 by kafortin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,11 @@ char	**copy_env(char **env)
 	while (env[++i])
 		new_env[i] = ft_strdup(env[i]);
 	return (new_env);
+}
+
+int	is_quote(char check)
+{
+	if (check == '\'' || check == '\"')
+		return (1);
+	return (0);
 }
