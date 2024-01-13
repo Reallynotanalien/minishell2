@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:17 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 14:10:02 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/13 15:08:54 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ as an argument.*/
 char	*find_path(t_command **cmd, char **env)
 {
 	int		i;
-	char	**path_env;
+	char	**path_env; 
 
 	if (!use_data()->new_env || !use_data()->new_env[0])
 		return (NULL);
@@ -50,12 +50,13 @@ char	*find_path(t_command **cmd, char **env)
 		if (ft_strncmp("PATH=", env[i], 5) == 0)
 			break ;
 		i++;
-		if (env[i] == NULL || env[i + 1] == NULL)
+		if (env[i] == NULL)
 			return (NULL);
 	}
 	path_env = (char **)ft_split(env[i] + 5, ':');
 	i = 0;
 	(*cmd)->path = access_path(*cmd, path_env);
+	printf("DEBUG : %s\n", (*cmd)->path);
 	free_array(path_env);
 	return ((*cmd)->path);
 }
@@ -78,7 +79,9 @@ char	*get_path(t_command *cmd)
 
 	ptr = opendir(cmd->cmd[0]);
 	if (access(cmd->cmd[0], F_OK | X_OK) == 0)
+	{
 		cmd->path = ft_strdup(cmd->cmd[0]);
+	}
 	else
 		find_cmd(&cmd);
 	return (cmd->path);
