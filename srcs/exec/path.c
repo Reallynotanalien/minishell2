@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:17 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/10 13:44:31 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/13 13:04:16 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,6 @@ t_command	*find_cmd(t_command **cmd)
 	(*cmd)->path = find_path(cmd, use_data()->new_env);
 	if (!(*cmd)->path)
 		(*cmd)->path = ft_strdup((*cmd)->cmd[0]);
-	// if ((*cmd)->path == NULL || access((*cmd)->path, X_OK) == -1)
-	// {
-	// 	ft_printf(2, "minishell: %s: command not found\n", (*cmd)->cmd[0]);
-	// 	use_data()->error_flag = ERROR;
-	// 	use_data()->exstat = 127;
-	// }
 	return (*cmd);
 }
 
