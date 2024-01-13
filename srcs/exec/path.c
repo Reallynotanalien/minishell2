@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:17 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 13:54:18 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/13 14:10:02 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,5 @@ char	*get_path(t_command *cmd)
 		cmd->path = ft_strdup(cmd->cmd[0]);
 	else
 		find_cmd(&cmd);
-	closedir(ptr);
 	return (cmd->path);
 }

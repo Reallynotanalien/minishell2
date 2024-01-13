@@ -52,6 +52,7 @@ void	clean_after_loop(void)
 void	exit_program(int code)
 {
 	t_data	*data;
+	int		i;
 
 	clean_after_loop();
 	restore_attributes();
@@ -59,5 +60,8 @@ void	exit_program(int code)
 	free_array(use_data()->new_env);
 	data = use_data();
 	safe_free((void **)&data);
+	i = 2;
+	while (++i <= 200)
+		close(i);
 	exit(code);
 }
