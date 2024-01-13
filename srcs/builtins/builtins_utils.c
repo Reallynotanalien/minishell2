@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:25:49 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 19:25:51 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/13 13:33:27 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int	is_envvar(char	*varname)
 	{
 		tmp = get_varname(use_data()->new_env[i]);
 		if (!ft_strcmp(varname, tmp))
-			return (1);
-		free (tmp);
+			return (safe_free((void **)&tmp), 1);
+		safe_free((void **)&tmp);
 	}
-	return (0);
+	return (safe_free((void **)&tmp), 0);
 }

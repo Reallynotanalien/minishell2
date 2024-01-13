@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:14 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 20:28:15 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/13 13:37:52 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	unset_var(char *variable)
 	if (!isvalid_varname(variable))
 		return (ft_printf(2, 
 				"minishell: unset: \'%s\': not a valid identifier\n", variable),
-			set_exstat(NULL, 1), 1);
+			set_exstat(NULL, 1), safe_free((void **)&variable), 1);
 	i = -1;
 	while (use_data()->new_env[++i])
 	{
@@ -47,9 +47,9 @@ int	unset_var(char *variable)
 		free (tmp);
 	}
 	if (!use_data()->new_env[i])
-		return (0);
+		return (safe_free((void **)&variable), 0);
 	update_env(i);
-	return (0);
+	return (safe_free((void **)&variable), 0);
 }
 
 //unsets an environment variable
@@ -62,7 +62,7 @@ int	unset_builtin(char **cmd)
 		return (0);
 	i = 0;
 	while (cmd[++i])
-		unset_var(cmd[i]);
+		unset_var(ft_strdup(cmd[i]));
 	return (0);
 }
 
