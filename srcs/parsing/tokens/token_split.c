@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:26:22 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 13:12:36 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/13 13:16:10 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ int	iterate_until_redir(char *line, int start)
 		return (free(index), start);
 	while (line[*index] && !(is_redirection(line[*index])
 			&& !double_quoted(line, *index) && !single_quoted(line, *index)))
-	{
-		if (is_quote(line[start]))
-			iterate_until_closed(line, index, line[(*index) + 1]);
 		(*index)++;
-	}
 	start = *index;
 	return (free(index), start);
 }
@@ -39,11 +35,7 @@ void	iterate_until_space(char *line, int *end)
 	while (line[*end] && line[*end] != ' ' && line[*end] != '\t'
 		&& !(is_redirection(line[*end])
 			&& !double_quoted(line, *end) && !single_quoted(line, *end)))
-	{
-		if (is_quote(line[*end]))
-			iterate_until_closed(line, end, line[*end]);
 		(*end)++;
-	}
 	if (is_redirection(line[*end]))
 		(*end)--;
 }
