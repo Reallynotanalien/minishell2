@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:05:44 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 16:25:14 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/13 17:35:00 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,7 @@ int	substitute_block(char *line, int index, char **blocks, int i_block)
 	if (line[i] == '?')
 		return (blocks[i_block] = ft_itoa(use_data()->exstat), 2);
 	if (is_delimiter(line[i]) && line[i] != '$')
-	{
-		if (line[i] != '$')
-			return (blocks[i_block] = ft_strdup("$"), 1);
-		else
-			return (blocks[i_block] = ft_strdup("$"), 2);
-	}
+		return (blocks[i_block] = ft_strdup("$"), 1);
 	while (!is_delimiter(line[i]))
 		i++;
 	var_name = ft_substr(line, index + 1, i - index - 1);
@@ -95,19 +90,14 @@ int	count_nbblocks(char *line)
 	i = -1;
 	flag_var = 0;
 	nb_blocks = 1;
-	while (line[++i])
+	while (line[++(i)])
 	{
 		if (line[i] == '$' && !single_quoted(line, i))
-		{
-			if (i != 0)
-				nb_blocks++;
-			flag_var = 1;
-			if (line[i + 1] == '$')
-				i++;
-			i++;
-		}
+			nb_blocks += skip_envvar(line, &i, &flag_var);
+		if (!line[i])
+			return (nb_blocks);
 		if ((flag_var == 1 && is_delimiter(line[i]))
-			&& (line[i] != '?' || (line[i + 1] && line[i + 1] != '$')))
+			&& (line[i] != '?' || (line[(i) + 1] && line[(i) + 1] != '$')))
 		{
 			flag_var = 0;
 			nb_blocks++;

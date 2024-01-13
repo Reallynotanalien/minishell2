@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:17 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 15:08:54 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/13 17:15:50 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	*find_path(t_command **cmd, char **env)
 	path_env = (char **)ft_split(env[i] + 5, ':');
 	i = 0;
 	(*cmd)->path = access_path(*cmd, path_env);
-	printf("DEBUG : %s\n", (*cmd)->path);
 	free_array(path_env);
 	return ((*cmd)->path);
 }

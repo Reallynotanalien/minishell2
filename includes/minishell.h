@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 16:09:53 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/13 17:33:42 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ void		view_commands(void);
 //line_parsing.c
 int			parse_quotes(char *str);
 int			remove_spaces(char *str);
+int			skip_envvar(char *line, int *i, int *flag_var);
 
 //linked_list.c
 t_token		*add_token(char *token);

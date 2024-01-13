@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:33:52 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 16:07:22 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/13 17:33:08 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,18 @@ void	line_parsing(void)
 	if (build_commands())
 		use_data()->error_flag = ERROR;
 	free_tokens_if_not_empty();
+}
+
+int	skip_envvar(char *line, int *i, int *flag_var)
+{
+	int	nb_blocks;
+
+	nb_blocks = 0;
+	if (*i != 0)
+		nb_blocks++;
+	(*flag_var) = 1;
+	if (line[(*i) + 1] == '$')
+		(*i)++;
+	(*i)++;
+	return (nb_blocks);
 }
