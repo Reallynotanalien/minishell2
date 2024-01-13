@@ -1,5 +1,5 @@
 
-DOING :
+DOING : >tmp1>tmp2 doesnt work, and "tmp1>tmp2" either
 
 conditional jumps 
 Lines from pictures (on phone) don't work because of an error in parsing/build_commands
