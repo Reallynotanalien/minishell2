@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:05:44 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 15:43:43 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/13 15:45:29 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	substitute_block(char *line, int index, char **blocks, int i_block)
 	char	*var_name;
 	char	*tmp;
 
-	if (!line[index + 1] || line[index] == '$')
+	if (!line[index + 1])
 		return (blocks[i_block] = ft_strdup("$"), 1);
 	i = index + 1;
 	if (line[i] == '?')
