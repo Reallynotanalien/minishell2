@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 17:33:42 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/14 14:46:20 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ void		restore_attributes(void);
 /*Commands*/
 
 //build_commands_utils.c
-int			open_heredoc(t_token *tokens);
+int			open_heredoc(t_token *tokens, char *command);
 int			contains_whitespace(char *str);
 
 //build_commands.c

@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:01 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/10 18:58:44 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/14 14:44:40 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*join_command(char *str, char *add)
 		new_str[i + i_add] = add[i_add];
 	new_str[i + i_add] = '\0';
 	if (str)
-		free (str);
+		safe_free((void **)&str);
 	return (new_str);
 }
 
@@ -52,11 +52,11 @@ int	command_loop(t_token **tokens)
 		if ((*tokens)->type == T_PIPE)
 			break ;
 		else if ((*tokens)->type == T_HEREDOC)
-			use_data()->infile = open_heredoc(*tokens);
+			use_data()->infile = open_heredoc(*tokens, command);
 		else if (((*tokens)->type == T_INFILE && token_redirin(*tokens) == -1)
 			|| ((*tokens)->type == T_OUTFILE && token_redirout(*tokens) == -1)
 			|| ((*tokens)->type == T_APPEND
-				&& token_redirappend(*tokens) == -1))
+ 				&& token_redirappend(*tokens) == -1))
 			return (1);
 		else if ((*tokens)->type == T_STR)
 			command = join_command(command, (*tokens)->token);
