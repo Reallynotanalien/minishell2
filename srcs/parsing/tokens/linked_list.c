@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:31:22 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 19:31:24 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/14 17:59:20 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,23 +103,5 @@ void	free_tokens_if_not_empty(void)
 		free(use_data()->token->token);
 		free (use_data()->token);
 		use_data()->token = temp;
-	}
-}
-
-void	view_list(void)
-{
-	t_token	*tokens;
-	int		i;
-
-	i = 1;
-	tokens = use_data()->token;
-	while (tokens)
-	{
-		printf("----------------\n");
-		printf("token%d:[%s]\n", i++, (char *)tokens->token);
-		printf("type: %d\n", tokens->type);
-		if (!tokens->next)
-			return ;
-		tokens = tokens->next;
 	}
 }
