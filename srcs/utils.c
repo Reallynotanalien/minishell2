@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:35:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 15:55:39 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/15 15:33:48 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_data	*use_data(void)
 
 	if (data == NULL)
 	{
-		data = malloc(sizeof(t_data));
+		data = ft_calloc(1, sizeof(t_data));
 		init_data(data);
 	}
 	return (data);
