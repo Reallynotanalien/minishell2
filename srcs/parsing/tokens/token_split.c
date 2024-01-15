@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:26:22 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/15 12:52:10 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/15 16:54:40 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	skip_redirection(int *end)
 		|| (use_data()->line_cpy[*end] == '<'
 			&& use_data()->line_cpy[(*end) + 1] == '<'))
 		(*end) += 2;
-	if (use_data()->line_cpy[(*end) + 1] == ' ')
+	if (use_data()->line_cpy[(*end) + 1] == ' '
+		|| use_data()->line_cpy[(*end) + 1] == '\t')
 		(*end)++;
 	(*end)++;
 	iterate_until_space(use_data()->line_cpy, end);
@@ -58,7 +59,8 @@ int	loop(int start, int *end)
 	if (!use_data()->line_cpy[*end])
 		return (0);
 	if (use_data()->line_cpy[*end] == '|'
-		&& use_data()->line_cpy[(*end) + 1] == ' ')
+		&& (use_data()->line_cpy[(*end) + 1] == ' '
+		 || use_data()->line_cpy[(*end) + 1] == '\t'))
 		(*end)++;
 	else if (use_data()->line_cpy[*end] == '>'
 		|| use_data()->line_cpy[*end] == '<')

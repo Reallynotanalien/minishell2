@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:31:22 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/14 17:59:20 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/15 16:59:47 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_token	*add_token(char *token)
 	new = create_token();
 	if (!new)
 		return (NULL);
-	new->token = ft_strdup(token);
+	new->token = token;
 	new->type = check_type(token);
 	if (use_data()->token == NULL)
 		use_data()->token = new;

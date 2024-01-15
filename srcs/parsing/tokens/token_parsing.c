@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:33:09 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/15 14:51:24 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/15 16:12:53 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	parse_pipe(char *line, int index)
 	if (!line[index + 1])
 		return (ft_printf(2,
 				"minishell: syntax error near unexpected token 'newline'\n"), 1);
-	if (line[index + 1] == ' ')
+	if (line[index + 1] == ' ' || line[index + 1] == '\t')
 		index++;
 	index++;
 	if (line[index] == '|')
@@ -68,7 +68,7 @@ int	parsing_redirection(char *line, int index)
 	{
 		if (line[index] == line[index + 1])
 			index++;
-		if (line[index + 1] == ' ')
+		if (line[index + 1] == ' ' || line[index + 1] == '\t')
 			index ++;
 		index++;
 		if (parse_in_out(line, index))

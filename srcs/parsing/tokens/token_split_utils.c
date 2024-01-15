@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:33:20 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/14 17:51:48 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/15 16:57:04 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,4 @@ void	new_token(int start, int end)
 		token = ft_strtrim_whitespaces(token);
 	}
 	add_token(token);
-	free(token);
 }
