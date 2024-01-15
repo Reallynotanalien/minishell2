@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:34:01 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/09 15:44:33 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/15 16:04:33 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	interruption_handler(int signum)
 void	child_handler(int signum)
 {
 	(void) signum;
-	printf("");
 }
 
 /*Exits the child we created to open the heredoc so the read function
