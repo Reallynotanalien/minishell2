@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:33:52 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 17:33:08 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/15 14:30:35 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,27 @@ int	ignore_tabs(int i)
 	return (i);
 }
 
+int	parse_redirections(void)
+{
+	int	i;
+
+	i = 0;
+	while (use_data()->line_cpy[i])
+	{
+		if (is_redirection(use_data()->line_cpy[i])
+			&& !single_quoted(use_data()->line_cpy, i)
+			&& !double_quoted(use_data()->line_cpy, i))
+		{
+			if (parsing_redirection(use_data()->line_cpy, i))
+				return (1);
+			else if (use_data()->line_cpy[i] == use_data()->line_cpy[i + 1])
+				i++;
+		}
+		i++;
+	}
+	return (0);
+}
+
 void	line_parsing(void)
 {
 	int		i;
@@ -68,10 +89,10 @@ void	line_parsing(void)
 		return ;
 	}
 	do_substitutions(use_data()->line_cpy);
-	if (split_tokens() == ERROR)
+	if (parse_redirections() || split_tokens() == ERROR)
 	{
 		use_data()->error_flag = ERROR;
-		return (free_tokens_if_not_empty());
+		return ;
 	}
 	if (build_commands())
 		use_data()->error_flag = ERROR;

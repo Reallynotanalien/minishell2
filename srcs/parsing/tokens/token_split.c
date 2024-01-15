@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:26:22 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/14 17:57:05 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/15 12:52:10 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,6 @@ int	loop(int start, int *end)
 	}
 	if (!use_data()->line_cpy[*end])
 		return (0);
-	if (is_redirection(use_data()->line_cpy[*end]
-			&& !double_quoted(use_data()->line_cpy, *end)
-			&& !single_quoted(use_data()->line_cpy, *end))
-		&& parsing_redirection(use_data()->line_cpy, *end))
-		return (1);
 	if (use_data()->line_cpy[*end] == '|'
 		&& use_data()->line_cpy[(*end) + 1] == ' ')
 		(*end)++;

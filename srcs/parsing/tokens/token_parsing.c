@@ -6,57 +6,73 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:33:09 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/14 16:36:55 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/15 14:51:24 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-/*The below function test the behavior of tokens surrounded by 
-all symbols required to handle in the subject. 
-Everything else is considered a string.
-If an error should occur because of an invalid string, 
-it will be handled by execve.
-Only symbols right of the redirection is checked, as the error would 
-have been caught earlier if a redirection symbol is present on left*/
-
-int	next_isredirection(char *line, int index)
+int	parse_pipe(char *line, int index)
 {
-	if (line[index + 1] == ' ' || line[index + 1] == '\t')
-		index += 2;
-	else
+	if (index == 0)
+		return (ft_printf(2,
+				"minishell: syntax error near unexpected token '|'\n"), 1);
+	if (!line[index + 1])
+		return (ft_printf(2,
+				"minishell: syntax error near unexpected token 'newline'\n"), 1);
+	if (line[index + 1] == ' ')
 		index++;
-	if ((!double_quoted(line, index) && !single_quoted(line, index))
-		&& (line[index] == '<' || line[index] == '>' || line[index] == '|'))
-		return (1);
+	index++;
+	if (line[index] == '|')
+		return (ft_printf(2,
+				"minishell: syntax error near unexpected token '|'\n"), 1);
 	return (0);
 }
 
-//For '>>', index is the index of the first '>'.
+int	parse_in_out(char *line, int index)
+{
+	if (!line[index])
+		return (ft_printf(2,
+				"minishell: syntax error near unexpected token 'newline'\n"), 1);
+	if (is_redirection(line[index]))
+	{
+		if (line[index] == line[index + 1])
+		{
+			ft_printf(2,
+				"minishell: syntax error near unexpected token '%c%c'\n",
+				use_data()->line_cpy[index], use_data()->line_cpy[index]);
+			return (1);
+		}
+		else
+		{
+			ft_printf(2,
+				"minishell: syntax error near unexpected token '%c'\n",
+				line[index]);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int	parsing_redirection(char *line, int index)
 {
-	if (line[index + 1] && line[index] == line[index + 1] && line[index] != '|')
-		index ++;
-	if (index == 0 && line[index] == '|')
-		return (ft_printf(2,
-				"minishell: syntax error near unexpected token '|'\n"),
-			set_exstat(NULL, 258), ERROR);
-	if (!line[index + 1])
-		return (ft_printf(2,
-				"minishell: syntax error near unexpected token 'newline'\n"),
-			set_exstat(NULL, 258), ERROR);
-	if (next_isredirection(line, index) && line[index] != '|')
+	if (!is_redirection(line[index])
+		|| double_quoted(line, index) || single_quoted(line, index))
+		return (0);
+	if (line[index] == '|')
 	{
-		if (line[index + 1] == ' ' || line[index + 1] == '\t')
+		if (parse_pipe(line, index))
+			return (set_exstat(NULL, 258), ERROR);
+	}
+	else
+	{
+		if (line[index] == line[index + 1])
+			index++;
+		if (line[index + 1] == ' ')
 			index ++;
 		index++;
-		if (line[index + 1] && line[index] == line[index + 1])
-			return (ft_printf(2,
-					"minishell: syntax error near unexpected token '%c%c'\n",
-					line[index], line[index]), set_exstat(NULL, 258), ERROR);
-		return (ft_printf(2,
-				"minishell: syntax error near unexpected token '%c'\n",
-				line[index]), set_exstat(NULL, 258), ERROR);
+		if (parse_in_out(line, index))
+			return (set_exstat(NULL, 258), ERROR);
 	}
 	return (0);
 }
