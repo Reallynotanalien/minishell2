@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:33:52 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/15 14:30:35 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/15 15:44:19 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ int	parse_redirections(void)
 void	line_parsing(void)
 {
 	int		i;
-	char	*tmp;
+	// char	*tmp;
 
 	i = ignore_tabs(0);
-	tmp = remove_nonascii(use_data()->line);
-	safe_free ((void **)&(use_data()->line));
-	use_data()->line = tmp;
+	// tmp = remove_nonascii(use_data()->line);
+	// safe_free ((void **)&(use_data()->line));
+	// use_data()->line = tmp;
 	if (i == (int)ft_strlen(use_data()->line)
 		|| parse_quotes(use_data()->line) == ERROR
 		|| remove_spaces(use_data()->line) == ERROR)

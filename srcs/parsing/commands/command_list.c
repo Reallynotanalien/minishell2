@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:27:55 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/10 13:31:39 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/15 15:41:13 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ t_command	*skip_commands(t_command *new)
 t_command	*add_command(char *command, int infile, int outfile)
 {
 	t_command	*new;
-	t_command	*next;
 
 	new = create_command();
 	if (!new)
@@ -104,7 +103,7 @@ t_command	*add_command(char *command, int infile, int outfile)
 	if (use_data()->cmd == NULL)
 		use_data()->cmd = new;
 	else
-		next = skip_commands(new); 
+		skip_commands(new); 
 	if (!new->cmd[0][0])
 	{
 		use_data()->error_flag = 1;

@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:17 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 17:15:50 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/15 15:40:29 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,6 @@ return it as is. If not, we find the path and as well as changing
 it directly in the struct, we return it.*/
 char	*get_path(t_command *cmd)
 {
-	DIR	*ptr;
-
-	ptr = opendir(cmd->cmd[0]);
 	if (access(cmd->cmd[0], F_OK | X_OK) == 0)
 	{
 		cmd->path = ft_strdup(cmd->cmd[0]);

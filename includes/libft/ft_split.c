@@ -3,62 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 13:03:42 by kafortin          #+#    #+#             */
-/*   Updated: 2022/10/06 18:28:11 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/15 15:57:34 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_str_malloc_copy(char	const *s, char c)
+static size_t	size_split(char const *s, char c)
 {
-	size_t	a;
-	size_t	b;
-	char	*str;
+	size_t	i;
 
-	a = 0;
-	b = 0;
-	while (s[a] != '\0' && s[a] == c)
-		a++;
-	while (s[a] != '\0' && s[a] != c)
-	{
-		a++;
-		b++;
-	}
-	str = ft_substr(s, (a - b), b);
-	return (str);
+	i = 0;
+	while (s[i] != '\0' && s[i] != c)
+		i++;
+	return (i + 1);
 }
 
-/*Allocates (with malloc) and returns a table of char strings
-obtained while separating "s" with char "c" acting as a delimiter
-(the table must end with NULL).*/
-void	**ft_split(char const *s, char c)
+static size_t	nb_words(char const *s, char c)
 {
-	void	**tab;
-	char	*temp;
-	size_t	a;
-	size_t	b;
-	size_t	len;
+	int	i;
+	int	nb;
 
-	a = 0;
-	b = 0;
+	i = 0;
+	nb = 0;
+	while (s[i])
+	{
+		if ((i > 0 && s[i] == c && s[i - 1] != c)
+			|| (s[i + 1] == '\0' && s[i] != c))
+			nb++;
+		i++;
+	}
+	return (nb);
+}
+
+static char	**no_memory_leaks(char **free_tab)
+{
+	size_t	i;
+
+	i = 0;
+	while (free_tab[i])
+	{
+		if (free_tab[i])
+			free(free_tab[i]);
+		i++;
+	}
+	if (free_tab)
+		free(free_tab);
+	return (NULL);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**tab;
+	size_t	i_s;
+	size_t	i_tab;
+
 	if (!s)
 		return (NULL);
-	temp = ft_strdup((char *)s);
-	if (!temp)
+	tab = (char **)ft_calloc(nb_words(s, c) + 1, sizeof(char *));
+	if (!tab)
 		return (NULL);
-	len = ft_count_words(temp, c);
-	tab = (void **)ft_calloc(sizeof(char *), (len + 1));
-	while (a < len)
+	i_s = 0;
+	i_tab = 0;
+	while (i_tab < nb_words(s, c))
 	{
-		tab[a] = ft_str_malloc_copy((temp + b), c);
-		while (temp[b] != '\0' && temp[b] == c)
-			b++;
-		b += ft_strlen(tab[a]);
-		a++;
+		while (s[i_s] == c)
+			i_s++;
+		tab[i_tab] = ft_substr(s, i_s, size_split(&s[i_s], c) - 1);
+		if (!tab[i_tab])
+			return (no_memory_leaks(tab));
+		i_s += size_split(&s[i_s], c);
+		i_tab++;
 	}
-	free(temp);
+	tab[i_tab] = NULL;
 	return (tab);
 }

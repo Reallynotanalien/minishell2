@@ -39,7 +39,6 @@ FILES = ft_isalpha.c \
 		ft_putendl_fd.c \
 		ft_putnbr_fd.c \
 		ft_iswhitespace.c \
-		ft_count_words.c \
 		ft_absolute.c \
 		ft_strcmp.c \
 		ft_tablen.c \
