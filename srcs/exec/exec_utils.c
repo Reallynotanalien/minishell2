@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:28:55 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 15:51:34 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/16 13:49:01 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@ void	close_files(t_command **cmd)
 
 void	execute(t_command **cmd)
 {
-	if (execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env))
+	if (!check_builtin((*cmd)))
 	{
-		ft_printf(2, "minishell: %s: command not found\n", (*cmd)->cmd[0]);
-		exit_program(127);
+		if (execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env))
+		{
+			ft_printf(2, "minishell: %s: command not found\n", (*cmd)->cmd[0]);
+			exit_program(127);
+		}
 	}
 }

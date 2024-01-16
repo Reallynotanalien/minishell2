@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:25:49 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 13:33:27 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/16 13:13:35 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	confirm_builtin(t_command *cmd)
 		return (1);
 	else
 		return (0);
-	return (1);
 }
 
 /* calls the relevant function from builtin name, 

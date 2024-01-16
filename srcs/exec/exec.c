@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 15:52:44 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/16 13:49:35 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,25 @@ void	child_two(t_command **cmd)
 {
 	int	*status;
 
-	if (!confirm_builtin((*cmd)))
+	use_data()->pid = fork();
+	signal(SIGINT, child_handler);
+	if (use_data()->pid == -1)
+		pipex_error("minishell: fork: ", 1);
+	else if (use_data()->pid == 0)
 	{
-		use_data()->pid = fork();
-		signal(SIGINT, child_handler);
-		if (use_data()->pid == -1)
-			pipex_error("minishell: fork: ", 1);
-		else if (use_data()->pid == 0)
-		{
-			dup_infile(cmd, NO);
-			dup_outfile(cmd, NO);
+		dup_infile(cmd, NO);
+		dup_outfile(cmd, NO);
+		if (!check_builtin((*cmd)))
 			execute(cmd);
-			exit_program(0);
-		}
-		else
-		{
-			close_files(cmd);
-			status = get_pid_status();
-			set_exstat(status, 0);
-			free(status);
-		}
+		exit_program(0);
 	}
 	else
-		exec_builtin(cmd, NO);
+	{
+		close_files(cmd);
+		status = get_pid_status();
+		set_exstat(status, 0);
+		free(status);
+	}
 }
 
 /*We duplicate the infile of the command as STDIN_FILENO and then we
@@ -83,24 +79,16 @@ void	pipex(t_command **cmd)
 {
 	if (pipe(use_data()->fd) < 0)
 		pipex_error("minishell: pipe: ", 1);
-	if (!confirm_builtin((*cmd)))
-	{
-		use_data()->pid = fork();
-		signal(SIGINT, child_handler);
-		if (use_data()->pid == -1)
-			pipex_error("minishell: fork: ", 1);
-		else if (use_data()->pid == 0)
-			child_one(cmd);
-		else
-		{
-			close_files(cmd);
-			close(use_data()->fd[1]);
-			setup_pipe_infile(cmd);
-		}
-	}
+	use_data()->pid = fork();
+	signal(SIGINT, child_handler);
+	if (use_data()->pid == -1)
+		pipex_error("minishell: fork: ", 1);
+	else if (use_data()->pid == 0)
+		child_one(cmd);
 	else
 	{
-		exec_builtin(cmd, YES);
+		close_files(cmd);
+		close(use_data()->fd[1]);
 		setup_pipe_infile(cmd);
 	}
 }
