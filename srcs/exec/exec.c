@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/16 13:49:35 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/17 15:17:51 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ void	child_one(t_command **cmd)
 {
 	dup_infile(cmd, YES);
 	close(use_data()->fd[0]);
-	setup_pipe_outfile();
+	if ((*cmd)->outfile == 1)
+		setup_pipe_outfile();
+	else
+		dup_outfile(cmd, NO);
 	close_files(cmd);
 	execute(cmd);
 	exit_program(0);

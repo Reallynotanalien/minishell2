@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_dup.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:38 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 19:27:42 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/17 15:13:56 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,8 @@ void	reset_files(void)
 
 void	setup_pipe_infile(t_command **cmd)
 {
-	if (!confirm_builtin((*cmd)->next))
-	{
-		if ((*cmd)->next->infile != 0)
-			close((*cmd)->next->infile);
+	if ((*cmd)->infile == STDIN_FILENO)
 		(*cmd)->next->infile = use_data()->fd[0];
-	}
 	else
 		close(use_data()->fd[0]);
 }

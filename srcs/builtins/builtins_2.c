@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:29:35 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/09 17:44:20 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/17 14:55:29 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ int	cd_builtin(char **cmd)
 		free (tmp);
 	}
 	else if (chdir(cmd[1]) == -1)
-		return (perror("minishell: cd: "), set_exstat(NULL, 1), 1);
+	{
+		ft_printf(2, "minishell: cd: %s: ", cmd[1]);
+		perror(NULL);
+		return (set_exstat(NULL, 1), 1);
+	}
 	return (0);
 }
 

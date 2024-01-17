@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:33:52 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/15 17:58:42 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/17 14:56:21 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,6 @@ goes wrong, the tokens are freed as well as the copy of the line.
 Those tokens are then used to create a command list, in which each 
 command will be associated with the right input and output file for
 easy execution.*/
-
-char	*remove_nonascii(char *str)
-{
-	char	*new_str;
-	int		i;
-
-	new_str = ft_calloc(ft_strlen(str) + 1, sizeof(char));
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] < 0 || str[i] > 127)
-			new_str[i] = '?';
-		else
-			new_str[i] = str[i];
-		i++;
-	}
-	return (new_str);
-}
-
 int	ignore_tabs(int i)
 {
 	while (use_data()->line[i]
@@ -75,12 +56,8 @@ int	parse_redirections(void)
 void	line_parsing(void)
 {
 	int		i;
-	char	*tmp;
 
 	i = ignore_tabs(0);
-	tmp = remove_nonascii(use_data()->line);
-	safe_free ((void **)&(use_data()->line));
-	use_data()->line = tmp;
 	if (i == (int)ft_strlen(use_data()->line)
 		|| parse_quotes(use_data()->line) == ERROR
 		|| remove_spaces(use_data()->line) == ERROR)
