@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:33:52 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/17 15:52:15 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/19 17:05:54 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,30 @@ int	parse_redirections(void)
 	return (0);
 }
 
+int	parse_envvar(char *line)
+{
+	int	i;
+
+	i = -1;
+	while (line[++i])
+	{
+		if (line[i] == '$' && line[i + 1] == '$')
+		{
+			ft_printf(2, "minishell: error: invalid environment variable.\n");
+			set_exstat(NULL, 1);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void	line_parsing(void)
 {
 	int		i;
 
 	i = ignore_tabs(0);
 	if (i == (int)ft_strlen(use_data()->line)
+		|| parse_envvar(use_data()->line) == ERROR
 		|| parse_quotes(use_data()->line) == ERROR
 		|| remove_spaces(use_data()->line) == ERROR)
 	{
