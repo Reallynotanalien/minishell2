@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:28:55 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/16 13:49:01 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/19 13:20:35 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,22 @@ void	close_files(t_command **cmd)
 
 void	execute(t_command **cmd)
 {
-	if (!check_builtin((*cmd)))
-	{
 		if (execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env))
 		{
 			ft_printf(2, "minishell: %s: command not found\n", (*cmd)->cmd[0]);
 			exit_program(127);
 		}
-	}
+}
+
+void	exec_single_builtin(t_command *cmd)
+{
+	if (cmd->infile != STDIN_FILENO)
+		dup2(cmd->infile, STDIN_FILENO);
+	if (cmd->outfile != STDOUT_FILENO)
+		dup2(cmd->outfile, STDOUT_FILENO);
+	check_builtin(cmd);
+	if (cmd->infile != STDIN_FILENO)
+		dup2(use_data()->old_stdin, STDIN_FILENO);
+	if (cmd->outfile != STDOUT_FILENO)
+		dup2(use_data()->old_stdout, STDOUT_FILENO);
 }

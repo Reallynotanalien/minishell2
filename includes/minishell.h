@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/14 14:46:20 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/19 13:21:00 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void		dup_outfile(t_command **cmd, int copy);
 void		reset_files(void);
 void		setup_pipe_outfile(void);
 void		setup_pipe_infile(t_command **cmd);
+void		exec_single_builtin(t_command *cmd);
 
 //exec.c
 void		exec(t_command *cmd);
