@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/19 13:22:45 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/19 15:51:18 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	child_two(t_command **cmd)
 
 	use_data()->pid = fork();
 	signal(SIGINT, child_handler);
+	signal(SIGQUIT, sigquit_handler);
 	if (use_data()->pid == -1)
 		pipex_error("minishell: fork: ", 1);
 	else if (use_data()->pid == 0)
@@ -84,6 +85,7 @@ void	pipex(t_command **cmd)
 		pipex_error("minishell: pipe: ", 1);
 	use_data()->pid = fork();
 	signal(SIGINT, child_handler);
+	signal(SIGQUIT, sigquit_handler);
 	if (use_data()->pid == -1)
 		pipex_error("minishell: fork: ", 1);
 	else if (use_data()->pid == 0)

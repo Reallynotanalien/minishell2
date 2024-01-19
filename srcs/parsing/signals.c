@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:34:01 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/15 16:04:33 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:46:43 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	child_handler(int signum)
 	(void) signum;
 }
 
+void	sigquit_handler(int signum)
+{
+	(void) signum;
+	printf("^\\Quit: 3\n");
+}
 /*Exits the child we created to open the heredoc so the read function
 stops looking for input.*/
 void	heredoc_handler(int signum)
@@ -41,7 +46,11 @@ void	heredoc_handler(int signum)
 	(void) signum;
 	if (use_data()->here_doc_str)
 		safe_free((void **)&(use_data()->here_doc_str));
-	exit(1);
+	if (use_data()->heredoc_token)
+		safe_free((void **)&(use_data()->heredoc_token));
+	if (use_data()->heredoc_cmd)
+		safe_free((void **)&(use_data()->heredoc_cmd));
+	exit_program(1);
 }
 
 /*Since we do not want the ^C characters to be echoed when we press Ctrl+C,

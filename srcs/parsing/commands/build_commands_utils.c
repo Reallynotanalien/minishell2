@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:29 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/14 14:46:31 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/19 15:00:33 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ int	add_str(void)
 {
 	char	*tmp;	
 	tmp = readline("> ");
+	if (!tmp)
+	{
+		use_data()->here_doc_str = NULL;
+		return (1);
+	}
 	use_data()->here_doc_str = ft_strjoin(tmp, "\n");
 	safe_free((void **)&tmp);
 	return (ft_strlen(use_data()->here_doc_str));
@@ -24,10 +29,11 @@ int	add_str(void)
 void	heredoc_input(int temp_file, char *token, char *command)
 {
 	signal(SIGINT, heredoc_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (add_str())
 	{
-		if ((ft_strlen(use_data()->here_doc_str) - 1 == (ft_strlen(token)))
-			&& (ft_strncmp(use_data()->here_doc_str, token,
+		if (!use_data()->here_doc_str || (ft_strlen(use_data()->here_doc_str) - 1 == ft_strlen(token)
+			&& ft_strncmp(use_data()->here_doc_str, token,
 					ft_strlen(use_data()->here_doc_str) - 1) == 0))
 		{
 			safe_free((void **)&token);
@@ -58,11 +64,14 @@ int	open_heredoc(t_token *tokens, char *command)
 	char	*token;
 
 	signal(SIGINT, child_handler);
+	signal(SIGQUIT, SIG_IGN);
 	temp_file = open(".here_doc", O_TRUNC | O_CREAT | O_WRONLY, 0644);
 	if (!temp_file)
 		ft_printf(2, HD_OPEN_ERROR);
 	token = ft_strtrim_whitespaces(ft_substr(tokens->token, 2,
 				ft_strlen(tokens->token) - 2));
+	use_data()->heredoc_token = token;
+	use_data()->heredoc_cmd = command;
 	use_data()->pid = fork();
 	if (use_data()->pid == -1)
 		ft_printf(2, HD_FORK_ERROR);
@@ -75,7 +84,7 @@ int	open_heredoc(t_token *tokens, char *command)
 	close(temp_file);
 	here_doc = open(".here_doc", O_RDONLY);
 	use_data()->heredoc_flag = YES;
-	signal(SIGINT, interruption_handler);
+	// signal(SIGINT, interruption_handler);
 	return (safe_free((void **)&status), here_doc);
 }
 

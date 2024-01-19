@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/19 13:21:00 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:35:32 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ typedef struct s_data
 	char				*line;
 	char				*line_cpy;
 	char				*here_doc_str;
+	char				*heredoc_token;
+	char				*heredoc_cmd;
 	struct termios		old_attributes;
 	struct termios		new_attributes;
 }				t_data;
@@ -184,6 +186,7 @@ void		interruption_handler(int signum);
 void		child_handler(int signum);
 void		heredoc_handler(int signum);
 void		signals(void);
+void		sigquit_handler(int signum);
 
 //term_attributes.c
 void		disable_ctrlc(void);
