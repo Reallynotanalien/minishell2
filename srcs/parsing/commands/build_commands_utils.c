@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:29 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 16:43:20 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/22 18:08:17 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	open_heredoc(t_token *tokens, char *command)
 	close(temp_file);
 	here_doc = open(".here_doc", O_RDONLY);
 	use_data()->heredoc_flag = YES;
+	safe_free((void **)&(use_data()->heredoc_token));
 	return (safe_free((void **)&status), here_doc);
 }
 
