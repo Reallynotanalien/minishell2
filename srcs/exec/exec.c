@@ -6,9 +6,11 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/19 15:51:18 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/22 14:34:51 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../includes/minishell.h"
 
 #include "../../includes/minishell.h"
 
@@ -43,8 +45,7 @@ void	child_two(t_command **cmd)
 	{
 		dup_infile(cmd, NO);
 		dup_outfile(cmd, NO);
-		if (!check_builtin((*cmd)))
-			execute(cmd);
+		execute(cmd);
 		exit_program(0);
 	}
 	else
@@ -62,13 +63,17 @@ the command is a builtin, the associated function executes; else,
 execve takes charge of it with the path.*/
 void	child_one(t_command **cmd)
 {
+	int	i;
+
 	dup_infile(cmd, YES);
 	close(use_data()->fd[0]);
 	if ((*cmd)->outfile == 1)
 		setup_pipe_outfile();
 	else
 		dup_outfile(cmd, NO);
-	close_files(cmd);
+	i = 2;
+	while (++i != 200)
+		close(i);
 	execute(cmd);
 	exit_program(0);
 }
@@ -112,7 +117,7 @@ void	exec(t_command *cmd)
 	nb_cmds = count_commands(cmd);
 	if (nb_cmds == 1 && confirm_builtin(cmd))
 		exec_single_builtin(cmd);
-	else
+	else	
 	{
 		while (cmd->next)
 		{

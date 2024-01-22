@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:28:55 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/19 13:25:42 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/22 14:37:33 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ void	close_files(t_command **cmd)
 
 void	execute(t_command **cmd)
 {
+	int	i;
+
+	i = 2;
+	while (++i != 200)
+		close(i);
 	if (!check_builtin((*cmd)))
 	{
 		if (execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env))
