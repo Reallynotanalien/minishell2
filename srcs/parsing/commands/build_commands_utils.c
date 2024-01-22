@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:29 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/19 15:00:33 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/22 16:43:20 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	add_str(void)
 {
-	char	*tmp;	
+	char	*tmp;
+
 	tmp = readline("> ");
 	if (!tmp)
 	{
@@ -32,13 +33,12 @@ void	heredoc_input(int temp_file, char *token, char *command)
 	signal(SIGQUIT, SIG_IGN);
 	while (add_str())
 	{
-		if (!use_data()->here_doc_str || (ft_strlen(use_data()->here_doc_str) - 1 == ft_strlen(token)
-			&& ft_strncmp(use_data()->here_doc_str, token,
+		if (!use_data()->here_doc_str
+			|| (ft_strlen(use_data()->here_doc_str) - 1 == ft_strlen(token)
+				&& ft_strncmp(use_data()->here_doc_str, token,
 					ft_strlen(use_data()->here_doc_str) - 1) == 0))
 		{
-			safe_free((void **)&token);
-			safe_free((void **)&(use_data()->here_doc_str));
-			safe_free((void **)&command);
+			clean_heredoc(use_data()->here_doc_str, token, command);
 			exit_program (0);
 		}
 		else
@@ -46,9 +46,7 @@ void	heredoc_input(int temp_file, char *token, char *command)
 				ft_strlen(use_data()->here_doc_str));
 		safe_free((void **)&(use_data()->here_doc_str));
 	}
-	safe_free((void **)&(use_data()->here_doc_str));
-	safe_free((void **)&token);
-	safe_free((void **)&command);
+	clean_heredoc(use_data()->here_doc_str, token, command);
 	exit_program(0);
 }
 
@@ -61,30 +59,26 @@ int	open_heredoc(t_token *tokens, char *command)
 	int		here_doc;
 	int		temp_file;
 	int		*status;
-	char	*token;
 
 	signal(SIGINT, child_handler);
 	signal(SIGQUIT, SIG_IGN);
 	temp_file = open(".here_doc", O_TRUNC | O_CREAT | O_WRONLY, 0644);
 	if (!temp_file)
 		ft_printf(2, HD_OPEN_ERROR);
-	token = ft_strtrim_whitespaces(ft_substr(tokens->token, 2,
-				ft_strlen(tokens->token) - 2));
-	use_data()->heredoc_token = token;
+	use_data()->heredoc_token = ft_strtrim_whitespaces
+	(ft_substr(tokens->token, 2, ft_strlen(tokens->token) - 2));
 	use_data()->heredoc_cmd = command;
 	use_data()->pid = fork();
 	if (use_data()->pid == -1)
 		ft_printf(2, HD_FORK_ERROR);
 	else if (use_data()->pid == 0)
-		heredoc_input(temp_file, token, command);
-	safe_free((void **)&token);
+		heredoc_input(temp_file, use_data()->heredoc_token, command);
 	status = get_pid_status();
 	if (*status != 0)
 		use_data()->error_flag = ERROR;
 	close(temp_file);
 	here_doc = open(".here_doc", O_RDONLY);
 	use_data()->heredoc_flag = YES;
-	// signal(SIGINT, interruption_handler);
 	return (safe_free((void **)&status), here_doc);
 }
 

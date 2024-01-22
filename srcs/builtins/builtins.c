@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:14 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 13:37:52 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/22 16:23:42 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	unset_var(char *variable)
 
 	i = 0;
 	if (!isvalid_varname(variable))
-		return (ft_printf(2, 
+		return (ft_printf(2,
 				"minishell: unset: \'%s\': not a valid identifier\n", variable),
 			set_exstat(NULL, 1), safe_free((void **)&variable), 1);
 	i = -1;

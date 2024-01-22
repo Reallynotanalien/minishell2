@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/19 14:35:32 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/22 16:53:28 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@
 # define T_APPEND 7
 
 /*ERROR MESSAGES*/
-# define ARGC_ERROR "No argument should be sent appart from the program's name\n"
 # define ENV_ERROR "The environment could not be copied\n"
 # define ARGV_ERROR "There is no argv\n"
 # define HD_FORK_ERROR "minishell: heredoc: could not fork\n"
 # define HD_OPEN_ERROR "minishell: heredoc: could not open heredoc\n"
 # define STRDUP_ERROR "Could not duplicate string.\n"
 # define QUOTES_ERROR "found unclosed quotation marks\n"
+# define INV_TOKEN "minishell: syntax error near unexpected token"
 
 /*STRUCTS*/
 
@@ -103,6 +103,7 @@ typedef struct s_data
 //cleaning_utils.c
 void		safe_free(void **ptr);
 void		free_array(char **array);
+void		clean_heredoc(char *string, char *token, char *cmd);
 
 //init.c
 void		init_data(t_data *data);

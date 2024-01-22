@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_parsing_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:27:35 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 20:27:37 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:52:58 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

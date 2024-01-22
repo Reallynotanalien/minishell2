@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:17 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/15 15:40:29 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/22 16:24:25 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ as an argument.*/
 char	*find_path(t_command **cmd, char **env)
 {
 	int		i;
-	char	**path_env; 
+	char	**path_env;
 
 	if (!use_data()->new_env || !use_data()->new_env[0])
 		return (NULL);

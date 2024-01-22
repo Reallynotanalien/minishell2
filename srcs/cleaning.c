@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:53:57 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/13 15:57:12 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:36:11 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,11 @@ void	exit_program(int code)
 	while (++i <= 200)
 		close(i);
 	exit(code);
+}
+
+void	clean_heredoc(char *string, char *token, char *cmd)
+{
+	safe_free((void **)&string);
+	safe_free((void **)&token);
+	safe_free((void **)&cmd);
 }

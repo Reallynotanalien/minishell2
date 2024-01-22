@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:05:44 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/14 14:25:09 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/22 16:44:00 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	create_blocks(char *line, char **blocks)
 	while (line[i])
 	{
 		len = 0;
-		while (line[i + len] && !(line[i + len] == '$' 
+		while (line[i + len] && !(line[i + len] == '$'
 				&& !single_quoted(line, i + len)))
 			len ++;
 		if (line[i] != '$')
@@ -122,7 +122,7 @@ void	do_substitutions(char *line)
 
 	nb_blocks = count_nbblocks(line);
 	if (nb_blocks == 1)
-		return ;	
+		return ;
 	blocks = ft_calloc(nb_blocks + 1, sizeof(char *));
 	create_blocks(line, blocks);
 	new_line = ft_strdup(blocks[0]);

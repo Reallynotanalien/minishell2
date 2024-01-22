@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:34:01 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/19 14:46:43 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/22 16:24:36 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	sigquit_handler(int signum)
 	(void) signum;
 	printf("^\\Quit: 3\n");
 }
+
 /*Exits the child we created to open the heredoc so the read function
 stops looking for input.*/
 void	heredoc_handler(int signum)

@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 14:34:51 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/22 16:23:57 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	exec(t_command *cmd)
 	nb_cmds = count_commands(cmd);
 	if (nb_cmds == 1 && confirm_builtin(cmd))
 		exec_single_builtin(cmd);
-	else	
+	else
 	{
 		while (cmd->next)
 		{
