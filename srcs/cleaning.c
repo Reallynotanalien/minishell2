@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:53:57 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 16:36:11 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/24 16:52:13 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	clean_tokens(void)
 
 void	clean_after_loop(void)
 {
+	dup2(use_data()->old_stdin, STDIN_FILENO);
+	dup2(use_data()->old_stdout, STDOUT_FILENO);
 	safe_free((void **)&(use_data()->line));
 	safe_free((void **)&(use_data()->line_cpy));
 	clean_tokens();

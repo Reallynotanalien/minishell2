@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:53:13 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/19 14:11:40 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/24 16:54:31 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	main(int argc, char **argv, char **env)
 	{
 		signals();
 		use_data()->line = readline("minishell$> ");
+		use_data()->old_stdin = dup(STDIN_FILENO);
+		use_data()->old_stdout = dup(STDOUT_FILENO);
 		if (use_data()->line && *use_data()->line)
 		{
 			line_parsing();

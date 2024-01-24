@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:38 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 14:38:39 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/24 16:55:22 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	reset_files(void)
 void	setup_pipe_infile(t_command **cmd)
 {
 	if ((*cmd)->infile == STDIN_FILENO)
-		(*cmd)->next->infile = use_data()->fd[0];
+		dup2(use_data()->fd[0], STDIN_FILENO);
+		// (*cmd)->next->infile = use_data()->fd[0];
 	else
 		close(use_data()->fd[0]);
 }
