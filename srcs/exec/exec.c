@@ -6,24 +6,13 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/24 16:56:00 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/24 18:33:07 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 #include "../../includes/minishell.h"
-
-// void	exec_builtin(t_command **cmd, int pipe)
-// {
-// 	if (pipe == YES)
-// 		setup_pipe_outfile();
-// 	else
-// 		dup_outfile(cmd, YES);
-// 	check_builtin((*cmd));
-// 	close_files(cmd);
-// 	reset_files();
-// }
 
 /*Changes the command to lowercase to make sure it's useable, then
 opens a pipe and creates a child. The signal is changed to make sure 
@@ -66,6 +55,8 @@ void	child_one(t_command **cmd)
 	int	i;
 
 	close(use_data()->fd[0]);
+	if ((*cmd)->infile != STDIN_FILENO)
+		dup_infile(cmd, NO);
 	if ((*cmd)->outfile == 1)
 		setup_pipe_outfile();
 	else
@@ -98,7 +89,7 @@ void	pipex(t_command **cmd)
 	{
 		close_files(cmd);
 		close(use_data()->fd[1]);
-		setup_pipe_infile(cmd);
+		setup_pipe_infile(&(*cmd)->next);
 	}
 }
 

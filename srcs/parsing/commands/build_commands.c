@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:01 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 16:24:57 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/24 18:08:58 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ int	command_loop(t_token **tokens)
 		if ((*tokens)->type == T_PIPE)
 			break ;
 		else if ((*tokens)->type == T_HEREDOC)
+		{
+			if (use_data()->infile != STDIN_FILENO)
+				close (use_data()->infile);
 			use_data()->infile = open_heredoc(*tokens, command);
+		}
 		else if (((*tokens)->type == T_INFILE && token_redirin(*tokens) == -1)
 			|| ((*tokens)->type == T_OUTFILE && token_redirout(*tokens) == -1)
 			|| ((*tokens)->type == T_APPEND
