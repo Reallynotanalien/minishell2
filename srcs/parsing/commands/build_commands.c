@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:01 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/24 18:08:58 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/25 13:45:25 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,6 @@ t_command	*create_command(void)
 	if (!new)
 		return (NULL);
 	new->next = NULL;
+	new->prev = NULL;
 	return (new);
 }

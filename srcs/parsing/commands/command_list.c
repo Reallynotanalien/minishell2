@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:27:55 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 16:43:30 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/25 13:46:46 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ t_command	*skip_commands(t_command *new)
 	while (next->next != NULL)
 		next = next->next;
 	next->next = new;
+	new->prev = next;
 	return (next);
 }
 

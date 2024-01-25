@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 16:53:28 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/25 13:51:33 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,11 @@ typedef struct s_command
 {
 	int					infile;
 	int					outfile;
+	int					pipe_cmd[2];
 	char				*path;
 	char				**cmd;
 	char				*lower_cmd;
+	struct s_command	*prev;
 	struct s_command	*next;
 }					t_command;
 
@@ -157,15 +159,15 @@ void		set_exstat(int *status, int exstat);
 
 //exec_dup.c
 int			count_commands(t_command *cmd);
-void		close_files(t_command **cmd);
+void		close_files(t_command *cmd);
 
 //exec_utils.c
-void		execute(t_command **cmd);
-void		dup_infile(t_command **cmd, int copy);
-void		dup_outfile(t_command **cmd, int copy);
+void		execute(t_command *cmd);
+void		dup_infile(t_command *cmd, int copy);
+void		dup_outfile(t_command *cmd, int copy);
 void		reset_files(void);
-void		setup_pipe_outfile(void);
-void		setup_pipe_infile(t_command **cmd);
+void		setup_pipe_outfile(t_command *cmd);
+void		setup_pipe_infile(t_command *cmd);
 void		exec_single_builtin(t_command *cmd);
 
 //exec.c
@@ -173,8 +175,8 @@ void		exec(t_command *cmd);
 
 //path.c
 char		*access_path(t_command *cmd, char **path_env);
-char		*find_path(t_command **cmd, char **env);
-t_command	*find_cmd(t_command **cmd);
+char		*find_path(t_command *cmd, char **env);
+t_command	*find_cmd(t_command *cmd);
 char		*get_path(t_command *cmd);
 
 /*PARSING*/

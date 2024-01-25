@@ -16,7 +16,7 @@ redirections + pipes doesnt work (echo hi | wc > file2)
 
 - replace all instances of ft_strlower by cmd->lower_cmd
 - get back to school's printf version (uintptr instead of intptr)
-- leaks : fix overwritten malloced variable in exec.c (child_two)(*cmd)->cmd[0] = ft_strlower((*cmd)->cmd[0])()
+- leaks : fix overwritten malloced variable in exec.c (child_two)cmd->cmd[0] = ft_strlower(cmd->cmd[0])()
 
 
 cat | ls : minishell does not behave correctly; it should wait for input for cat. Now it sorta crashes. Need to stop with a signal ?

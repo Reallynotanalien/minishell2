@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:28:55 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 16:24:12 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/25 13:51:04 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,26 @@ int	count_commands(t_command *cmd)
 	return (i);
 }
 
-void	close_files(t_command **cmd)
+void	close_files(t_command *cmd)
 {
-	if ((*cmd)->infile != 0)
-		close((*cmd)->infile);
-	if ((*cmd)->outfile != 1)
-		close((*cmd)->outfile);
+	if (cmd->infile != 0)
+		close(cmd->infile);
+	if (cmd->outfile != 1)
+		close(cmd->outfile);
 }
 
-void	execute(t_command **cmd)
+void	execute(t_command *cmd)
 {
 	int	i;
 
 	i = 2;
 	while (++i != 200)
 		close(i);
-	if (!check_builtin((*cmd)))
+	if (!check_builtin(cmd))
 	{
-		if (execve((*cmd)->path, (*cmd)->cmd, use_data()->new_env))
+		if (execve(cmd->path, cmd->cmd, use_data()->new_env))
 		{
-			ft_printf(2, "minishell: %s: command not found\n", (*cmd)->cmd[0]);
+			ft_printf(2, "minishell: %s: command not found\n", cmd->cmd[0]);
 			exit_program(127);
 		}
 	}

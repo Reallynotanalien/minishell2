@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:53:57 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/24 16:52:13 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/25 13:51:59 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ void	clean_heredoc(char *string, char *token, char *cmd)
 {
 	safe_free((void **)&string);
 	safe_free((void **)&token);
-	safe_free((void **)&cmd);
+	safe_free((void **)cmd);
 }
