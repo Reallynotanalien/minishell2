@@ -13,8 +13,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/edufour/Desktop/42_Projets/minishell/srcs/parsing/tokens",
-      "program": "/Users/edufour/Desktop/42_Projets/minishell/srcs/parsing/tokens/build/Debug/outDebug"
+      "cwd": "/Users/edufour/Desktop/42_Projets/minishell/srcs/exec",
+      "program": "/Users/edufour/Desktop/42_Projets/minishell/srcs/exec/build/Debug/outDebug"
     }
   ]
 }
