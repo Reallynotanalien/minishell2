@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/25 13:51:33 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/26 15:15:09 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ typedef struct s_data
 	int					exstat;
 	int					infile;
 	int					outfile;
-	int					fd[2];
 	int					pid;
 	int					child;
 	int					old_stdin;

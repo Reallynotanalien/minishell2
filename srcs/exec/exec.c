@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/25 17:07:11 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/26 18:36:40 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,90 +14,56 @@
 
 #include "../../includes/minishell.h"
 
-/*Changes the command to lowercase to make sure it's useable, then
-opens a pipe and creates a child. The signal is changed to make sure 
-ctrl+c closes the child properly when a command is hanged. 
-If we are in the child, we duplicate the infile and outfile of the 
-command into the right STD_FILENO. Then, if the command is a builtin,
-the associated function executes; else, execve takes charge of it
-with the path.*/
-void	child_two(t_command **cmd)
+void	dup_fds(t_command *cmd)
 {
-	int	*status;
-
-	use_data()->pid = fork();
-	signal(SIGINT, child_handler);
-	signal(SIGQUIT, sigquit_handler);
-	if (use_data()->pid == -1)
-		pipex_error("minishell: fork: ", 1);
-	else if (use_data()->pid == 0)
+	if (cmd->infile == STDIN_FILENO && cmd->prev)
+		dup2(cmd->prev->pipe_cmd[0], STDIN_FILENO);
+	else if (cmd->infile != STDIN_FILENO)
 	{
-		dup_infile(cmd, NO);
-		dup_outfile(cmd, NO);
-		execute(cmd);
-		exit_program(0);
+		dup2(cmd->infile, STDIN_FILENO);
+		close (cmd->infile);
 	}
-	else
+	if (cmd->next && cmd->outfile == STDOUT_FILENO)
+		dup2(cmd->pipe_cmd[1], STDOUT_FILENO);
+	else if (cmd->outfile != STDOUT_FILENO)
 	{
-		close_files(cmd);
-		status = get_pid_status();
-		set_exstat(status, 0);
-		free(status);
+		dup2(cmd->outfile, STDOUT_FILENO);
+		close (cmd->outfile);
 	}
+	close (cmd->prev->pipe_cmd[0]);
+	close (cmd->prev->pipe_cmd[1]);
+	close (cmd->pipe_cmd[0]);
+	close (cmd->pipe_cmd[1]);
 }
 
-/*We duplicate the infile of the command as STDIN_FILENO and then we
-duplicate the end of the pipe we want as the STDOUT_FILENO. Then, if 
-the command is a builtin, the associated function executes; else, 
-execve takes charge of it with the path.*/
-void	child_one(t_command **cmd)
+void	handle_child(t_command *cmd)
 {
-	int	i;
-
-	close(use_data()->fd[0]);
-	if ((*cmd)->infile != STDIN_FILENO)
-		dup_infile(cmd, NO);
-	if ((*cmd)->outfile == 1)
-		setup_pipe_outfile();
-	else
-		dup_outfile(cmd, NO);
-	i = 2;
-	while (++i != 200)
-		close(i);
+	signal(SIGINT, child_handler);
+	signal(SIGQUIT, sigquit_handler);
+	ft_printf(2, "pipe[0] : %d pipe[1] : %d infile : %d outfile : %d\n", cmd->pipe_cmd[0], cmd->pipe_cmd[1], cmd->infile, cmd->outfile);
+	dup_fds(cmd);
 	execute(cmd);
-	exit_program(0);
 }
 
-/*Changes the command to lowercase to make sure it's useable, then
-opens a pipe and creates a child. The signal is changed to make sure
-ctrl+c closes the child properly when a command is hanged.
-If we are in the child, then we use the execution function (child one).
-If not, we close the end of the pipe we will not be using and store
-the other end into the next command's infile fd.*/
-void	pipex(t_command **cmd)
+int	setup_pipes(t_command *cmd)
 {
-	if (pipe(use_data()->fd) < 0)
-		pipex_error("minishell: pipe: ", 1);
-	use_data()->pid = fork();
-	signal(SIGINT, child_handler);
-	signal(SIGQUIT, sigquit_handler);
-	if (use_data()->pid == -1)
-		pipex_error("minishell: fork: ", 1);
-	else if (use_data()->pid == 0)
-		child_one(cmd);
-	else
+	if (cmd->next && pipe(cmd->pipe_cmd) < 0)
 	{
-		close_files(cmd);
-		close(use_data()->fd[1]);
-		setup_pipe_infile(&(*cmd)->next);
+		perror("minishell: pipe: ");
+		return (1);
 	}
+	return (0);
 }
 
-/*Counts the number of commands in the struct, and uses pipex
-until the last command to open pipes and execute them. Then, 
-executes the last command separately (if there is only one
-command, it will jump right to this point) and when all is 
-done, the signal handler is reset to the main handler.*/
+void	close_pipes(t_command *cmd)
+{
+	if (cmd->prev)
+	{
+		close(cmd->prev->pipe_cmd[0]);
+		close(cmd->prev->pipe_cmd[1]);
+	}	
+}
+
 void	exec(t_command *cmd)
 {
 	int	nb_cmds;
@@ -106,17 +72,25 @@ void	exec(t_command *cmd)
 		return ;
 	nb_cmds = count_commands(cmd);
 	if (nb_cmds == 1 && confirm_builtin(cmd))
-		exec_single_builtin(cmd);
-	else
+		return (exec_single_builtin(cmd));
+	while (cmd)
 	{
-		while (cmd->next)
+		setup_pipes(cmd);
+		use_data()->pid = fork();
+		if (use_data()->pid == -1)
+			return (perror("minishell: fork: "));
+		else if (use_data()->pid == 0)
+			handle_child(cmd);
+		else
 		{
-			pipex(&cmd);
-			nb_cmds--;
-			if (cmd->next)
-				cmd = cmd->next;
+			close_pipes(cmd);
+			if (cmd->prev && cmd->prev->prev)
+			{
+				close(cmd->prev->prev->pipe_cmd[0]);
+				close(cmd->prev->prev->pipe_cmd[1]);
+			}
+			cmd = cmd->next;
 		}
-		child_two(&cmd);
-		signal(SIGINT, interruption_handler);
 	}
+	get_pid_status();
 }
