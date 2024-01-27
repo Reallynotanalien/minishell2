@@ -6,48 +6,50 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/26 18:36:40 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/26 19:46:07 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-#include "../../includes/minishell.h"
+void	close_pipes(int *fd)
+{
+	close(fd[0]);
+	close(fd[1]);
+}
 
 void	dup_fds(t_command *cmd)
 {
-	if (cmd->infile == STDIN_FILENO && cmd->prev)
-		dup2(cmd->prev->pipe_cmd[0], STDIN_FILENO);
-	else if (cmd->infile != STDIN_FILENO)
-	{
-		dup2(cmd->infile, STDIN_FILENO);
-		close (cmd->infile);
-	}
-	if (cmd->next && cmd->outfile == STDOUT_FILENO)
+	if (cmd->outfile == STDOUT_FILENO && cmd->next)
 		dup2(cmd->pipe_cmd[1], STDOUT_FILENO);
 	else if (cmd->outfile != STDOUT_FILENO)
 	{
 		dup2(cmd->outfile, STDOUT_FILENO);
 		close (cmd->outfile);
 	}
-	close (cmd->prev->pipe_cmd[0]);
-	close (cmd->prev->pipe_cmd[1]);
-	close (cmd->pipe_cmd[0]);
-	close (cmd->pipe_cmd[1]);
+	if (cmd->infile != STDIN_FILENO)
+	{
+		dup2(cmd->infile, STDIN_FILENO);
+		close (cmd->infile);
+	}
+	//close(cmd->prev->pipe_cmd[0]);
+	//close(cmd->prev->pipe_cmd[1]);
+	close_pipes(cmd->pipe_cmd);
 }
 
 void	handle_child(t_command *cmd)
 {
 	signal(SIGINT, child_handler);
 	signal(SIGQUIT, sigquit_handler);
-	ft_printf(2, "pipe[0] : %d pipe[1] : %d infile : %d outfile : %d\n", cmd->pipe_cmd[0], cmd->pipe_cmd[1], cmd->infile, cmd->outfile);
+	ft_printf(2, "In child pipe[0] : %d pipe[1] : %d infile : %d outfile : %d\n", cmd->pipe_cmd[0], cmd->pipe_cmd[1], cmd->infile, cmd->outfile);
 	dup_fds(cmd);
 	execute(cmd);
+	exit(0);
 }
 
 int	setup_pipes(t_command *cmd)
 {
-	if (cmd->next && pipe(cmd->pipe_cmd) < 0)
+	if (pipe(cmd->pipe_cmd) < 0)
 	{
 		perror("minishell: pipe: ");
 		return (1);
@@ -55,14 +57,6 @@ int	setup_pipes(t_command *cmd)
 	return (0);
 }
 
-void	close_pipes(t_command *cmd)
-{
-	if (cmd->prev)
-	{
-		close(cmd->prev->pipe_cmd[0]);
-		close(cmd->prev->pipe_cmd[1]);
-	}	
-}
 
 void	exec(t_command *cmd)
 {
@@ -81,16 +75,11 @@ void	exec(t_command *cmd)
 			return (perror("minishell: fork: "));
 		else if (use_data()->pid == 0)
 			handle_child(cmd);
-		else
-		{
-			close_pipes(cmd);
-			if (cmd->prev && cmd->prev->prev)
-			{
-				close(cmd->prev->prev->pipe_cmd[0]);
-				close(cmd->prev->prev->pipe_cmd[1]);
-			}
-			cmd = cmd->next;
-		}
+		dup2(cmd->pipe_cmd[0], STDIN_FILENO);
+		close_pipes(cmd->pipe_cmd);
+		cmd = cmd->next;
 	}
+	dup2(use_data()->old_stdin, 0);
+	dup2(use_data()->old_stdout, 1);
 	get_pid_status();
 }
