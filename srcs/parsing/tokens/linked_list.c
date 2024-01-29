@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:31:22 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/15 16:59:47 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 12:02:05 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,4 @@ t_token	*add_token(char *token)
 		next->next = new;
 	}
 	return (use_data()->token);
-}
-
-/*If the token linked list is not empty, frees each token one by
-one.*/
-void	free_tokens_if_not_empty(void)
-{
-	t_token	*temp;
-
-	if (!use_data()->token)
-		return ;
-	while (use_data()->token)
-	{
-		temp = use_data()->token->next;
-		free(use_data()->token->token);
-		free (use_data()->token);
-		use_data()->token = temp;
-	}
 }

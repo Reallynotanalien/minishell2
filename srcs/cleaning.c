@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:53:57 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/25 13:51:59 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 11:49:33 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void	clean_cmds(void)
 	{
 		tmp = use_data()->cmd->next;
 		free_array(use_data()->cmd->cmd);
+		if (use_data()->cmd->infile != STDIN_FILENO)
+			close(use_data()->cmd->infile);
+		if (use_data()->cmd->outfile != STDOUT_FILENO)
+			close(use_data()->cmd->outfile);
 		safe_free ((void **)&(use_data()->cmd->path));
 		safe_free((void **)&(use_data()->cmd->lower_cmd));
 		safe_free((void **)&(use_data()->cmd));
@@ -42,8 +46,20 @@ void	clean_tokens(void)
 
 void	clean_after_loop(void)
 {
-	dup2(use_data()->old_stdin, STDIN_FILENO);
-	dup2(use_data()->old_stdout, STDOUT_FILENO);
+	if (use_data()->old_stdin != 0)
+		dup2(use_data()->old_stdin, STDIN_FILENO);
+	if (use_data()->old_stdout != 0)
+		dup2(use_data()->old_stdout, STDOUT_FILENO);
+	if (use_data()->infile != STDIN_FILENO)
+		close(use_data()->infile);
+	if (use_data()->outfile != STDOUT_FILENO)
+		close(use_data()->outfile);
+	use_data()->infile = STDIN_FILENO;
+	use_data()->outfile = STDOUT_FILENO;
+	safe_close_file(use_data()->old_stdin);
+	use_data()->old_stdin = 0;
+	safe_close_file(use_data()->old_stdout);
+	use_data()->old_stdout = 0;
 	safe_free((void **)&(use_data()->line));
 	safe_free((void **)&(use_data()->line_cpy));
 	clean_tokens();
@@ -55,7 +71,6 @@ void	clean_after_loop(void)
 void	exit_program(int code)
 {
 	t_data	*data;
-	int		i;
 
 	clean_after_loop();
 	restore_attributes();
@@ -63,9 +78,6 @@ void	exit_program(int code)
 	free_array(use_data()->new_env);
 	data = use_data();
 	safe_free((void **)&data);
-	i = 2;
-	while (++i <= 200)
-		close(i);
 	exit(code);
 }
 

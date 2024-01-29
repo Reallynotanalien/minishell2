@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:28:55 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/26 15:48:46 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 12:00:15 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,6 @@ int	count_commands(t_command *cmd)
 		i++;
 	}
 	return (i);
-}
-
-void	close_files(t_command *cmd)
-{
-	if (cmd->infile != 0)
-		close(cmd->infile);
-	if (cmd->outfile != 1)
-		close(cmd->outfile);
 }
 
 void	execute(t_command *cmd)
@@ -54,8 +46,4 @@ void	exec_single_builtin(t_command *cmd)
 	if (cmd->outfile != STDOUT_FILENO)
 		dup2(cmd->outfile, STDOUT_FILENO);
 	check_builtin(cmd);
-	if (cmd->infile != STDIN_FILENO)
-		dup2(use_data()->old_stdin, STDIN_FILENO);
-	if (cmd->outfile != STDOUT_FILENO)
-		dup2(use_data()->old_stdout, STDOUT_FILENO);
 }

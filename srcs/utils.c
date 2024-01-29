@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:35:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/15 15:33:48 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 11:34:49 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,20 @@ char	*ft_getenv(char *var_name)
 	return (free((void **)&tmp), NULL);
 }
 
-char	**copy_env(char **env)
+char	**copy_array(char **old_array)
 {
-	char	**new_env;
+	char	**new_array;
 	int		nb_lines;
 	int		i;
 
 	nb_lines = 0;
-	while (env[nb_lines])
+	while (old_array[nb_lines])
 		nb_lines++;
-	new_env = ft_calloc(nb_lines + 1, sizeof(char *));
+	new_array = ft_calloc(nb_lines + 1, sizeof(char *));
 	i = -1;
-	while (env[++i])
-		new_env[i] = ft_strdup(env[i]);
-	return (new_env);
+	while (old_array[++i])
+		new_array[i] = ft_strdup(old_array[i]);
+	return (new_array);
 }
 
 int	is_quote(char check)
@@ -70,4 +70,10 @@ int	is_quote(char check)
 	if (check == '\'' || check == '\"')
 		return (1);
 	return (0);
+}
+
+void	safe_close_file(int fd)
+{
+	if (fd != 0)
+		close (fd);
 }

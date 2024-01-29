@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/26 15:15:09 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 12:03:20 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,8 @@
 # define T_APPEND 7
 
 /*ERROR MESSAGES*/
-# define ENV_ERROR "The environment could not be copied\n"
-# define ARGV_ERROR "There is no argv\n"
 # define HD_FORK_ERROR "minishell: heredoc: could not fork\n"
 # define HD_OPEN_ERROR "minishell: heredoc: could not open heredoc\n"
-# define STRDUP_ERROR "Could not duplicate string.\n"
-# define QUOTES_ERROR "found unclosed quotation marks\n"
 # define INV_TOKEN "minishell: syntax error near unexpected token"
 
 /*STRUCTS*/
@@ -112,8 +108,7 @@ void		init_data(t_data *data);
 //utils.c
 t_data		*use_data(void);
 char		*ft_getenv(char *var_name);
-char		**copy_env(char **env);
-void		print_array(void);
+char		**copy_array(char **old_array);
 void		safe_free(void **ptr);
 void		set_exstat(int *status, int exstat);
 int			iterate_until_closed(char *str, int *index, char quote);
@@ -121,6 +116,7 @@ void		clean_cmds(void);
 void		free_array(char **array);
 void		clean_after_loop(void);
 int			is_quote(char check);
+void		safe_close_file(int fd);
 
 /*BUILTINS*/
 //builtins_utils.c
@@ -145,28 +141,21 @@ int			export_builtin(char **cmd);
 
 /*ERROR*/
 
-//errors.c
-int			parsing_error(char *error);
+//errors
 void		exit_program(int code);
-void		pipex_error(char *error, int code);
 
 //exit_status.c
-int			*get_pid_status(void);
+int			get_pid_status(void);
 void		set_exstat(int *status, int exstat);
 
 /*EXEC*/
 
 //exec_dup.c
 int			count_commands(t_command *cmd);
-void		close_files(t_command *cmd);
 
 //exec_utils.c
 void		execute(t_command *cmd);
-void		dup_infile(t_command *cmd, int copy);
-void		dup_outfile(t_command *cmd, int copy);
-void		reset_files(void);
-void		setup_pipe_outfile(t_command *cmd);
-void		setup_pipe_infile(t_command *cmd);
+void		dup_infile(t_command *cmd);
 void		exec_single_builtin(t_command *cmd);
 
 //exec.c
@@ -206,8 +195,6 @@ int			build_commands(void);
 //command_list.c
 t_command	*create_command(void);
 t_command	*add_command(char *command, int infile, int outfile);
-void		free_commands_if_not_empty(void);
-void		view_commands(void);
 
 /*Tokens*/
 
@@ -218,8 +205,6 @@ int			skip_envvar(char *line, int *i, int *flag_var);
 
 //linked_list.c
 t_token		*add_token(char *token);
-void		free_tokens_if_not_empty(void);
-void		view_list(void);
 
 //redirections.c
 int			token_redirin(t_token *token);

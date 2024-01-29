@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:53:13 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/24 16:54:31 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 11:35:19 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	if (!isatty(0))
 		return (1);
-	use_data()->new_env = copy_env(env);
+	use_data()->new_env = copy_array(env);
 	while (1)
 	{
 		signals();

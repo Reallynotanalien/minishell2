@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:29 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 18:08:17 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 12:01:37 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	open_heredoc(t_token *tokens, char *command)
 {
 	int		here_doc;
 	int		temp_file;
-	int		*status;
+	int		status;
 
 	signal(SIGINT, child_handler);
 	signal(SIGQUIT, SIG_IGN);
@@ -74,13 +74,13 @@ int	open_heredoc(t_token *tokens, char *command)
 	else if (use_data()->pid == 0)
 		heredoc_input(temp_file, use_data()->heredoc_token, command);
 	status = get_pid_status();
-	if (*status != 0)
+	if (status != 0)
 		use_data()->error_flag = ERROR;
 	close(temp_file);
 	here_doc = open(".here_doc", O_RDONLY);
 	use_data()->heredoc_flag = YES;
 	safe_free((void **)&(use_data()->heredoc_token));
-	return (safe_free((void **)&status), here_doc);
+	return (here_doc);
 }
 
 int	contains_whitespace(char *str)
@@ -95,18 +95,4 @@ int	contains_whitespace(char *str)
 		i++;
 	}
 	return (NO);
-}
-
-void	free_commands_if_not_empty(void)
-{
-	t_command	*temp;
-
-	if (!use_data()->cmd)
-		return ;
-	while (use_data()->cmd)
-	{
-		temp = use_data()->cmd->next;
-		free(use_data()->cmd);
-		use_data()->cmd = temp;
-	}
 }

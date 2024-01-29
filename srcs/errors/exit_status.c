@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:26:58 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/09 17:51:19 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 11:44:28 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ void	set_exstat(int *status, int exstat)
 			use_data()->exstat = WTERMSIG(*status) + 128;
 }
 
-int	*get_pid_status(void)
+int	get_pid_status(void)
 {
-	int	*status;
+	int	status;
 
-	status = ft_calloc(1, sizeof(int));
-	waitpid(use_data()->pid, status, 0);
+	waitpid(use_data()->pid, &status, 0);
 	while (waitpid(-1, NULL, 0) > 0)
 		;
 	return (status);
