@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:14 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 16:23:42 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 12:26:26 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,21 +90,24 @@ int	exit_builtin(char **cmd)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	if (cmd[1] && cmd[2])
 		return (ft_printf(2, "minishell: exit: too many arguments"), 1);
 	if (cmd[1])
 	{
-		while (cmd[1][++i])
+		if (cmd[1][0] == '-')
+			i++;
+		while (cmd[1][i])
 		{
-			if (!ft_isdigit(cmd[1][i]))
+			if (!ft_isdigit(cmd[1][i]) && cmd[1][i] != '-')
 			{
 				return (ft_printf(2,
 						"minishell: exit: %s: numeric argument required\n",
 						cmd[1]), exit_program(255), 0);
 			}
+			i++;
 		}
-		return (ft_printf(1, "exit\n"), exit_program(ft_atoi(cmd[1])), 0);
+		return (ft_printf(1, "exit\n"), exit_program((unsigned int)ft_atoi(cmd[1])), 0);
 	}
 	return (ft_printf(1, "exit\n"), exit_program(0), 0);
 }

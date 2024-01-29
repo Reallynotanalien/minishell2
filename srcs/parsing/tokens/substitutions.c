@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:05:44 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 16:44:00 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 13:06:16 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,13 @@ int	substitute_block(char *line, int index, char **blocks, int i_block)
 	tmp = ft_getenv(var_name);
 	new_block = ft_strdup(tmp);
 	if (!new_block)
-		new_block = ft_strdup("");
-	blocks[i_block] = new_block;
+	{
+		blocks[i_block] = ft_calloc(1, 1);
+		if (line[i] == ' ')
+			i++;
+	}
+	else
+		blocks[i_block] = new_block;
 	return (free (tmp), free (var_name), i - index);
 }
 
@@ -130,8 +135,11 @@ void	do_substitutions(char *line)
 	while (i < nb_blocks)
 	{
 		tmp = new_line;
-		new_line = ft_strjoin(tmp, blocks[i]);
-		free (tmp);
+		if (blocks[i] && blocks[i][0])
+		{
+			new_line = ft_strjoin(tmp, blocks[i]);
+			free (tmp);
+		}
 		i++;
 	}
 	free_array(blocks);

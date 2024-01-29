@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:01 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/25 13:45:25 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 12:08:20 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	command_loop(t_token **tokens)
 			|| ((*tokens)->type == T_OUTFILE && token_redirout(*tokens) == -1)
 			|| ((*tokens)->type == T_APPEND
 				&& token_redirappend(*tokens) == -1))
-			return (1);
+			return (safe_free((void **)&command), 1);
 		else if ((*tokens)->type == T_STR)
 			command = join_command(command, (*tokens)->token);
 		if ((*tokens)->next)
