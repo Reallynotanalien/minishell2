@@ -6,21 +6,24 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:26:58 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/29 11:44:28 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 16:07:06 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	set_exstat(int *status, int exstat)
+void	set_exstat(int exstat)
 {
-	if (!status)
-		use_data()->exstat = exstat;
-	else if (WIFEXITED(*status))
-		use_data()->exstat = WEXITSTATUS(*status);
+	use_data()->exstat = exstat;
+}
+
+void	get_exstat(int status)
+{
+	if (WIFEXITED(status))
+		use_data()->exstat = WEXITSTATUS(status);
 	else
-		if (WIFSIGNALED(*status))
-			use_data()->exstat = WTERMSIG(*status) + 128;
+		if (WIFSIGNALED(status))
+			use_data()->exstat = WTERMSIG(status) + 128;
 }
 
 int	get_pid_status(void)
@@ -30,5 +33,6 @@ int	get_pid_status(void)
 	waitpid(use_data()->pid, &status, 0);
 	while (waitpid(-1, NULL, 0) > 0)
 		;
-	return (status);
+	get_exstat(status);
+	return (use_data()->exstat);
 }

@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:29 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/29 12:01:37 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 16:07:27 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	heredoc_input(int temp_file, char *token, char *command)
 				&& ft_strncmp(use_data()->here_doc_str, token,
 					ft_strlen(use_data()->here_doc_str) - 1) == 0))
 		{
-			clean_heredoc(use_data()->here_doc_str, token, command);
+			clean_heredoc(use_data()->here_doc_str, token, command, temp_file);
 			exit_program (0);
 		}
 		else
@@ -46,7 +46,7 @@ void	heredoc_input(int temp_file, char *token, char *command)
 				ft_strlen(use_data()->here_doc_str));
 		safe_free((void **)&(use_data()->here_doc_str));
 	}
-	clean_heredoc(use_data()->here_doc_str, token, command);
+	clean_heredoc(use_data()->here_doc_str, token, command, temp_file);
 	exit_program(0);
 }
 

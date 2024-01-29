@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:29:35 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/18 14:00:12 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 16:04:13 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ int	cd_builtin(char **cmd)
 		tmp = ft_getenv("HOME");
 		if (chdir(tmp))
 			return (ft_printf(2, "minishell: cd: HOME not set\n"),
-				set_exstat(NULL, 1), free(tmp), 1);
+				set_exstat(1), free(tmp), 1);
 		free (tmp);
 	}
 	else if (chdir(cmd[1]) == -1)
 	{
 		ft_printf(2, "minishell: cd: %s: ", cmd[1]);
 		perror(NULL);
-		return (set_exstat(NULL, 1), 1);
+		return (set_exstat(1), 1);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/29 13:37:59 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 15:58:46 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	dup_fds(t_command *cmd)
 		dup2(cmd->infile, STDIN_FILENO);
 		close(cmd->infile);
 	}
-	else
-		dup2(cmd->pipe_cmd[0], STDIN_FILENO);
 	if (cmd->outfile == STDOUT_FILENO && cmd->next)
 		dup2(cmd->pipe_cmd[1], STDOUT_FILENO);
 	else if (cmd->outfile != STDOUT_FILENO)
@@ -39,8 +37,6 @@ void	dup_fds(t_command *cmd)
 
 void	handle_child(t_command *cmd)
 {
-	signal(SIGINT, child_handler);
-	signal(SIGQUIT, sigquit_handler);
 	dup_fds(cmd);
 	execute(cmd);
 	exit_program(use_data()->exstat);
@@ -69,11 +65,15 @@ void	exec(t_command *cmd)
 	{
 		setup_pipes(cmd);
 		use_data()->pid = fork();
+		signal(SIGINT, child_handler);
+		signal(SIGQUIT, sigquit_handler);
 		if (use_data()->pid == -1)
 			return (perror("minishell: fork: "));
 		else if (use_data()->pid == 0)
 			handle_child(cmd);
-		dup_infile(cmd);
+		dup2(cmd->pipe_cmd[0], STDIN_FILENO);
+		if(cmd->infile != STDIN_FILENO)
+			close (cmd->infile);
 		close_pipes(cmd->pipe_cmd);
 		if (cmd->outfile != STDOUT_FILENO)
 			close (cmd->outfile);

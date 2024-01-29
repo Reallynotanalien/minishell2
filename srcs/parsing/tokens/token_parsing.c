@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:33:09 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 16:52:41 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 16:04:13 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	parsing_redirection(char *line, int index)
 	if (line[index] == '|')
 	{
 		if (parse_pipe(line, index))
-			return (set_exstat(NULL, 258), ERROR);
+			return (set_exstat(258), ERROR);
 	}
 	else
 	{
@@ -66,7 +66,7 @@ int	parsing_redirection(char *line, int index)
 			index ++;
 		index++;
 		if (parse_in_out(line, index))
-			return (set_exstat(NULL, 258), ERROR);
+			return (set_exstat(258), ERROR);
 	}
 	return (0);
 }

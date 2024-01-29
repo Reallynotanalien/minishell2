@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kafortin <kafortin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:27:47 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/05 20:27:49 by kafortin         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:04:13 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	parse_quotes(char *str)
 	{
 		if (double_quoted(str, i) == -1 || single_quoted(str, i) == -1)
 			return (ft_printf(2, "minishell: quotations are not closed\n"),
-				set_exstat(NULL, 1), ERROR);
+				set_exstat(1), ERROR);
 	}
 	if (double_quoted(str, i) == -1 || single_quoted(str, i) == -1)
 		return (ft_printf(2, "minishell: quotations are not closed\n"),
-			set_exstat(NULL, 1), ERROR);
+			set_exstat(1), ERROR);
 	return (0);
 }
 
@@ -62,7 +62,7 @@ char	*skip_consecutives(char *str, int i, int end)
 	new_str = ft_calloc(find_lenght(str, end) + 1, sizeof(char));
 	if (!new_str)
 		return (ft_printf(2, "minishell: fatal error\n"),
-			set_exstat(NULL, 1), NULL);
+			set_exstat(1), NULL);
 	i_new = 0;
 	while (i < end)
 	{

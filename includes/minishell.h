@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:28:26 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/29 12:03:20 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 16:04:42 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_data
 	char				*here_doc_str;
 	char				*heredoc_token;
 	char				*heredoc_cmd;
+	int					temp_file;
 	struct termios		old_attributes;
 	struct termios		new_attributes;
 }				t_data;
@@ -100,7 +101,7 @@ typedef struct s_data
 //cleaning_utils.c
 void		safe_free(void **ptr);
 void		free_array(char **array);
-void		clean_heredoc(char *string, char *token, char *cmd);
+void		clean_heredoc(char *string, char *token, char *cmd, int fd);
 
 //init.c
 void		init_data(t_data *data);
@@ -110,7 +111,8 @@ t_data		*use_data(void);
 char		*ft_getenv(char *var_name);
 char		**copy_array(char **old_array);
 void		safe_free(void **ptr);
-void		set_exstat(int *status, int exstat);
+void		set_exstat(int exstat);
+void		get_exstat(int status);
 int			iterate_until_closed(char *str, int *index, char quote);
 void		clean_cmds(void);
 void		free_array(char **array);
@@ -146,7 +148,6 @@ void		exit_program(int code);
 
 //exit_status.c
 int			get_pid_status(void);
-void		set_exstat(int *status, int exstat);
 
 /*EXEC*/
 
@@ -155,7 +156,6 @@ int			count_commands(t_command *cmd);
 
 //exec_utils.c
 void		execute(t_command *cmd);
-void		dup_infile(t_command *cmd);
 void		exec_single_builtin(t_command *cmd);
 
 //exec.c

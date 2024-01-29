@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:53:57 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/29 11:49:33 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 14:39:27 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,10 @@ void	exit_program(int code)
 	exit(code);
 }
 
-void	clean_heredoc(char *string, char *token, char *cmd)
+void	clean_heredoc(char *string, char *token, char *cmd, int fd)
 {
+	close (fd);
 	safe_free((void **)&string);
 	safe_free((void **)&token);
-	safe_free((void **)cmd);
+	safe_free((void **)&cmd);
 }

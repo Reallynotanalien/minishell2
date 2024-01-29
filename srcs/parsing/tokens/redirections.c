@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:56:16 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 16:43:38 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 16:04:13 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ int	token_redirout(t_token *token)
 			fd = open(t_copy, O_TRUNC | O_WRONLY);
 		else
 			return (free(t_lower), ft_printf(2, "minishell: %s: ", t_copy),
-				free(t_copy), perror(NULL), set_exstat(NULL, 1), -1);
+				free(t_copy), perror(NULL), set_exstat(1), -1);
 	}
 	else
 		fd = open(t_copy, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (fd < 0)
-		return (free(t_lower), free(t_copy), set_exstat(NULL, 1),
+		return (free(t_lower), free(t_copy), set_exstat(1),
 			ft_printf(2, "minishell: %s: ", t_copy), perror(NULL), -1);
 	if (use_data()->outfile != STDOUT_FILENO)
 		close(use_data()->outfile);
@@ -66,7 +66,7 @@ int	token_redirappend(t_token *token)
 			fd = open(t_copy, O_APPEND | O_WRONLY);
 		else
 			return (free(t_lower), ft_printf(2, "minishell: %s: ", t_copy),
-				free(t_copy), perror(NULL), set_exstat(NULL, 1), -1);
+				free(t_copy), perror(NULL), set_exstat(1), -1);
 	}
 	else
 		fd = open(t_copy, O_CREAT | O_APPEND | O_WRONLY, 0644);
@@ -88,7 +88,7 @@ int	token_redirin(t_token *token)
 	if (access(t_copy, F_OK | R_OK) == -1
 		&& access(t_lower, F_OK | R_OK) == -1)
 		return (free(t_lower), ft_printf(2, "minishell: %s: ", t_copy),
-			free(t_copy), perror(NULL), set_exstat(NULL, 1), -1);
+			free(t_copy), perror(NULL), set_exstat(1), -1);
 	fd = open(t_copy, O_RDONLY);
 	if (fd < 0)
 	{
@@ -96,7 +96,7 @@ int	token_redirin(t_token *token)
 		if (fd < 0)
 			return (free(t_lower), free(t_copy),
 				ft_printf(2, "minishell: %s: ", t_copy), perror(NULL),
-				set_exstat(NULL, 1), -1);
+				set_exstat(1), -1);
 	}
 	if (use_data()->infile != STDIN_FILENO)
 		close(use_data()->infile);

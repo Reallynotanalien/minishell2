@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:34:01 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/22 16:24:36 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 15:51:10 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	heredoc_handler(int signum)
 		safe_free((void **)&(use_data()->heredoc_token));
 	if (use_data()->heredoc_cmd)
 		safe_free((void **)&(use_data()->heredoc_cmd));
+	close (use_data()->temp_file);
 	exit_program(1);
 }
 
