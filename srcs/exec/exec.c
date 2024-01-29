@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:29:06 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/29 12:06:24 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 13:37:59 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ void	close_pipes(int *fd)
 
 void	dup_fds(t_command *cmd)
 {
+	if (cmd->infile != STDIN_FILENO)
+	{
+		dup2(cmd->infile, STDIN_FILENO);
+		close(cmd->infile);
+	}
+	else
+		dup2(cmd->pipe_cmd[0], STDIN_FILENO);
 	if (cmd->outfile == STDOUT_FILENO && cmd->next)
 		dup2(cmd->pipe_cmd[1], STDOUT_FILENO);
 	else if (cmd->outfile != STDOUT_FILENO)
