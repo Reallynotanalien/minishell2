@@ -6,7 +6,7 @@
 /*   By: edufour <edufour@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 20:05:44 by kafortin          #+#    #+#             */
-/*   Updated: 2024/01/29 13:06:16 by edufour          ###   ########.fr       */
+/*   Updated: 2024/01/29 13:09:32 by edufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,6 @@ void	do_substitutions(char *line)
 	int		i;
 
 	nb_blocks = count_nbblocks(line);
-	if (nb_blocks == 1)
-		return ;
 	blocks = ft_calloc(nb_blocks + 1, sizeof(char *));
 	create_blocks(line, blocks);
 	new_line = ft_strdup(blocks[0]);
